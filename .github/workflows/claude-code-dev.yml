@@ -1,0 +1,55 @@
+name: Claude Code (Development)
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - 'feature/**'
+      - 'fix/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  claude-code-dev:
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Code (Development)
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY_DEV }}
+          # Optional: Add model preference for dev
+          model: claude-3-5-sonnet
+
+      - name: Run Project Tests
+        run: |
+          ./gradlew :shared:commonTest
+          ./gradlew :androidApp:test
+
+      - name: Check Lint
+        run: |
+          ./gradlew :androidApp:lint
+          ./gradlew :shared:detekt
+
+      - name: Comment on PR
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const status = context.payload.pull_request ? 'completed' : 'skipped';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `✅ Claude Code (Dev) analysis ${status}. See logs for details.`
+            })
