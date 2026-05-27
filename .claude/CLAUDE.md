@@ -641,34 +641,22 @@ bash scripts/install-hooks.sh
 
 **To skip (emergency only):** `git commit --no-verify` or `git push --no-verify`
 
-### 15. KtLint Comment Placement in Function Arguments
-**Problem:** KtLint flags comments placed inline within function argument lists as `discouraged-comment-location`. These violations **cannot be auto-corrected** by `./gradlew ktlintFormat`.
+### 15. KtLint Violations — Cannot Be Auto-Corrected
+**Problem:** Two KtLint violation types **cannot be auto-corrected** by `./gradlew ktlintFormat`:
+1. **Wildcard imports** (`standard:no-wildcard-imports`) — must expand manually to explicit imports
+2. **Comment placement in arguments** (`standard:discouraged-comment-location`) — must move comments above arguments
 
-**Wrong:**
-```kotlin
-Icon(
-    imageVector = leadingIcon,
-    contentDescription = null, // a11y: decorative — labelled by adjacent Text
-    tint = Primary,
-)
-```
+**Solution:** See `.claude/rules/ktlint-rules.md` for comprehensive guidance:
+- **Rule KL-1:** No Wildcard Imports — Always Explicit
+- **Rule KL-2:** Comment Placement in Function Arguments
+- **Rule KL-3:** Composable Function Naming (PascalCase) — false positive, do NOT fix
+- **Rule KL-4:** Formatting Best Practices
+- **Rule KL-5:** Import Organization in New Files
 
-**Correct:**
-```kotlin
-Icon(
-    imageVector = leadingIcon,
-    // a11y: decorative — labelled by adjacent Text
-    contentDescription = null,
-    tint = Primary,
-)
-```
-
-**Wildcard Imports (Avoid):**
-Wildcard imports (`import androidx.compose.foundation.*`) are flagged by KtLint as `standard:no-wildcard-imports`. These also **cannot be auto-corrected**. Always use explicit imports:
-- ❌ `import androidx.compose.foundation.*`
-- ✅ `import androidx.compose.foundation.background`, `import androidx.compose.foundation.clickable`, etc.
-
-Both of these violations require manual fixes and should be avoided when writing new code.
+**Quick fixes:**
+- Wildcard imports → expand to explicit imports
+- Inline comments in args → move above the argument on a separate line
+- Composable PascalCase warnings → ignore (it's correct per Compose conventions)
 
 ---
 
