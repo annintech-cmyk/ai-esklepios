@@ -66,8 +66,7 @@ class AuthViewModel(
                     _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
                 }
                 .onFailure { throwable ->
-                    // _uiState.update { it.copy(isLoading = false, error = throwable.message ?: "Login failed") }
-                    _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
+                    _uiState.update { it.copy(isLoading = false, error = throwable.message ?: "Login failed") }
                 }
         }
     }

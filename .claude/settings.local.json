@@ -45,7 +45,8 @@
       "Bash(./gradlew :androidApp:ktlintCheck)",
       "Bash(bash scripts/pre-push.sh)",
       "Bash(./gradlew :androidApp:testDebugUnitTest)",
-      "Bash(./gradlew :androidApp:testDebugUnitTest --info)"
+      "Bash(./gradlew :androidApp:testDebugUnitTest --info)",
+      "Bash(./gradlew :androidApp:testDebugUnitTest --quiet)"
     ]
   }
 }
