@@ -65,7 +65,8 @@ fun AppointmentSuccessScreen(
         ) {
             AppIcon(
                 Icons.Filled.CheckCircle,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = Success,
                 size = Dimens.avatarSizeLg + Dimens.paddingS,
             )
@@ -163,12 +164,13 @@ private fun SuccessDetailRow(
     value: String,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
+        // a11y: decorative — labelled by adjacent Text
         AppIcon(
             icon,
             contentDescription = null,
             tint = Primary,
             size = Dimens.iconSizeCompact,
-        ) // a11y: decorative — labelled by adjacent Text
+        )
         Spacer(Modifier.width(Dimens.paddingM))
         Column {
             AppCaptionText(text = label)

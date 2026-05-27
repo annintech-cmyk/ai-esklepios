@@ -36,7 +36,11 @@
       "Bash(grep -rEn '[0-9]+\\\\.dp|[0-9]+\\\\.sp' /Users/anna.felix/projects/esklepios/androidApp/src/main/kotlin --include=\"*.kt\" | grep -v \"/theme/\" > /tmp/android_hardcoded.txt; wc -l /tmp/android_hardcoded.txt; echo \"---\"; cut -d: -f3- /tmp/android_hardcoded.txt | grep -oE '[0-9]+\\\\.dp|[0-9]+\\\\.sp' | sort | uniq -c | sort -rn | head -40)",
       "Bash(sed 's|/Users/anna.felix/projects/esklepios/||')",
       "Bash(awk -F: '{print $1}' /tmp/android_hc.txt)",
-      "Bash(awk -F: '{print $1}' /tmp/ios_hc.txt)"
+      "Bash(awk -F: '{print $1}' /tmp/ios_hc.txt)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(./gradlew :androidApp:ktlintFormat --quiet)",
+      "Bash(./gradlew :androidApp:ktlintCheck --no-daemon)"
     ]
   }
 }

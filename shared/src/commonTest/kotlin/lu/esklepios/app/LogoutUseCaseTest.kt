@@ -1,13 +1,13 @@
 package lu.esklepios.app
 
-import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import kotlinx.coroutines.test.runTest
 import lu.esklepios.app.domain.model.User
 import lu.esklepios.app.domain.repository.AuthRepository
 import lu.esklepios.app.domain.usecase.LogoutUseCase
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class LogoutUseCaseTest {
     private class FakeAuthRepository : AuthRepository {

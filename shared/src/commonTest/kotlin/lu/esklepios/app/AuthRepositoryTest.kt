@@ -1,15 +1,15 @@
 package lu.esklepios.app
 
+import kotlinx.coroutines.test.runTest
+import lu.esklepios.app.domain.model.ProfileType
+import lu.esklepios.app.domain.model.User
+import lu.esklepios.app.domain.repository.AuthRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import kotlinx.coroutines.test.runTest
-import lu.esklepios.app.domain.model.ProfileType
-import lu.esklepios.app.domain.model.User
-import lu.esklepios.app.domain.repository.AuthRepository
 
 /**
  * Tests for AuthRepository contract using a fake implementation.

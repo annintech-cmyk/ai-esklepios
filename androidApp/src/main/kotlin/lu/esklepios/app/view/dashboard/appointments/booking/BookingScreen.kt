@@ -213,7 +213,8 @@ fun BookingScreen(
         ) {
             AppIcon(
                 imageVector = Icons.Filled.Info,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = Warning,
                 size = Dimens.iconSizeSm,
             )
@@ -278,7 +279,8 @@ fun BookingScreen(
             ) {
                 AppIcon(
                     imageVector = Icons.Filled.Lock,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = Primary,
                     size = Dimens.iconSizeSm,
                 )
@@ -315,7 +317,8 @@ private fun BookingCardHeader(
     ) {
         AppIcon(
             imageVector = icon,
-            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+            // a11y: decorative — labelled by adjacent Text
+            contentDescription = null,
             tint = tint,
             size = Dimens.iconSizeMicro,
         )

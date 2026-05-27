@@ -167,7 +167,8 @@ fun ProfileScreen(
                     ) {
                         AppIcon(
                             imageVector = Icons.Filled.Person,
-                            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                            // a11y: decorative — labelled by adjacent Text
+                            contentDescription = null,
                             tint = Primary,
                             size = Dimens.iconSizeCompact,
                         )
@@ -190,7 +191,8 @@ fun ProfileScreen(
                         ) {
                             AppIcon(
                                 imageVector = Icons.Filled.Edit,
-                                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                                // a11y: decorative — labelled by adjacent Text
+                                contentDescription = null,
                                 tint = Primary,
                                 size = Dimens.iconSizeChevron,
                             )
@@ -239,7 +241,8 @@ fun ProfileScreen(
                     ) {
                         AppIcon(
                             imageVector = Icons.Filled.Notifications,
-                            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                            // a11y: decorative — labelled by adjacent Text
+                            contentDescription = null,
                             tint = Primary,
                             size = Dimens.iconSizeCompact,
                         )
@@ -268,7 +271,8 @@ fun ProfileScreen(
                             ) {
                                 AppIcon(
                                     imageVector = Icons.Filled.Email,
-                                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                                    // a11y: decorative — labelled by adjacent Text
+                                    contentDescription = null,
                                     tint = Primary,
                                     size = Dimens.iconSizeMd,
                                 )
@@ -341,7 +345,8 @@ fun ProfileScreen(
                     ) {
                         AppIcon(
                             imageVector = Icons.Filled.Shield,
-                            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                            // a11y: decorative — labelled by adjacent Text
+                            contentDescription = null,
                             tint = Primary,
                             size = Dimens.iconSizeCompact,
                         )
@@ -386,7 +391,8 @@ fun ProfileScreen(
             ) {
                 AppIcon(
                     imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = Danger,
                     size = Dimens.iconSizeMd,
                 )
@@ -426,7 +432,8 @@ private fun ProfileInfoRow(
         ) {
             AppIcon(
                 imageVector = icon,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = iconTint,
                 size = Dimens.iconSizeSm,
             )
@@ -438,7 +445,8 @@ private fun ProfileInfoRow(
         }
         AppIcon(
             imageVector = Icons.Filled.ChevronRight,
-            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+            // a11y: decorative — labelled by adjacent Text
+            contentDescription = null,
             tint = TextHint,
             size = Dimens.iconSizeCompact,
         )
@@ -471,7 +479,8 @@ private fun SecurityRow(
         ) {
             AppIcon(
                 imageVector = icon,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = iconTint,
                 size = Dimens.iconSizeMd,
             )
@@ -483,7 +492,8 @@ private fun SecurityRow(
         }
         AppIcon(
             imageVector = Icons.Filled.ChevronRight,
-            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+            // a11y: decorative — labelled by adjacent Text
+            contentDescription = null,
             tint = TextHint,
             size = Dimens.iconSizeCompact,
         )

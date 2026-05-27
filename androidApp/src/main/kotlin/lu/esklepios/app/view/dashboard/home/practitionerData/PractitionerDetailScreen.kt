@@ -1,4 +1,4 @@
-package lu.esklepios.app.view.dashboard.home.practitioner_data
+package lu.esklepios.app.view.dashboard.home.practitionerData
 
 import android.content.Intent
 import android.net.Uri
