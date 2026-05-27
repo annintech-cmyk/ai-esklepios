@@ -1,32 +1,35 @@
-# Properties with secrets
-prod.properties
+# Secrets & environment (dev.properties is dev-only, prod.properties is tracked)
 dev.properties
 local.properties
+androidApp/local.properties
 
 # Gradle
 .gradle/
 build/
 *.iml
 
+# Kotlin Gradle Plugin caches
+.kotlin/
+
 # IDE
-.idea/
+**/.idea/
 *.iws
 *.ipr
 
 # macOS
-.DS_Store
+**/.DS_Store
 
 # Xcode
-xcuserdata/
+**/xcuserdata/
 *.pbxuser
 *.mode1v3
-*.xcworkspace/contents.xcworkspacestate
+**/xcworkspace/contents.xcworkspacestate
 DerivedData/
 *.xcuserstate
-*.xcscheme
 
 # Swift Package Manager
 .build/
+**/Package.resolved
 
 # Kotlin Native
 *.dSYM/
@@ -39,3 +42,10 @@ DerivedData/
 # Keystore files
 *.jks
 *.keystore
+
+# Logs & reports
+*.log
+reports/
+
+# Docs (generated/local only)
+docs/
