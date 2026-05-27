@@ -1,14 +1,21 @@
 package lu.esklepios.app
 
 import app.cash.turbine.test
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
-import lu.esklepios.app.domain.model.*
-import lu.esklepios.app.domain.usecase.*
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import lu.esklepios.app.domain.model.ProfileType
+import lu.esklepios.app.domain.model.User
+import lu.esklepios.app.domain.usecase.GetProfileUseCase
+import lu.esklepios.app.domain.usecase.LogoutUseCase
 import lu.esklepios.app.presentation.viewmodel.ProfileViewModel
-import org.junit.*
+import org.junit.After
+import org.junit.Before
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull

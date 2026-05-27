@@ -1,9 +1,11 @@
 package lu.esklepios.app
 
 import kotlinx.coroutines.test.runTest
-import lu.esklepios.app.domain.model.*
+import lu.esklepios.app.domain.model.Practitioner
 import lu.esklepios.app.domain.repository.PractitionerRepository
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
  * Tests for PractitionerRepository contract using a fake implementation.

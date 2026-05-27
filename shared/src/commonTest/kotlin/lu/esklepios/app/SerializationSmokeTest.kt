@@ -2,7 +2,8 @@ package lu.esklepios.app
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import lu.esklepios.app.data.network.*
+import lu.esklepios.app.data.network.AppointmentSlotDto
+import lu.esklepios.app.data.network.PractitionerDto
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

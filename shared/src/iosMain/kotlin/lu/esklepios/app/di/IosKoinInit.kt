@@ -1,6 +1,16 @@
 package lu.esklepios.app.di
 
-import lu.esklepios.app.presentation.viewmodel.*
+import lu.esklepios.app.presentation.viewmodel.AppointmentSuccessViewModel
+import lu.esklepios.app.presentation.viewmodel.AuthViewModel
+import lu.esklepios.app.presentation.viewmodel.BookAppointmentViewModel
+import lu.esklepios.app.presentation.viewmodel.ChangeEmailViewModel
+import lu.esklepios.app.presentation.viewmodel.ChangePasswordViewModel
+import lu.esklepios.app.presentation.viewmodel.EditProfileViewModel
+import lu.esklepios.app.presentation.viewmodel.HomeViewModel
+import lu.esklepios.app.presentation.viewmodel.MyAppointmentsViewModel
+import lu.esklepios.app.presentation.viewmodel.PractitionerDetailViewModel
+import lu.esklepios.app.presentation.viewmodel.ProfileViewModel
+import lu.esklepios.app.presentation.viewmodel.SplashViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
