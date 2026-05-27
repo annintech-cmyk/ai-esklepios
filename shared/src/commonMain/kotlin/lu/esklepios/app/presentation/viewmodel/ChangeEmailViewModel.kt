@@ -16,13 +16,12 @@ data class ChangeEmailUiState(
     val newEmail: String = "",
     val confirmEmail: String = "",
     val isSuccess: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
 )
 
 class ChangeEmailViewModel(
-    private val changeEmailUseCase: ChangeEmailUseCase
+    private val changeEmailUseCase: ChangeEmailUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(ChangeEmailUiState())
     val uiState: StateFlow<ChangeEmailUiState> = _uiState.asStateFlow()
 

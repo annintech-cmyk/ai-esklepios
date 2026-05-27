@@ -18,16 +18,15 @@ data class MyAppointmentsUiState(
     val upcomingAppointments: List<Appointment> = emptyList(),
     val pastAppointments: List<Appointment> = emptyList(),
     val selectedTab: Int = 0,
-    val error: String? = null
+    val error: String? = null,
 )
 
 class MyAppointmentsViewModel(
     private val getUpcomingAppointmentsUseCase: GetUpcomingAppointmentsUseCase,
     private val getPastAppointmentsUseCase: GetPastAppointmentsUseCase,
     private val cancelAppointmentUseCase: CancelAppointmentUseCase,
-    private val modifyAppointmentUseCase: ModifyAppointmentUseCase
+    private val modifyAppointmentUseCase: ModifyAppointmentUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(MyAppointmentsUiState())
     val uiState: StateFlow<MyAppointmentsUiState> = _uiState.asStateFlow()
 
@@ -69,7 +68,7 @@ class MyAppointmentsViewModel(
                     _uiState.update { state ->
                         state.copy(
                             isLoading = false,
-                            upcomingAppointments = state.upcomingAppointments.filter { it.id != appointmentId }
+                            upcomingAppointments = state.upcomingAppointments.filter { it.id != appointmentId },
                         )
                     }
                 }

@@ -10,11 +10,10 @@ data class AppointmentSuccessUiState(
     val appointmentId: String = "",
     val practitionerName: String = "",
     val dateTime: String = "",
-    val clinicName: String = ""
+    val clinicName: String = "",
 )
 
 class AppointmentSuccessViewModel : ViewModel() {
-
     private val _uiState = MutableStateFlow(AppointmentSuccessUiState())
     val uiState: StateFlow<AppointmentSuccessUiState> = _uiState.asStateFlow()
 
@@ -22,14 +21,14 @@ class AppointmentSuccessViewModel : ViewModel() {
         id: String,
         practitionerName: String,
         dateTime: String,
-        clinicName: String
+        clinicName: String,
     ) {
         _uiState.update {
             it.copy(
                 appointmentId = id,
                 practitionerName = practitionerName,
                 dateTime = dateTime,
-                clinicName = clinicName
+                clinicName = clinicName,
             )
         }
     }

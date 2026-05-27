@@ -18,59 +18,65 @@ fun GradientHeader(
     roundedBottom: Boolean = false,
     topPadding: Dp = Dimens.paddingM,
     bottomPadding: Dp = Dimens.paddingXXL,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
-    val shape = if (roundedBottom) {
-        RoundedCornerShape(bottomStart = Dimens.paddingXXXL, bottomEnd = Dimens.paddingXXXL)
-    } else {
-        RoundedCornerShape(Dimens.cornerNone)
-    }
+    val shape =
+        if (roundedBottom) {
+            RoundedCornerShape(bottomStart = Dimens.paddingXXXL, bottomEnd = Dimens.paddingXXXL)
+        } else {
+            RoundedCornerShape(Dimens.cornerNone)
+        }
 
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .background(brush = Gradients.primaryBrush)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clip(shape)
+                .background(brush = Gradients.primaryBrush),
     ) {
         // Decorative orb circles
         Box(
-            modifier = Modifier
-                .offset(x = -Dimens.orbXs, y = -Dimens.orbXs)
-                .size(Dimens.orbXs)
-                .background(
-                    color = Color.White.copy(alpha = 0.05f),
-                    shape = CircleShape
-                )
+            modifier =
+                Modifier
+                    .offset(x = -Dimens.orbXs, y = -Dimens.orbXs)
+                    .size(Dimens.orbXs)
+                    .background(
+                        color = Color.White.copy(alpha = 0.05f),
+                        shape = CircleShape,
+                    ),
         )
         Box(
-            modifier = Modifier
-                .offset(x = Dimens.orbOffsetMainX, y = -Dimens.orbOffsetMainY)
-                .size(Dimens.orbMd)
-                .background(
-                    color = Color.White.copy(alpha = 0.07f),
-                    shape = CircleShape
-                )
+            modifier =
+                Modifier
+                    .offset(x = Dimens.orbOffsetMainX, y = -Dimens.orbOffsetMainY)
+                    .size(Dimens.orbMd)
+                    .background(
+                        color = Color.White.copy(alpha = 0.07f),
+                        shape = CircleShape,
+                    ),
         )
         Box(
-            modifier = Modifier
-                .offset(x = Dimens.orbOffsetSecondaryX, y = Dimens.orbOffsetSecondaryY)
-                .size(Dimens.orbSm)
-                .background(
-                    color = Color.White.copy(alpha = 0.04f),
-                    shape = CircleShape
-                )
+            modifier =
+                Modifier
+                    .offset(x = Dimens.orbOffsetSecondaryX, y = Dimens.orbOffsetSecondaryY)
+                    .size(Dimens.orbSm)
+                    .background(
+                        color = Color.White.copy(alpha = 0.04f),
+                        shape = CircleShape,
+                    ),
         )
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = Dimens.paddingL,
-                    end = Dimens.paddingL,
-                    top = topPadding,
-                    bottom = bottomPadding
-                ),
-            content = content
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = Dimens.paddingL,
+                        end = Dimens.paddingL,
+                        top = topPadding,
+                        bottom = bottomPadding,
+                    ),
+            content = content,
         )
     }
 }

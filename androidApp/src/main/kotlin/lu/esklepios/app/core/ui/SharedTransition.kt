@@ -24,7 +24,7 @@ fun sharedElementModifier(key: Any): Modifier {
     return with(sts) {
         Modifier.sharedElement(
             state = rememberSharedContentState(key = key),
-            animatedVisibilityScope = avs
+            animatedVisibilityScope = avs,
         )
     }
 }

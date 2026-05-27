@@ -11,10 +11,12 @@ import io.ktor.client.request.setBody
 
 class KtorApiService(
     private val client: HttpClient,
-    private val baseUrl: String
+    private val baseUrl: String,
 ) : ApiService {
-
-    override suspend fun login(email: String, password: String): Result<LoginResponse> =
+    override suspend fun login(
+        email: String,
+        password: String,
+    ): Result<LoginResponse> =
         safeCall {
             client.post("$baseUrl/auth/login") {
                 setBody(LoginRequest(email = email, password = password))
@@ -46,7 +48,7 @@ class KtorApiService(
         location: String,
         specialty: String,
         page: Int,
-        limit: Int
+        limit: Int,
     ): Result<List<PractitionerDto>> =
         safeCall {
             client.get("$baseUrl/practitioners") {
@@ -78,7 +80,7 @@ class KtorApiService(
 
     override suspend fun modifyAppointment(
         id: String,
-        request: ModifyAppointmentRequest
+        request: ModifyAppointmentRequest,
     ): Result<AppointmentDto> =
         safeCall {
             client.put("$baseUrl/appointments/$id") {
@@ -104,7 +106,10 @@ class KtorApiService(
             }.body()
         }
 
-    override suspend fun changeEmail(newEmail: String, password: String): Result<Unit> =
+    override suspend fun changeEmail(
+        newEmail: String,
+        password: String,
+    ): Result<Unit> =
         safeCall {
             client.put("$baseUrl/profile/email") {
                 setBody(ChangeEmailRequest(newEmail = newEmail, password = password))
@@ -112,7 +117,10 @@ class KtorApiService(
             Unit
         }
 
-    override suspend fun changePassword(oldPassword: String, newPassword: String): Result<Unit> =
+    override suspend fun changePassword(
+        oldPassword: String,
+        newPassword: String,
+    ): Result<Unit> =
         safeCall {
             client.put("$baseUrl/profile/password") {
                 setBody(ChangePasswordRequest(oldPassword = oldPassword, newPassword = newPassword))
@@ -140,4 +148,5 @@ suspend fun <T> safeCall(block: suspend () -> T): Result<T> {
 }
 
 class ApiException(val statusCode: Int, message: String) : Exception(message)
+
 class NetworkException(message: String) : Exception(message)

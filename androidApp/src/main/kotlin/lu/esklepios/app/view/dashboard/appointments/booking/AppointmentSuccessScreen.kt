@@ -14,20 +14,20 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
-import lu.esklepios.app.presentation.viewmodel.AppointmentSuccessViewModel
-import lu.esklepios.app.core.ui.components.*
 import lu.esklepios.app.core.navigation.NavDestination
+import lu.esklepios.app.core.ui.components.*
 import lu.esklepios.app.core.ui.theme.*
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import lu.esklepios.app.presentation.viewmodel.AppointmentSuccessViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppointmentSuccessScreen(
     navController: NavController,
     appointmentId: String,
-    viewModel: AppointmentSuccessViewModel = koinViewModel()
+    viewModel: AppointmentSuccessViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -36,36 +36,38 @@ fun AppointmentSuccessScreen(
             id = appointmentId,
             practitionerName = uiState.practitionerName.ifBlank { "Your Practitioner" },
             dateTime = uiState.dateTime.ifBlank { "Scheduled" },
-            clinicName = uiState.clinicName.ifBlank { "Clinic" }
+            clinicName = uiState.clinicName.ifBlank { "Clinic" },
         )
     }
 
     val scale by animateFloatAsState(
         targetValue = 1f,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
-        label = "checkmark_scale"
+        label = "checkmark_scale",
     )
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Background)
-            .padding(horizontal = Dimens.paddingXXL),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(Background)
+                .padding(horizontal = Dimens.paddingXXL),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Box(
-            modifier = Modifier
-                .size(Dimens.avatarSizeXl + Dimens.paddingXXXL + Dimens.paddingXS)
-                .scale(scale)
-                .background(color = SuccessBg, shape = CircleShape),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(Dimens.avatarSizeXl + Dimens.paddingXXXL + Dimens.paddingXS)
+                    .scale(scale)
+                    .background(color = SuccessBg, shape = CircleShape),
+            contentAlignment = Alignment.Center,
         ) {
             AppIcon(
                 Icons.Filled.CheckCircle,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = Success,
-                size = Dimens.avatarSizeLg + Dimens.paddingS
+                size = Dimens.avatarSizeLg + Dimens.paddingS,
             )
         }
 
@@ -73,7 +75,7 @@ fun AppointmentSuccessScreen(
 
         AppTitleText(
             text = stringResource(R.string.success_title),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
 
         Spacer(Modifier.height(Dimens.paddingM))
@@ -81,7 +83,7 @@ fun AppointmentSuccessScreen(
         AppSubtitleText(
             text = stringResource(R.string.success_subtitle),
             color = TextSecondary,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
 
         Spacer(Modifier.height(Dimens.paddingXXXL))
@@ -89,39 +91,40 @@ fun AppointmentSuccessScreen(
         AppCard(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(Dimens.paddingXL),
-                verticalArrangement = Arrangement.spacedBy(Dimens.paddingM)
+                verticalArrangement = Arrangement.spacedBy(Dimens.paddingM),
             ) {
                 if (uiState.practitionerName.isNotBlank()) {
                     SuccessDetailRow(
                         icon = Icons.Filled.Person,
                         label = stringResource(R.string.label_practitioner),
-                        value = uiState.practitionerName
+                        value = uiState.practitionerName,
                     )
                 }
                 if (uiState.dateTime.isNotBlank()) {
                     SuccessDetailRow(
                         icon = Icons.Filled.CalendarMonth,
                         label = stringResource(R.string.label_date_time),
-                        value = uiState.dateTime
+                        value = uiState.dateTime,
                     )
                 }
                 if (uiState.clinicName.isNotBlank()) {
                     SuccessDetailRow(
                         icon = Icons.Filled.Business,
                         label = stringResource(R.string.label_clinic),
-                        value = uiState.clinicName
+                        value = uiState.clinicName,
                     )
                 }
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = SuccessBg, shape = RoundedCornerShape(Dimens.radiusSm))
-                        .padding(Dimens.paddingM),
-                    horizontalArrangement = Arrangement.Center
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(color = SuccessBg, shape = RoundedCornerShape(Dimens.radiusSm))
+                            .padding(Dimens.paddingM),
+                    horizontalArrangement = Arrangement.Center,
                 ) {
                     AppLabelText(
                         text = stringResource(R.string.success_confirmed_badge),
-                        color = Success
+                        color = Success,
                     )
                 }
             }
@@ -136,7 +139,7 @@ fun AppointmentSuccessScreen(
                     popUpTo(NavDestination.Home.route) { inclusive = false }
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(Modifier.height(Dimens.paddingM))
@@ -148,7 +151,7 @@ fun AppointmentSuccessScreen(
                     popUpTo(0) { inclusive = true }
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -157,10 +160,15 @@ fun AppointmentSuccessScreen(
 private fun SuccessDetailRow(
     icon: ImageVector,
     label: String,
-    value: String
+    value: String,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        AppIcon(icon, contentDescription = null, tint = Primary, size = Dimens.iconSizeCompact) // a11y: decorative — labelled by adjacent Text
+        AppIcon(
+            icon,
+            contentDescription = null,
+            tint = Primary,
+            size = Dimens.iconSizeCompact,
+        ) // a11y: decorative — labelled by adjacent Text
         Spacer(Modifier.width(Dimens.paddingM))
         Column {
             AppCaptionText(text = label)

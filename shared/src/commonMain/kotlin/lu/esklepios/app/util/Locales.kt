@@ -17,9 +17,10 @@ data class SupportedLanguage(val code: String, val englishName: String, val flag
  *
  * RULE A-13: Inline `listOf("fr" to "French", ...)` in a screen is forbidden.
  */
-val supportedLanguages: List<SupportedLanguage> = listOf(
-    SupportedLanguage(code = "fr", englishName = "French",        flagEmoji = "🇫🇷"),
-    SupportedLanguage(code = "en", englishName = "English",       flagEmoji = "🇬🇧"),
-    SupportedLanguage(code = "de", englishName = "German",        flagEmoji = "🇩🇪"),
-    SupportedLanguage(code = "lb", englishName = "Luxembourgish", flagEmoji = "🇱🇺"),
-)
+val supportedLanguages: List<SupportedLanguage> =
+    listOf(
+        SupportedLanguage(code = "fr", englishName = "French", flagEmoji = "🇫🇷"),
+        SupportedLanguage(code = "en", englishName = "English", flagEmoji = "🇬🇧"),
+        SupportedLanguage(code = "de", englishName = "German", flagEmoji = "🇩🇪"),
+        SupportedLanguage(code = "lb", englishName = "Luxembourgish", flagEmoji = "🇱🇺"),
+    )

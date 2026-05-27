@@ -29,16 +29,16 @@ object Dimens {
     val radiusXs = 6.dp
     val radiusSm = 8.dp
     val radiusMd = 12.dp
-    val radiusAction = 14.dp    // CTA buttons, "see all" outlined button
+    val radiusAction = 14.dp // CTA buttons, "see all" outlined button
     val radiusLg = 16.dp
     val radiusCard = 18.dp
-    val radiusXl = 20.dp        // show-more pill
+    val radiusXl = 20.dp // show-more pill
     val radiusPill = 50.dp
 
     // ── Borders & elevations ─────────────────────────────────────────
     val borderHairline = 0.5.dp
     val borderThin = 1.dp
-    val borderAccent = 1.5.dp   // slot buttons, key-action outlined borders
+    val borderAccent = 1.5.dp // slot buttons, key-action outlined borders
     val borderMedium = 2.dp
     val borderStrong = 3.dp
     val elevationNone = 0.dp
@@ -54,8 +54,8 @@ object Dimens {
 
     // ── Icons ────────────────────────────────────────────────────────
     val iconSizeXxs = 13.dp
-    val iconSizeChevron = 13.dp     // used for "size-3" chevrons / small inline icons
-    val iconSizeMicro = 14.dp       // smallest icon variant
+    val iconSizeChevron = 13.dp // used for "size-3" chevrons / small inline icons
+    val iconSizeMicro = 14.dp // smallest icon variant
     val iconSizeCamera = 15.dp
     val iconSizeSm = 16.dp
     val iconSizeCompact = 18.dp
@@ -84,12 +84,12 @@ object Dimens {
     val drawerSectionVertical = 4.dp
     val drawerSectionTop = 16.dp
     val mapPreviewHeight = 140.dp
-    val detailMapHeight = 160.dp          // static map placeholder in detail contact card
-    val detailAvatarSize = 56.dp          // avatar in PractitionerDetailScreen gradient header
-    val scheduleDayLabelWidth = 80.dp     // fixed-width day name column in schedule table
+    val detailMapHeight = 160.dp // static map placeholder in detail contact card
+    val detailAvatarSize = 56.dp // avatar in PractitionerDetailScreen gradient header
+    val scheduleDayLabelWidth = 80.dp // fixed-width day name column in schedule table
     val timeSlotGridHeight = 120.dp
     val scheduleStripDayWidth = 52.dp
-    val scheduleDayCircleSize = 20.dp  // today-highlight circle in PractitionerCard
+    val scheduleDayCircleSize = 20.dp // today-highlight circle in PractitionerCard
     val progressBarHeight = 4.dp
     val progressBarRadius = 2.dp
     val countryCodeWidth = 110.dp
@@ -110,13 +110,13 @@ object Dimens {
     // ── Font sizes (sp) ──────────────────────────────────────────────
     // Used only when overriding MaterialTheme typography. Prefer applying
     // a TextStyle directly when possible.
-    val fontSizeTiny = 10.sp    // slot buttons, show-more pill, day abbreviations
+    val fontSizeTiny = 10.sp // slot buttons, show-more pill, day abbreviations
     val fontSizeXxs = 11.sp
     val fontSizeXs = 12.sp
     val fontSizeFootnote = 13.sp
     val fontSizeSm = 14.sp
     val fontSizeBase = 15.sp
-    val fontSizeBody = 16.sp    // empty-day dash, booking name
+    val fontSizeBody = 16.sp // empty-day dash, booking name
     val fontSizeMd = 18.sp
     val fontSizeLg = 22.sp
     val letterSpacingWide = 0.8.sp

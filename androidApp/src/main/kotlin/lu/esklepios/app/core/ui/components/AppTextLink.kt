@@ -11,16 +11,16 @@ import lu.esklepios.app.core.ui.theme.*
 fun AppTextLink(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     TextButton(
         onClick = onClick,
         modifier = modifier,
-        contentPadding = PaddingValues(horizontal = Dimens.paddingXS, vertical = Dimens.paddingNone)
+        contentPadding = PaddingValues(horizontal = Dimens.paddingXS, vertical = Dimens.paddingNone),
     ) {
         AppButtonText(
             text = text,
-            color = Primary
+            color = Primary,
         )
     }
 }
@@ -28,11 +28,11 @@ fun AppTextLink(
 @Composable
 fun DividerWithLabel(
     label: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         HorizontalDivider(modifier = Modifier.weight(1f), color = BorderColor)
         AppCaptionText(text = "  $label  ")

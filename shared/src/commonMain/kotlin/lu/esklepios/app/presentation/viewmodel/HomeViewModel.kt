@@ -28,15 +28,14 @@ data class HomeUiState(
     val locationQuery: String = "",
     val selectedDateFilter: String = DateFilter.ALL.apiKey,
     val openToNewPatients: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
 )
 
 class HomeViewModel(
     private val searchPractitionersUseCase: SearchPractitionersUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
-    private val clock: Clock = Clock.System
+    private val clock: Clock = Clock.System,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
@@ -51,15 +50,17 @@ class HomeViewModel(
             val sq = state.specialtyQuery.trim().lowercase()
             val lq = state.locationQuery.trim().lowercase()
             return state.practitioners.filter { p ->
-                val matchSpec = sq.isEmpty() ||
-                    p.specialty.lowercase().contains(sq) ||
-                    p.firstName.lowercase().contains(sq) ||
-                    p.lastName.lowercase().contains(sq) ||
-                    p.clinicName.lowercase().contains(sq)
-                val matchLoc = lq.isEmpty() ||
-                    p.address.lowercase().contains(lq) ||
-                    p.city.lowercase().contains(lq) ||
-                    p.clinicName.lowercase().contains(lq)
+                val matchSpec =
+                    sq.isEmpty() ||
+                        p.specialty.lowercase().contains(sq) ||
+                        p.firstName.lowercase().contains(sq) ||
+                        p.lastName.lowercase().contains(sq) ||
+                        p.clinicName.lowercase().contains(sq)
+                val matchLoc =
+                    lq.isEmpty() ||
+                        p.address.lowercase().contains(lq) ||
+                        p.city.lowercase().contains(lq) ||
+                        p.clinicName.lowercase().contains(lq)
                 matchSpec && matchLoc
             }
         }
@@ -71,15 +72,16 @@ class HomeViewModel(
             searchPractitionersUseCase(state.locationQuery, state.specialtyQuery)
                 .onSuccess { practitioners ->
                     _uiState.update { current ->
-                        val filtered = applyFilters(
-                            practitioners,
-                            current.selectedDateFilter,
-                            current.openToNewPatients
-                        )
+                        val filtered =
+                            applyFilters(
+                                practitioners,
+                                current.selectedDateFilter,
+                                current.openToNewPatients,
+                            )
                         current.copy(
                             isLoading = false,
                             allPractitioners = practitioners,
-                            practitioners = filtered
+                            practitioners = filtered,
                         )
                     }
                 }
@@ -96,29 +98,33 @@ class HomeViewModel(
     private fun applyFilters(
         all: List<Practitioner>,
         dateFilter: String,
-        newPatientsOnly: Boolean
+        newPatientsOnly: Boolean,
     ): List<Practitioner> {
-        val today = clock.now()
-            .toLocalDateTime(TimeZone.currentSystemDefault())
-            .date
+        val today =
+            clock.now()
+                .toLocalDateTime(TimeZone.currentSystemDefault())
+                .date
 
         return all.filter { p ->
             val passesNewPatients = !newPatientsOnly || p.acceptingNewPatients
-            val passesDate = when (dateFilter) {
-                DateFilter.TODAY.apiKey -> p.availableSlots.any { slot ->
-                    slot.available && slot.dateTime.take(10) == today.toString()
-                }
-                DateFilter.WITHIN_3_DAYS.apiKey -> {
-                    p.availableSlots.any { slot ->
-                        if (!slot.available) return@any false
-                        val slotDate = runCatching { LocalDate.parse(slot.dateTime.take(10)) }.getOrNull()
-                            ?: return@any false
-                        val daysAhead = today.daysUntil(slotDate)
-                        daysAhead in 0..3
+            val passesDate =
+                when (dateFilter) {
+                    DateFilter.TODAY.apiKey ->
+                        p.availableSlots.any { slot ->
+                            slot.available && slot.dateTime.take(10) == today.toString()
+                        }
+                    DateFilter.WITHIN_3_DAYS.apiKey -> {
+                        p.availableSlots.any { slot ->
+                            if (!slot.available) return@any false
+                            val slotDate =
+                                runCatching { LocalDate.parse(slot.dateTime.take(10)) }.getOrNull()
+                                    ?: return@any false
+                            val daysAhead = today.daysUntil(slotDate)
+                            daysAhead in 0..3
+                        }
                     }
+                    else -> true // DateFilter.ALL
                 }
-                else -> true // DateFilter.ALL
-            }
             passesNewPatients && passesDate
         }
     }
@@ -129,11 +135,12 @@ class HomeViewModel(
     fun applyFiltersToState() {
         _uiState.update { current ->
             current.copy(
-                practitioners = applyFilters(
-                    current.allPractitioners,
-                    current.selectedDateFilter,
-                    current.openToNewPatients
-                )
+                practitioners =
+                    applyFilters(
+                        current.allPractitioners,
+                        current.selectedDateFilter,
+                        current.openToNewPatients,
+                    ),
             )
         }
     }
@@ -147,6 +154,7 @@ class HomeViewModel(
     }
 
     fun updateSearchQuery(query: String) = onSpecialtyQueryChange(query)
+
     fun updateLocationQuery(location: String) = onLocationQueryChange(location)
 
     fun setDateFilter(filter: String) {
@@ -169,16 +177,18 @@ class HomeViewModel(
             toggleFavoriteUseCase(id)
                 .onSuccess {
                     _uiState.update { state ->
-                        val updatedAll = state.allPractitioners.map { p ->
-                            if (p.id == id) p.copy(isFavorite = !p.isFavorite) else p
-                        }
+                        val updatedAll =
+                            state.allPractitioners.map { p ->
+                                if (p.id == id) p.copy(isFavorite = !p.isFavorite) else p
+                            }
                         state.copy(
                             allPractitioners = updatedAll,
-                            practitioners = applyFilters(
-                                updatedAll,
-                                state.selectedDateFilter,
-                                state.openToNewPatients
-                            )
+                            practitioners =
+                                applyFilters(
+                                    updatedAll,
+                                    state.selectedDateFilter,
+                                    state.openToNewPatients,
+                                ),
                         )
                     }
                 }
@@ -192,7 +202,10 @@ class HomeViewModel(
         _uiState.update { it.copy(error = null) }
     }
 
-    fun search(query: String, location: String) {
+    fun search(
+        query: String,
+        location: String,
+    ) {
         onSpecialtyQueryChange(query)
         onLocationQueryChange(location)
         search()

@@ -12,5 +12,5 @@ package lu.esklepios.app.util
 enum class AvailabilityFilter(val labelKey: String) {
     TODAY("home_filter_today"),
     WITHIN_THREE_DAYS("home_filter_3days"),
-    OPEN_TO_NEW_PATIENTS("home_filter_new_patients");
+    OPEN_TO_NEW_PATIENTS("home_filter_new_patients"),
 }

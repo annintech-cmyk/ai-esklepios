@@ -15,14 +15,13 @@ data class ProfileUiState(
     val isLoading: Boolean = false,
     val user: User? = null,
     val error: String? = null,
-    val isLoggedOut: Boolean = false
+    val isLoggedOut: Boolean = false,
 )
 
 class ProfileViewModel(
     private val getProfileUseCase: GetProfileUseCase,
-    private val logoutUseCase: LogoutUseCase
+    private val logoutUseCase: LogoutUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 

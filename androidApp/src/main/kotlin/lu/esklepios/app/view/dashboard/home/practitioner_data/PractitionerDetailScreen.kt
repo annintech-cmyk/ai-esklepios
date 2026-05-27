@@ -25,10 +25,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
@@ -36,9 +34,7 @@ import lu.esklepios.app.core.ui.components.AppBodyText
 import lu.esklepios.app.core.ui.components.AppCaptionText
 import lu.esklepios.app.core.ui.components.AppIcon
 import lu.esklepios.app.core.ui.components.AppIconButton
-import lu.esklepios.app.core.ui.components.AppLabelText
 import lu.esklepios.app.core.ui.components.AppSubtitleText
-import lu.esklepios.app.core.ui.components.AppTitleText
 import lu.esklepios.app.core.ui.components.AvatarCircle
 import lu.esklepios.app.core.ui.components.GradientHeader
 import lu.esklepios.app.core.ui.sharedElementModifier
@@ -49,7 +45,7 @@ import lu.esklepios.app.util.AppUrls
 @Composable
 fun PractitionerDetailScreen(
     navController: NavController,
-    practitionerId: String
+    practitionerId: String,
 ) {
     val doctor = DummyPractitioners.all.find { it.id == practitionerId }
     val context = LocalContext.current
@@ -57,7 +53,7 @@ fun PractitionerDetailScreen(
     if (doctor == null) {
         Box(
             modifier = Modifier.fillMaxSize().background(Background),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             AppBodyText(
                 text = stringResource(R.string.detail_not_found),
@@ -71,11 +67,11 @@ fun PractitionerDetailScreen(
         GradientHeader(
             roundedBottom = false,
             topPadding = Dimens.paddingNone,
-            bottomPadding = Dimens.paddingNone
+            bottomPadding = Dimens.paddingNone,
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 AppIconButton(
                     icon = Icons.AutoMirrored.Filled.ArrowBack,
@@ -86,22 +82,23 @@ fun PractitionerDetailScreen(
                 Spacer(Modifier.weight(1f))
             }
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = Dimens.paddingL, end = Dimens.paddingL, bottom = Dimens.paddingL),
-                verticalAlignment = Alignment.CenterVertically
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = Dimens.paddingL, end = Dimens.paddingL, bottom = Dimens.paddingL),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 AvatarCircle(
                     initials = doctor.initials,
                     size = Dimens.detailAvatarSize,
-                    modifier = sharedElementModifier("practitioner-avatar-${practitionerId}")
+                    modifier = sharedElementModifier("practitioner-avatar-$practitionerId"),
                 )
                 Spacer(Modifier.width(Dimens.paddingPlus))
                 Column {
                     AppSubtitleText(
                         text = doctor.fullName,
                         color = Color.White,
-                        modifier = sharedElementModifier("practitioner-name-${practitionerId}"),
+                        modifier = sharedElementModifier("practitioner-name-$practitionerId"),
                     )
                     AppCaptionText(
                         text = doctor.specialty,
@@ -112,31 +109,33 @@ fun PractitionerDetailScreen(
         }
 
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Background),
-            contentPadding = PaddingValues(top = Dimens.paddingM)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Background),
+            contentPadding = PaddingValues(top = Dimens.paddingM),
         ) {
-
             // ── Card 1 — Contact details ─────────────────────────────────────
             item {
                 DetailCard {
                     AppSubtitleText(
                         text = stringResource(R.string.detail_contact_details),
                         color = TextPrimary,
-                        modifier = Modifier.padding(
-                            top = Dimens.paddingL,
-                            start = Dimens.paddingL,
-                            end = Dimens.paddingL
-                        ),
+                        modifier =
+                            Modifier.padding(
+                                top = Dimens.paddingL,
+                                start = Dimens.paddingL,
+                                end = Dimens.paddingL,
+                            ),
                     )
                     Row(
-                        modifier = Modifier.padding(
-                            start = Dimens.paddingL,
-                            end = Dimens.paddingL,
-                            top = Dimens.paddingS,
-                            bottom = Dimens.paddingL
-                        )
+                        modifier =
+                            Modifier.padding(
+                                start = Dimens.paddingL,
+                                end = Dimens.paddingL,
+                                top = Dimens.paddingS,
+                                bottom = Dimens.paddingL,
+                            ),
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             AppCaptionText(
@@ -182,11 +181,12 @@ fun PractitionerDetailScreen(
                             Spacer(Modifier.height(Dimens.paddingXS))
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.clickable {
-                                    context.startActivity(
-                                        Intent(Intent.ACTION_DIAL, Uri.parse("tel:${doctor.phone}"))
-                                    )
-                                }
+                                modifier =
+                                    Modifier.clickable {
+                                        context.startActivity(
+                                            Intent(Intent.ACTION_DIAL, Uri.parse("tel:${doctor.phone}")),
+                                        )
+                                    },
                             ) {
                                 AppIcon(
                                     imageVector = Icons.Filled.Phone,
@@ -200,13 +200,14 @@ fun PractitionerDetailScreen(
                             Spacer(Modifier.height(Dimens.paddingS))
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.clickable {
-                                    context.startActivity(
-                                        Intent(Intent.ACTION_SENDTO).apply {
-                                            data = Uri.parse("mailto:${doctor.email}")
-                                        }
-                                    )
-                                }
+                                modifier =
+                                    Modifier.clickable {
+                                        context.startActivity(
+                                            Intent(Intent.ACTION_SENDTO).apply {
+                                                data = Uri.parse("mailto:${doctor.email}")
+                                            },
+                                        )
+                                    },
                             ) {
                                 AppIcon(
                                     imageVector = Icons.Filled.Email,
@@ -223,12 +224,13 @@ fun PractitionerDetailScreen(
 
                         Column(modifier = Modifier.weight(1f)) {
                             Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(Dimens.detailMapHeight)
-                                    .clip(RoundedCornerShape(Dimens.radiusSm))
-                                    .background(PrimaryLight),
-                                contentAlignment = Alignment.Center
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .height(Dimens.detailMapHeight)
+                                        .clip(RoundedCornerShape(Dimens.radiusSm))
+                                        .background(PrimaryLight),
+                                contentAlignment = Alignment.Center,
                             ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     AppIcon(
@@ -256,19 +258,21 @@ fun PractitionerDetailScreen(
                     AppCaptionText(
                         text = stringResource(R.string.detail_schedules_header),
                         color = TextPrimary,
-                        modifier = Modifier.padding(
-                            top = Dimens.paddingL,
-                            start = Dimens.paddingL,
-                            end = Dimens.paddingL
-                        ),
+                        modifier =
+                            Modifier.padding(
+                                top = Dimens.paddingL,
+                                start = Dimens.paddingL,
+                                end = Dimens.paddingL,
+                            ),
                     )
                     Row(
-                        modifier = Modifier.padding(
-                            start = Dimens.paddingL,
-                            end = Dimens.paddingL,
-                            top = Dimens.paddingS,
-                            bottom = Dimens.paddingL
-                        )
+                        modifier =
+                            Modifier.padding(
+                                start = Dimens.paddingL,
+                                end = Dimens.paddingL,
+                                top = Dimens.paddingS,
+                                bottom = Dimens.paddingL,
+                            ),
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             if (doctor.schedule.isEmpty()) {
@@ -309,29 +313,31 @@ fun PractitionerDetailScreen(
                                 // UI-14 exemption: buildAnnotatedString requires raw `Text(annotated)` —
                                 // annotated strings cannot be wrapped in AppText components.
                                 Text(
-                                    text = buildAnnotatedString {
-                                        append(stringResource(R.string.detail_emergency_prefix))
-                                        append(" ")
-                                        withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                                            append(stringResource(R.string.detail_emergency_number))
-                                        }
-                                    },
+                                    text =
+                                        buildAnnotatedString {
+                                            append(stringResource(R.string.detail_emergency_prefix))
+                                            append(" ")
+                                            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                                append(stringResource(R.string.detail_emergency_number))
+                                            }
+                                        },
                                     fontSize = Dimens.fontSizeXxs,
-                                    color = TextPrimary
+                                    color = TextPrimary,
                                 )
                             }
                             Spacer(Modifier.height(Dimens.paddingTiny))
                             AppCaptionText(
                                 text = stringResource(R.string.detail_emergency_subtitle),
                                 color = Primary,
-                                modifier = Modifier.clickable {
-                                    context.startActivity(
-                                        Intent(
-                                            Intent.ACTION_VIEW,
-                                            Uri.parse(AppUrls.HEALTH_PORTAL)
+                                modifier =
+                                    Modifier.clickable {
+                                        context.startActivity(
+                                            Intent(
+                                                Intent.ACTION_VIEW,
+                                                Uri.parse(AppUrls.HEALTH_PORTAL),
+                                            ),
                                         )
-                                    )
-                                },
+                                    },
                             )
                         }
                     }
@@ -344,20 +350,22 @@ fun PractitionerDetailScreen(
                     AppSubtitleText(
                         text = stringResource(R.string.detail_payments),
                         color = TextPrimary,
-                        modifier = Modifier.padding(
-                            top = Dimens.paddingL,
-                            start = Dimens.paddingL,
-                            end = Dimens.paddingL
-                        ),
+                        modifier =
+                            Modifier.padding(
+                                top = Dimens.paddingL,
+                                start = Dimens.paddingL,
+                                end = Dimens.paddingL,
+                            ),
                     )
                     AppCaptionText(
                         text = stringResource(R.string.detail_means_of_payment),
                         color = TextPrimary,
-                        modifier = Modifier.padding(
-                            top = Dimens.paddingS,
-                            start = Dimens.paddingL,
-                            end = Dimens.paddingL
-                        ),
+                        modifier =
+                            Modifier.padding(
+                                top = Dimens.paddingS,
+                                start = Dimens.paddingL,
+                                end = Dimens.paddingL,
+                            ),
                     )
                     if (doctor.paymentMethods.isEmpty()) {
                         AppBodyText(
@@ -367,22 +375,24 @@ fun PractitionerDetailScreen(
                         )
                     } else {
                         Column(
-                            modifier = Modifier.padding(
-                                start = Dimens.paddingL,
-                                end = Dimens.paddingL,
-                                top = Dimens.paddingS,
-                                bottom = Dimens.paddingL
-                            )
+                            modifier =
+                                Modifier.padding(
+                                    start = Dimens.paddingL,
+                                    end = Dimens.paddingL,
+                                    top = Dimens.paddingS,
+                                    bottom = Dimens.paddingL,
+                                ),
                         ) {
                             doctor.paymentMethods.forEach { method ->
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.padding(bottom = Dimens.paddingTiny)
+                                    modifier = Modifier.padding(bottom = Dimens.paddingTiny),
                                 ) {
                                     Box(
-                                        modifier = Modifier
-                                            .size(Dimens.paddingTiny)
-                                            .background(TextSecondary, CircleShape)
+                                        modifier =
+                                            Modifier
+                                                .size(Dimens.paddingTiny)
+                                                .background(TextSecondary, CircleShape),
                                     )
                                     Spacer(Modifier.width(Dimens.paddingS))
                                     AppCaptionText(
@@ -402,11 +412,12 @@ fun PractitionerDetailScreen(
                     AppSubtitleText(
                         text = stringResource(R.string.detail_presentation),
                         color = TextPrimary,
-                        modifier = Modifier.padding(
-                            top = Dimens.paddingL,
-                            start = Dimens.paddingL,
-                            end = Dimens.paddingL
-                        ),
+                        modifier =
+                            Modifier.padding(
+                                top = Dimens.paddingL,
+                                start = Dimens.paddingL,
+                                end = Dimens.paddingL,
+                            ),
                     )
                     if (doctor.diplomas.isEmpty() && doctor.presentation.isBlank()) {
                         AppBodyText(
@@ -419,21 +430,23 @@ fun PractitionerDetailScreen(
                             AppCaptionText(
                                 text = stringResource(R.string.detail_diplomas_label),
                                 color = TextPrimary,
-                                modifier = Modifier.padding(
-                                    horizontal = Dimens.paddingL,
-                                    vertical = Dimens.paddingS
-                                ),
+                                modifier =
+                                    Modifier.padding(
+                                        horizontal = Dimens.paddingL,
+                                        vertical = Dimens.paddingS,
+                                    ),
                             )
                             Column(modifier = Modifier.padding(horizontal = Dimens.paddingL)) {
                                 doctor.diplomas.forEach { diploma ->
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
-                                        modifier = Modifier.padding(bottom = Dimens.paddingTiny)
+                                        modifier = Modifier.padding(bottom = Dimens.paddingTiny),
                                     ) {
                                         Box(
-                                            modifier = Modifier
-                                                .size(Dimens.paddingTiny)
-                                                .background(TextSecondary, CircleShape)
+                                            modifier =
+                                                Modifier
+                                                    .size(Dimens.paddingTiny)
+                                                    .background(TextSecondary, CircleShape),
                                         )
                                         Spacer(Modifier.width(Dimens.paddingS))
                                         AppCaptionText(
@@ -449,11 +462,12 @@ fun PractitionerDetailScreen(
                             AppCaptionText(
                                 text = doctor.presentation,
                                 color = TextSecondary,
-                                modifier = Modifier.padding(
-                                    start = Dimens.paddingL,
-                                    end = Dimens.paddingL,
-                                    bottom = Dimens.paddingL
-                                ),
+                                modifier =
+                                    Modifier.padding(
+                                        start = Dimens.paddingL,
+                                        end = Dimens.paddingL,
+                                        bottom = Dimens.paddingL,
+                                    ),
                             )
                         } else {
                             Spacer(Modifier.height(Dimens.paddingM))
@@ -474,10 +488,11 @@ private fun DetailCard(content: @Composable ColumnScope.() -> Unit) {
         colors = CardDefaults.cardColors(containerColor = Surface),
         border = BorderStroke(Dimens.borderHairline, BorderColor),
         elevation = CardDefaults.cardElevation(defaultElevation = Dimens.cardElevation),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = Dimens.paddingM)
-            .padding(bottom = Dimens.paddingM)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = Dimens.paddingM)
+                .padding(bottom = Dimens.paddingM),
     ) {
         Column(content = content)
     }

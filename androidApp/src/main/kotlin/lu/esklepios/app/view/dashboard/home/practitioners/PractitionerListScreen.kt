@@ -22,40 +22,43 @@ import lu.esklepios.app.core.ui.theme.*
 import lu.esklepios.app.presentation.viewmodel.HomeViewModel
 import lu.esklepios.app.util.DateFilter
 import lu.esklepios.app.view.dashboard.home.HomePractitionerCard
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PractitionerListScreen(
     navController: NavController,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val dateFilters = DateFilter.entries.map { filter ->
-        val resId = when (filter) {
-            DateFilter.ALL           -> R.string.home_filter_all
-            DateFilter.TODAY         -> R.string.home_filter_today
-            DateFilter.WITHIN_3_DAYS -> R.string.home_filter_3days
+    val dateFilters =
+        DateFilter.entries.map { filter ->
+            val resId =
+                when (filter) {
+                    DateFilter.ALL -> R.string.home_filter_all
+                    DateFilter.TODAY -> R.string.home_filter_today
+                    DateFilter.WITHIN_3_DAYS -> R.string.home_filter_3days
+                }
+            filter.apiKey to stringResource(resId)
         }
-        filter.apiKey to stringResource(resId)
-    }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Background)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(Background),
     ) {
         AppToolbar(
             title = stringResource(R.string.screen_practitioner_list),
-            onNavigateBack = { navController.popBackStack() }
+            onNavigateBack = { navController.popBackStack() },
         )
 
         // ── Date filter segmented control ────────────────────────────────
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Surface)
-                .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(Surface)
+                    .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
         ) {
             SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
                 dateFilters.forEachIndexed { index, (key, label) ->
@@ -63,15 +66,16 @@ fun PractitionerListScreen(
                         selected = uiState.selectedDateFilter == key,
                         onClick = { viewModel.setDateFilter(key) },
                         shape = SegmentedButtonDefaults.itemShape(index = index, count = dateFilters.size),
-                        colors = SegmentedButtonDefaults.colors(
-                            activeContainerColor = Primary,
-                            activeContentColor = Color.White,
-                            activeBorderColor = Primary,
-                            inactiveContainerColor = Surface,
-                            inactiveContentColor = TextSecondary,
-                            inactiveBorderColor = BorderColor
-                        ),
-                        icon = {}
+                        colors =
+                            SegmentedButtonDefaults.colors(
+                                activeContainerColor = Primary,
+                                activeContentColor = Color.White,
+                                activeBorderColor = Primary,
+                                inactiveContainerColor = Surface,
+                                inactiveContentColor = TextSecondary,
+                                inactiveBorderColor = BorderColor,
+                            ),
+                        icon = {},
                     ) {
                         AppLabelText(text = label, color = Color.Unspecified)
                     }
@@ -81,26 +85,28 @@ fun PractitionerListScreen(
 
         // ── "Open to New Patients" toggle ────────────────────────────────
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Surface)
-                .padding(horizontal = Dimens.paddingL)
-                .padding(bottom = Dimens.paddingM)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(Surface)
+                    .padding(horizontal = Dimens.paddingL)
+                    .padding(bottom = Dimens.paddingM),
         ) {
             PractitionerListNewPatientsToggle(
                 checked = uiState.openToNewPatients,
                 label = stringResource(R.string.home_filter_new_patients),
-                onToggle = { viewModel.toggleNewPatientsFilter() }
+                onToggle = { viewModel.toggleNewPatientsFilter() },
             )
         }
 
         // ── Section header ───────────────────────────────────────────────
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingXS),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingXS),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             AppSubtitleText(
                 text = stringResource(R.string.home_nearby_label),
@@ -113,45 +119,47 @@ fun PractitionerListScreen(
         // ── Content ──────────────────────────────────────────────────────
         when {
             uiState.isLoading -> LoadingIndicator()
-            uiState.error != null -> ErrorView(
-                message = stringResource(R.string.error_generic),
-                onRetry = { viewModel.refresh() }
-            )
+            uiState.error != null ->
+                ErrorView(
+                    message = stringResource(R.string.error_generic),
+                    onRetry = { viewModel.refresh() },
+                )
             uiState.practitioners.isEmpty() -> {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    contentAlignment = Alignment.Center
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                    contentAlignment = Alignment.Center,
                 ) {
                     EmptyStateView(
                         icon = Icons.Filled.Search,
                         title = stringResource(R.string.home_no_results_title),
                         subtitle = stringResource(R.string.home_no_results_subtitle),
                         actionLabel = stringResource(R.string.home_clear_filters),
-                        onAction = { viewModel.setDateFilter(DateFilter.ALL.apiKey) }
+                        onAction = { viewModel.setDateFilter(DateFilter.ALL.apiKey) },
                     )
                 }
             }
             else -> {
                 LazyColumn(
                     contentPadding = PaddingValues(vertical = Dimens.paddingS),
-                    verticalArrangement = Arrangement.spacedBy(Dimens.paddingM)
+                    verticalArrangement = Arrangement.spacedBy(Dimens.paddingM),
                 ) {
                     items(uiState.practitioners, key = { it.id }) { practitioner ->
                         HomePractitionerCard(
                             practitioner = practitioner,
                             onBook = { slotId ->
                                 navController.navigate(
-                                    NavDestination.Booking.createRoute(practitioner.id, slotId)
+                                    NavDestination.Booking.createRoute(practitioner.id, slotId),
                                 )
                             },
                             onSeeProfile = {
                                 navController.navigate(
-                                    NavDestination.PractitionerDetail.createRoute(practitioner.id)
+                                    NavDestination.PractitionerDetail.createRoute(practitioner.id),
                                 )
                             },
-                            modifier = Modifier.padding(horizontal = Dimens.paddingL)
+                            modifier = Modifier.padding(horizontal = Dimens.paddingL),
                         )
                     }
                 }
@@ -164,24 +172,25 @@ fun PractitionerListScreen(
 private fun PractitionerListNewPatientsToggle(
     checked: Boolean,
     label: String,
-    onToggle: () -> Unit
+    onToggle: () -> Unit,
 ) {
     Row(
         modifier = Modifier.clickable(onClick = onToggle),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(
             checked = checked,
             onCheckedChange = { onToggle() },
-            colors = CheckboxDefaults.colors(
-                checkedColor = Primary,
-                uncheckedColor = TextHint,
-                checkmarkColor = Color.White
-            )
+            colors =
+                CheckboxDefaults.colors(
+                    checkedColor = Primary,
+                    uncheckedColor = TextHint,
+                    checkmarkColor = Color.White,
+                ),
         )
         AppCaptionText(
             text = label,
-            color = if (checked) TextPrimary else TextSecondary
+            color = if (checked) TextPrimary else TextSecondary,
         )
     }
 }

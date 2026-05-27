@@ -8,21 +8,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
-import lu.esklepios.app.presentation.viewmodel.SplashViewModel
 import lu.esklepios.app.core.navigation.NavDestination
 import lu.esklepios.app.core.ui.components.AppBodyText
 import lu.esklepios.app.core.ui.components.AppTitleText
 import lu.esklepios.app.core.ui.theme.Dimens
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import lu.esklepios.app.core.ui.theme.Gradients
+import lu.esklepios.app.presentation.viewmodel.SplashViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SplashScreen(
     navController: NavController,
-    viewModel: SplashViewModel = koinViewModel()
+    viewModel: SplashViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -43,30 +43,32 @@ fun SplashScreen(
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Gradients.primaryBrush)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(Gradients.primaryBrush),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .safeDrawingPadding(),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .safeDrawingPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             AppTitleText(
                 text = stringResource(R.string.app_name),
-                color = Color.White
+                color = Color.White,
             )
             Spacer(Modifier.height(Dimens.paddingS))
             AppBodyText(
                 text = stringResource(R.string.landing_tagline),
-                color = Color.White.copy(alpha = 0.7f)
+                color = Color.White.copy(alpha = 0.7f),
             )
             Spacer(Modifier.height(Dimens.paddingXXXL + Dimens.paddingL))
             CircularProgressIndicator(
                 color = Color.White,
-                modifier = Modifier.size(Dimens.paddingXXXL)
+                modifier = Modifier.size(Dimens.paddingXXXL),
             )
         }
     }

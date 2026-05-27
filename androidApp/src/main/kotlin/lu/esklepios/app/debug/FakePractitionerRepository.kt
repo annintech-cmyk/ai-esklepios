@@ -9,22 +9,24 @@ import lu.esklepios.app.domain.repository.PractitionerRepository
  * when the API is available.
  */
 class FakePractitionerRepository : PractitionerRepository {
-
     override suspend fun searchPractitioners(
         location: String,
         specialty: String,
         page: Int,
-        limit: Int
+        limit: Int,
     ): Result<List<Practitioner>> {
-        val results = DummyPractitioners.all.filter { practitioner ->
-            val matchesLocation = location.isBlank() ||
-                practitioner.city.contains(location, ignoreCase = true) ||
-                practitioner.address.contains(location, ignoreCase = true)
-            val matchesSpecialty = specialty.isBlank() ||
-                practitioner.specialty.contains(specialty, ignoreCase = true) ||
-                practitioner.fullName.contains(specialty, ignoreCase = true)
-            matchesLocation && matchesSpecialty
-        }
+        val results =
+            DummyPractitioners.all.filter { practitioner ->
+                val matchesLocation =
+                    location.isBlank() ||
+                        practitioner.city.contains(location, ignoreCase = true) ||
+                        practitioner.address.contains(location, ignoreCase = true)
+                val matchesSpecialty =
+                    specialty.isBlank() ||
+                        practitioner.specialty.contains(specialty, ignoreCase = true) ||
+                        practitioner.fullName.contains(specialty, ignoreCase = true)
+                matchesLocation && matchesSpecialty
+            }
         return Result.success(results)
     }
 
@@ -37,6 +39,5 @@ class FakePractitionerRepository : PractitionerRepository {
         }
     }
 
-    override suspend fun toggleFavorite(practitionerId: String): Result<Unit> =
-        Result.success(Unit)
+    override suspend fun toggleFavorite(practitionerId: String): Result<Unit> = Result.success(Unit)
 }

@@ -26,7 +26,7 @@ fun AppFormScreen(
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     horizontalPadding: Dp = Dimens.paddingXL,
     bottomBar: @Composable () -> Unit = {},
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     LaunchedEffect(error) {
         error?.let {
@@ -38,22 +38,24 @@ fun AppFormScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = Background,
-        bottomBar = bottomBar
+        bottomBar = bottomBar,
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Background)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Background),
         ) {
             AppToolbar(title = title, onNavigateBack = onNavigateBack)
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = horizontalPadding)
-                    .padding(bottom = innerPadding.calculateBottomPadding()),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(horizontal = horizontalPadding)
+                        .padding(bottom = innerPadding.calculateBottomPadding()),
                 horizontalAlignment = horizontalAlignment,
-                content = content
+                content = content,
             )
         }
     }

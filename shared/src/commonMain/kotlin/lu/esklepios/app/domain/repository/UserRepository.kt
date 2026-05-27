@@ -7,7 +7,13 @@ interface UserRepository {
 
     suspend fun updateProfile(user: User): Result<User>
 
-    suspend fun changeEmail(newEmail: String, password: String): Result<Unit>
+    suspend fun changeEmail(
+        newEmail: String,
+        password: String,
+    ): Result<Unit>
 
-    suspend fun changePassword(oldPassword: String, newPassword: String): Result<Unit>
+    suspend fun changePassword(
+        oldPassword: String,
+        newPassword: String,
+    ): Result<Unit>
 }

@@ -6,8 +6,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import lu.esklepios.app.data.network.ApiService
-import lu.esklepios.app.data.network.toDomain
 import lu.esklepios.app.data.network.toCreateRequest
+import lu.esklepios.app.data.network.toDomain
 import lu.esklepios.app.data.network.toModifyRequest
 import lu.esklepios.app.db.ESklepiosDatabase
 import lu.esklepios.app.domain.model.Appointment
@@ -16,9 +16,8 @@ import lu.esklepios.app.domain.repository.AppointmentRepository
 
 class AppointmentRepositoryImpl(
     private val apiService: ApiService,
-    private val database: ESklepiosDatabase
+    private val database: ESklepiosDatabase,
 ) : AppointmentRepository {
-
     override suspend fun createAppointment(appointment: Appointment): Result<Appointment> {
         return apiService.createAppointment(appointment.toCreateRequest())
             .map { dto ->
@@ -37,9 +36,10 @@ class AppointmentRepositoryImpl(
 
     override suspend fun getUpcomingAppointments(userId: String): Result<List<Appointment>> {
         return runCatching {
-            val upcoming = database.appointmentsQueries.selectUpcoming()
-                .executeAsList()
-                .map { it.toDomain() }
+            val upcoming =
+                database.appointmentsQueries.selectUpcoming()
+                    .executeAsList()
+                    .map { it.toDomain() }
 
             // Refresh from API in background
             apiService.getAppointments(userId).onSuccess { dtos ->
@@ -71,7 +71,7 @@ class AppointmentRepositoryImpl(
         return apiService.cancelAppointment(id).onSuccess {
             database.appointmentsQueries.updateStatus(
                 status = AppointmentStatus.CANCELLED.name,
-                id = id
+                id = id,
             )
         }
     }
@@ -86,19 +86,20 @@ class AppointmentRepositoryImpl(
             dateTime = appointment.dateTime,
             status = appointment.status.name,
             messageToDoctor = appointment.messageToDoctor,
-            consultationReason = appointment.consultationReason
+            consultationReason = appointment.consultationReason,
         )
     }
 
-    private fun lu.esklepios.app.db.AppointmentEntity.toDomain(): Appointment = Appointment(
-        id = id,
-        practitionerId = practitionerId,
-        practitionerName = practitionerName,
-        clinicName = clinicName,
-        specialty = specialty,
-        dateTime = dateTime,
-        status = AppointmentStatus.fromString(status),
-        messageToDoctor = messageToDoctor,
-        consultationReason = consultationReason
-    )
+    private fun lu.esklepios.app.db.AppointmentEntity.toDomain(): Appointment =
+        Appointment(
+            id = id,
+            practitionerId = practitionerId,
+            practitionerName = practitionerName,
+            clinicName = clinicName,
+            specialty = specialty,
+            dateTime = dateTime,
+            status = AppointmentStatus.fromString(status),
+            messageToDoctor = messageToDoctor,
+            consultationReason = consultationReason,
+        )
 }

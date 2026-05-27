@@ -46,7 +46,9 @@ class SplashViewModelTest {
         viewModel = SplashViewModel(repo)
     }
 
-    @AfterTest fun tearDown() { Dispatchers.resetMain() }
+    @AfterTest fun tearDown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
     fun `initial state has isLoading true`() {
@@ -54,24 +56,26 @@ class SplashViewModelTest {
     }
 
     @Test
-    fun `checkAuth sets authenticated when token present`() = runTest {
-        repo.loggedIn = true
-        viewModel.checkAuth()
-        dispatcher.scheduler.advanceUntilIdle()
-        val state = viewModel.uiState.value
-        assertFalse(state.isLoading)
-        assertTrue(state.isAuthenticated)
-    }
+    fun `checkAuth sets authenticated when token present`() =
+        runTest {
+            repo.loggedIn = true
+            viewModel.checkAuth()
+            dispatcher.scheduler.advanceUntilIdle()
+            val state = viewModel.uiState.value
+            assertFalse(state.isLoading)
+            assertTrue(state.isAuthenticated)
+        }
 
     @Test
-    fun `checkAuth sets not authenticated when no token`() = runTest {
-        repo.loggedIn = false
-        viewModel.checkAuth()
-        dispatcher.scheduler.advanceUntilIdle()
-        val state = viewModel.uiState.value
-        assertFalse(state.isLoading)
-        assertFalse(state.isAuthenticated)
-    }
+    fun `checkAuth sets not authenticated when no token`() =
+        runTest {
+            repo.loggedIn = false
+            viewModel.checkAuth()
+            dispatcher.scheduler.advanceUntilIdle()
+            val state = viewModel.uiState.value
+            assertFalse(state.isLoading)
+            assertFalse(state.isAuthenticated)
+        }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -83,35 +87,40 @@ class PractitionerDetailViewModelTest {
     @BeforeTest fun setUp() {
         Dispatchers.setMain(dispatcher)
         practRepo = FakePractRepoV()
-        viewModel = PractitionerDetailViewModel(
-            GetPractitionerDetailUseCase(practRepo),
-            ToggleFavoriteUseCase(practRepo)
-        )
+        viewModel =
+            PractitionerDetailViewModel(
+                GetPractitionerDetailUseCase(practRepo),
+                ToggleFavoriteUseCase(practRepo),
+            )
     }
 
-    @AfterTest fun tearDown() { Dispatchers.resetMain() }
-
-    @Test
-    fun `loadPractitioner success populates state`() = runTest {
-        viewModel.loadPractitioner("p1")
-        dispatcher.scheduler.advanceUntilIdle()
-        val state = viewModel.uiState.value
-        assertFalse(state.isLoading)
-        assertNotNull(state.practitioner)
-        assertEquals("p1", state.practitioner?.id)
-        assertNull(state.error)
+    @AfterTest fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun `loadPractitioner failure sets error`() = runTest {
-        practRepo.getByIdResult = Result.failure(Exception("not found"))
-        viewModel.loadPractitioner("p99")
-        dispatcher.scheduler.advanceUntilIdle()
-        val state = viewModel.uiState.value
-        assertFalse(state.isLoading)
-        assertNull(state.practitioner)
-        assertNotNull(state.error)
-    }
+    fun `loadPractitioner success populates state`() =
+        runTest {
+            viewModel.loadPractitioner("p1")
+            dispatcher.scheduler.advanceUntilIdle()
+            val state = viewModel.uiState.value
+            assertFalse(state.isLoading)
+            assertNotNull(state.practitioner)
+            assertEquals("p1", state.practitioner?.id)
+            assertNull(state.error)
+        }
+
+    @Test
+    fun `loadPractitioner failure sets error`() =
+        runTest {
+            practRepo.getByIdResult = Result.failure(Exception("not found"))
+            viewModel.loadPractitioner("p99")
+            dispatcher.scheduler.advanceUntilIdle()
+            val state = viewModel.uiState.value
+            assertFalse(state.isLoading)
+            assertNull(state.practitioner)
+            assertNotNull(state.error)
+        }
 
     @Test
     fun `selectSlot updates selectedSlot`() {
@@ -121,26 +130,28 @@ class PractitionerDetailViewModelTest {
     }
 
     @Test
-    fun `toggleFavorite flips isFavorite on success`() = runTest {
-        viewModel.loadPractitioner("p1")
-        dispatcher.scheduler.advanceUntilIdle()
-        val initial = viewModel.uiState.value.isFavorite
+    fun `toggleFavorite flips isFavorite on success`() =
+        runTest {
+            viewModel.loadPractitioner("p1")
+            dispatcher.scheduler.advanceUntilIdle()
+            val initial = viewModel.uiState.value.isFavorite
 
-        viewModel.toggleFavorite()
-        dispatcher.scheduler.advanceUntilIdle()
-        assertEquals(!initial, viewModel.uiState.value.isFavorite)
-    }
+            viewModel.toggleFavorite()
+            dispatcher.scheduler.advanceUntilIdle()
+            assertEquals(!initial, viewModel.uiState.value.isFavorite)
+        }
 
     @Test
-    fun `clearError resets error field`() = runTest {
-        practRepo.getByIdResult = Result.failure(Exception("err"))
-        viewModel.loadPractitioner("p99")
-        dispatcher.scheduler.advanceUntilIdle()
-        assertNotNull(viewModel.uiState.value.error)
+    fun `clearError resets error field`() =
+        runTest {
+            practRepo.getByIdResult = Result.failure(Exception("err"))
+            viewModel.loadPractitioner("p99")
+            dispatcher.scheduler.advanceUntilIdle()
+            assertNotNull(viewModel.uiState.value.error)
 
-        viewModel.clearError()
-        assertNull(viewModel.uiState.value.error)
-    }
+            viewModel.clearError()
+            assertNull(viewModel.uiState.value.error)
+        }
 }
 
 class AppointmentSuccessViewModelTest {
@@ -182,43 +193,49 @@ class EditProfileViewModelTest {
         viewModel = EditProfileViewModel(GetProfileUseCase(userRepo), UpdateProfileUseCase(userRepo))
     }
 
-    @AfterTest fun tearDown() { Dispatchers.resetMain() }
-
-    @Test
-    fun `init loads profile and populates fields`() = runTest {
-        dispatcher.scheduler.advanceUntilIdle()
-        val state = viewModel.uiState.value
-        assertFalse(state.isLoading)
-        assertEquals("Anna", state.firstName)
-        assertEquals("Test", state.lastName)
+    @AfterTest fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun `init load failure sets error`() = runTest {
-        userRepo.profileResult = Result.failure(Exception("unauthenticated"))
-        viewModel = EditProfileViewModel(GetProfileUseCase(userRepo), UpdateProfileUseCase(userRepo))
-        dispatcher.scheduler.advanceUntilIdle()
-        assertNotNull(viewModel.uiState.value.error)
-    }
+    fun `init loads profile and populates fields`() =
+        runTest {
+            dispatcher.scheduler.advanceUntilIdle()
+            val state = viewModel.uiState.value
+            assertFalse(state.isLoading)
+            assertEquals("Anna", state.firstName)
+            assertEquals("Test", state.lastName)
+        }
 
     @Test
-    fun `save success sets isSaved`() = runTest {
-        dispatcher.scheduler.advanceUntilIdle()
-        viewModel.save()
-        dispatcher.scheduler.advanceUntilIdle()
-        assertTrue(viewModel.uiState.value.isSaved)
-        assertNull(viewModel.uiState.value.error)
-    }
+    fun `init load failure sets error`() =
+        runTest {
+            userRepo.profileResult = Result.failure(Exception("unauthenticated"))
+            viewModel = EditProfileViewModel(GetProfileUseCase(userRepo), UpdateProfileUseCase(userRepo))
+            dispatcher.scheduler.advanceUntilIdle()
+            assertNotNull(viewModel.uiState.value.error)
+        }
 
     @Test
-    fun `save failure sets error`() = runTest {
-        dispatcher.scheduler.advanceUntilIdle()
-        userRepo.updateResult = Result.failure(Exception("server error"))
-        viewModel.save()
-        dispatcher.scheduler.advanceUntilIdle()
-        assertNotNull(viewModel.uiState.value.error)
-        assertFalse(viewModel.uiState.value.isSaved)
-    }
+    fun `save success sets isSaved`() =
+        runTest {
+            dispatcher.scheduler.advanceUntilIdle()
+            viewModel.save()
+            dispatcher.scheduler.advanceUntilIdle()
+            assertTrue(viewModel.uiState.value.isSaved)
+            assertNull(viewModel.uiState.value.error)
+        }
+
+    @Test
+    fun `save failure sets error`() =
+        runTest {
+            dispatcher.scheduler.advanceUntilIdle()
+            userRepo.updateResult = Result.failure(Exception("server error"))
+            viewModel.save()
+            dispatcher.scheduler.advanceUntilIdle()
+            assertNotNull(viewModel.uiState.value.error)
+            assertFalse(viewModel.uiState.value.isSaved)
+        }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -233,7 +250,9 @@ class ChangeEmailViewModelTest {
         viewModel = ChangeEmailViewModel(ChangeEmailUseCase(userRepo))
     }
 
-    @AfterTest fun tearDown() { Dispatchers.resetMain() }
+    @AfterTest fun tearDown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
     fun `changeEmail with empty new email sets error`() {
@@ -258,25 +277,27 @@ class ChangeEmailViewModelTest {
     }
 
     @Test
-    fun `changeEmail success sets isSuccess`() = runTest {
-        viewModel.updateNewEmail("new@test.lu")
-        viewModel.updateConfirmEmail("new@test.lu")
-        viewModel.changeEmail()
-        dispatcher.scheduler.advanceUntilIdle()
-        assertTrue(viewModel.uiState.value.isSuccess)
-        assertNull(viewModel.uiState.value.error)
-    }
+    fun `changeEmail success sets isSuccess`() =
+        runTest {
+            viewModel.updateNewEmail("new@test.lu")
+            viewModel.updateConfirmEmail("new@test.lu")
+            viewModel.changeEmail()
+            dispatcher.scheduler.advanceUntilIdle()
+            assertTrue(viewModel.uiState.value.isSuccess)
+            assertNull(viewModel.uiState.value.error)
+        }
 
     @Test
-    fun `changeEmail failure sets error`() = runTest {
-        userRepo.changeEmailResult = Result.failure(Exception("wrong password"))
-        viewModel.updateNewEmail("new@test.lu")
-        viewModel.updateConfirmEmail("new@test.lu")
-        viewModel.changeEmail()
-        dispatcher.scheduler.advanceUntilIdle()
-        assertFalse(viewModel.uiState.value.isSuccess)
-        assertNotNull(viewModel.uiState.value.error)
-    }
+    fun `changeEmail failure sets error`() =
+        runTest {
+            userRepo.changeEmailResult = Result.failure(Exception("wrong password"))
+            viewModel.updateNewEmail("new@test.lu")
+            viewModel.updateConfirmEmail("new@test.lu")
+            viewModel.changeEmail()
+            dispatcher.scheduler.advanceUntilIdle()
+            assertFalse(viewModel.uiState.value.isSuccess)
+            assertNotNull(viewModel.uiState.value.error)
+        }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -291,7 +312,9 @@ class ChangePasswordViewModelTest {
         viewModel = ChangePasswordViewModel(ChangePasswordUseCase(userRepo))
     }
 
-    @AfterTest fun tearDown() { Dispatchers.resetMain() }
+    @AfterTest fun tearDown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
     fun `changePassword with blank old password sets error`() {
@@ -318,55 +341,72 @@ class ChangePasswordViewModelTest {
     }
 
     @Test
-    fun `changePassword success sets isSuccess`() = runTest {
-        viewModel.updateOldPassword("oldPass")
-        viewModel.updateNewPassword("newPass123!")
-        viewModel.updateConfirmPassword("newPass123!")
-        viewModel.changePassword()
-        dispatcher.scheduler.advanceUntilIdle()
-        assertTrue(viewModel.uiState.value.isSuccess)
-        assertNull(viewModel.uiState.value.error)
-    }
+    fun `changePassword success sets isSuccess`() =
+        runTest {
+            viewModel.updateOldPassword("oldPass")
+            viewModel.updateNewPassword("newPass123!")
+            viewModel.updateConfirmPassword("newPass123!")
+            viewModel.changePassword()
+            dispatcher.scheduler.advanceUntilIdle()
+            assertTrue(viewModel.uiState.value.isSuccess)
+            assertNull(viewModel.uiState.value.error)
+        }
 
     @Test
-    fun `changePassword failure sets error`() = runTest {
-        userRepo.changePasswordResult = Result.failure(Exception("wrong old password"))
-        viewModel.updateOldPassword("wrong")
-        viewModel.updateNewPassword("newPass123!")
-        viewModel.updateConfirmPassword("newPass123!")
-        viewModel.changePassword()
-        dispatcher.scheduler.advanceUntilIdle()
-        assertFalse(viewModel.uiState.value.isSuccess)
-        assertNotNull(viewModel.uiState.value.error)
-    }
+    fun `changePassword failure sets error`() =
+        runTest {
+            userRepo.changePasswordResult = Result.failure(Exception("wrong old password"))
+            viewModel.updateOldPassword("wrong")
+            viewModel.updateNewPassword("newPass123!")
+            viewModel.updateConfirmPassword("newPass123!")
+            viewModel.changePassword()
+            dispatcher.scheduler.advanceUntilIdle()
+            assertFalse(viewModel.uiState.value.isSuccess)
+            assertNotNull(viewModel.uiState.value.error)
+        }
 }
 
 // ── Shared test data ─────────────────────────────────────────────────────────
 
-private val vmTestUser = User(
-    id = "u1", firstName = "Anna", lastName = "Test", email = "anna@test.lu",
-    phone = "+352600000000", gender = "female", dateOfBirth = "1990-01-01",
-    cnsNumber = "1234567890", profileType = ProfileType.PATIENT, language = "fr"
-)
+private val vmTestUser =
+    User(
+        id = "u1", firstName = "Anna", lastName = "Test", email = "anna@test.lu",
+        phone = "+352600000000", gender = "female", dateOfBirth = "1990-01-01",
+        cnsNumber = "1234567890", profileType = ProfileType.PATIENT, language = "fr",
+    )
 
-private val vmTestPractitioner = Practitioner(
-    id = "p1", firstName = "Dr", lastName = "Smith", specialty = "General",
-    clinicName = "Clinic A", address = "1 Main St", city = "Luxembourg",
-    phone = "+352000000", email = "doc@clinic.lu", latitude = 49.6, longitude = 6.1,
-    acceptingNewPatients = true, availableSlots = emptyList(), schedule = emptyList(),
-    paymentMethods = emptyList(), diplomas = emptyList(), isFavorite = false
-)
+private val vmTestPractitioner =
+    Practitioner(
+        id = "p1", firstName = "Dr", lastName = "Smith", specialty = "General",
+        clinicName = "Clinic A", address = "1 Main St", city = "Luxembourg",
+        phone = "+352000000", email = "doc@clinic.lu", latitude = 49.6, longitude = 6.1,
+        acceptingNewPatients = true, availableSlots = emptyList(), schedule = emptyList(),
+        paymentMethods = emptyList(), diplomas = emptyList(), isFavorite = false,
+    )
 
 // ── Fakes ─────────────────────────────────────────────────────────────────────
 
 private class FakeAuthRepoV : AuthRepository {
     var loggedIn = true
-    override suspend fun login(email: String, password: String) = Result.success(vmTestUser)
-    override suspend fun register(user: User, password: String) = Result.success(vmTestUser)
+
+    override suspend fun login(
+        email: String,
+        password: String,
+    ) = Result.success(vmTestUser)
+
+    override suspend fun register(
+        user: User,
+        password: String,
+    ) = Result.success(vmTestUser)
+
     override suspend fun forgotPassword(email: String) = Result.success(Unit)
+
     override suspend fun refreshToken() = Result.success("token")
+
     override suspend fun logout() = Result.success(Unit)
+
     override fun isLoggedIn() = loggedIn
+
     override fun getCurrentUser() = vmTestUser
 }
 
@@ -374,8 +414,12 @@ private class FakePractRepoV : PractitionerRepository {
     var getByIdResult: Result<Practitioner> = Result.success(vmTestPractitioner)
     var toggleResult: Result<Unit> = Result.success(Unit)
 
-    override suspend fun searchPractitioners(location: String, specialty: String, page: Int, limit: Int) =
-        Result.success(listOf(vmTestPractitioner))
+    override suspend fun searchPractitioners(
+        location: String,
+        specialty: String,
+        page: Int,
+        limit: Int,
+    ) = Result.success(listOf(vmTestPractitioner))
 
     override suspend fun getPractitionerById(id: String) = getByIdResult
 
@@ -389,7 +433,16 @@ private class FakeUserRepoV : UserRepository {
     var changePasswordResult: Result<Unit> = Result.success(Unit)
 
     override suspend fun getProfile() = profileResult
+
     override suspend fun updateProfile(user: User) = updateResult
-    override suspend fun changeEmail(newEmail: String, password: String) = changeEmailResult
-    override suspend fun changePassword(oldPassword: String, newPassword: String) = changePasswordResult
+
+    override suspend fun changeEmail(
+        newEmail: String,
+        password: String,
+    ) = changeEmailResult
+
+    override suspend fun changePassword(
+        oldPassword: String,
+        newPassword: String,
+    ) = changePasswordResult
 }

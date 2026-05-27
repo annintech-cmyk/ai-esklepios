@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ScheduleEntry(
     val day: String,
-    val hours: String
+    val hours: String,
 )
 
 data class Practitioner(
@@ -27,7 +27,7 @@ data class Practitioner(
     val paymentMethods: List<String> = emptyList(),
     val diplomas: List<String> = emptyList(),
     val presentation: String = "",
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
 ) {
     val fullName: String get() = "Dr. $firstName $lastName"
     val initials: String get() = "${firstName.firstOrNull() ?: ""}${lastName.firstOrNull() ?: ""}".uppercase()

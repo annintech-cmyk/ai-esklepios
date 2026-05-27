@@ -6,7 +6,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 class PhoneParserTest {
-
     @Test
     fun `parse Luxembourg prefix splits dial code from rest`() {
         val (dial, rest) = PhoneParser.parse("+352 621 12 34 56")

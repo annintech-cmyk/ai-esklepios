@@ -8,7 +8,7 @@ class SearchPractitionersUseCase(private val repository: PractitionerRepository)
         location: String,
         specialty: String,
         page: Int = 1,
-        limit: Int = 20
+        limit: Int = 20,
     ): Result<List<Practitioner>> {
         return repository.searchPractitioners(location, specialty, page, limit)
     }

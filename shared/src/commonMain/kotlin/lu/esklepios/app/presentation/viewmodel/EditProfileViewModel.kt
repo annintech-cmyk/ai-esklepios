@@ -12,7 +12,13 @@ import lu.esklepios.app.domain.usecase.GetProfileUseCase
 import lu.esklepios.app.domain.usecase.UpdateProfileUseCase
 
 enum class ProfileField {
-    FIRST_NAME, LAST_NAME, PHONE, GENDER, DATE_OF_BIRTH, CNS_NUMBER, LANGUAGE
+    FIRST_NAME,
+    LAST_NAME,
+    PHONE,
+    GENDER,
+    DATE_OF_BIRTH,
+    CNS_NUMBER,
+    LANGUAGE,
 }
 
 data class EditProfileUiState(
@@ -26,14 +32,13 @@ data class EditProfileUiState(
     val cnsNumber: String = "",
     val language: String = "en",
     val isSaved: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
 )
 
 class EditProfileViewModel(
     private val getProfileUseCase: GetProfileUseCase,
-    private val updateProfileUseCase: UpdateProfileUseCase
+    private val updateProfileUseCase: UpdateProfileUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(EditProfileUiState())
     val uiState: StateFlow<EditProfileUiState> = _uiState.asStateFlow()
 
@@ -56,7 +61,7 @@ class EditProfileViewModel(
                             gender = user.gender,
                             dateOfBirth = user.dateOfBirth,
                             cnsNumber = user.cnsNumber,
-                            language = user.language
+                            language = user.language,
                         )
                     }
                 }
@@ -68,22 +73,24 @@ class EditProfileViewModel(
 
     fun save() {
         val state = _uiState.value
-        val existingUser = state.user ?: run {
-            _uiState.update { it.copy(error = "No user data available") }
-            return
-        }
+        val existingUser =
+            state.user ?: run {
+                _uiState.update { it.copy(error = "No user data available") }
+                return
+            }
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            val updatedUser = existingUser.copy(
-                firstName = state.firstName,
-                lastName = state.lastName,
-                phone = state.phone,
-                gender = state.gender,
-                dateOfBirth = state.dateOfBirth,
-                cnsNumber = state.cnsNumber,
-                language = state.language
-            )
+            val updatedUser =
+                existingUser.copy(
+                    firstName = state.firstName,
+                    lastName = state.lastName,
+                    phone = state.phone,
+                    gender = state.gender,
+                    dateOfBirth = state.dateOfBirth,
+                    cnsNumber = state.cnsNumber,
+                    language = state.language,
+                )
             updateProfileUseCase(updatedUser)
                 .onSuccess { user ->
                     _uiState.update { it.copy(isLoading = false, user = user, isSaved = true) }
@@ -94,7 +101,10 @@ class EditProfileViewModel(
         }
     }
 
-    fun updateField(field: ProfileField, value: String) {
+    fun updateField(
+        field: ProfileField,
+        value: String,
+    ) {
         _uiState.update { state ->
             when (field) {
                 ProfileField.FIRST_NAME -> state.copy(firstName = value)
@@ -118,7 +128,7 @@ class EditProfileViewModel(
         phone: String,
         dateOfBirth: String,
         gender: String,
-        address: String
+        address: String,
     ) {
         updateField(ProfileField.FIRST_NAME, firstName)
         updateField(ProfileField.LAST_NAME, lastName)

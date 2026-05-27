@@ -16,13 +16,12 @@ data class ChangePasswordUiState(
     val newPassword: String = "",
     val confirmPassword: String = "",
     val isSuccess: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
 )
 
 class ChangePasswordViewModel(
-    private val changePasswordUseCase: ChangePasswordUseCase
+    private val changePasswordUseCase: ChangePasswordUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(ChangePasswordUiState())
     val uiState: StateFlow<ChangePasswordUiState> = _uiState.asStateFlow()
 
@@ -72,7 +71,11 @@ class ChangePasswordViewModel(
         _uiState.update { it.copy(error = null) }
     }
 
-    fun changePassword(currentPassword: String, newPassword: String, confirmPassword: String) {
+    fun changePassword(
+        currentPassword: String,
+        newPassword: String,
+        confirmPassword: String,
+    ) {
         updateOldPassword(currentPassword)
         updateNewPassword(newPassword)
         updateConfirmPassword(confirmPassword)

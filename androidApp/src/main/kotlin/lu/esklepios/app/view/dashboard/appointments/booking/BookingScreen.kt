@@ -29,7 +29,7 @@ fun BookingScreen(
     doctorId: String,
     slotId: String,
     isChange: Boolean = false,
-    bookingViewModel: BookAppointmentViewModel = koinViewModel()
+    bookingViewModel: BookAppointmentViewModel = koinViewModel(),
 ) {
     val bookingUiState by bookingViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -46,7 +46,7 @@ fun BookingScreen(
     LaunchedEffect(bookingUiState.isConfirmed) {
         if (bookingUiState.isConfirmed) {
             navController.navigate(
-                NavDestination.AppointmentSuccess.createRoute(bookingUiState.confirmedAppointmentId)
+                NavDestination.AppointmentSuccess.createRoute(bookingUiState.confirmedAppointmentId),
             ) {
                 popUpTo(NavDestination.Home.route) { inclusive = false }
             }
@@ -54,10 +54,18 @@ fun BookingScreen(
     }
 
     val isAuthenticated = bookingUiState.isAuthenticated
-    val screenTitle = if (isChange) stringResource(R.string.booking_title_change)
-    else stringResource(R.string.booking_title)
-    val buttonText = if (isChange) stringResource(R.string.booking_button_validate_change)
-    else stringResource(R.string.booking_button_validate)
+    val screenTitle =
+        if (isChange) {
+            stringResource(R.string.booking_title_change)
+        } else {
+            stringResource(R.string.booking_title)
+        }
+    val buttonText =
+        if (isChange) {
+            stringResource(R.string.booking_button_validate_change)
+        } else {
+            stringResource(R.string.booking_button_validate)
+        }
     val ctaText = if (!isAuthenticated) stringResource(R.string.booking_signin_to_book) else buttonText
 
     AppFormScreen(
@@ -69,7 +77,7 @@ fun BookingScreen(
         bottomBar = {
             Surface(
                 shadowElevation = Dimens.cardElevation,
-                color = Color.White
+                color = Color.White,
             ) {
                 PrimaryButton(
                     text = ctaText,
@@ -81,39 +89,41 @@ fun BookingScreen(
                         } else {
                             bookingViewModel.confirmBooking(
                                 message = reason,
-                                reason = consultationReason
+                                reason = consultationReason,
                             )
                         }
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
                 )
             }
-        }
+        },
     ) {
         VSpace(Dimens.paddingL)
 
         // ── Card 1: Doctor summary ────────────────────────────────────
         AppCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.paddingL)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.paddingL),
         ) {
             Row(
                 modifier = Modifier.padding(Dimens.paddingL),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 AvatarCircle(
                     initials = practitioner?.initials ?: "--",
                     size = Dimens.avatarSizeMd,
-                    fontSize = MaterialTheme.typography.titleMedium.fontSize
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 )
                 HSpace(Dimens.paddingM)
                 Column {
                     AppSubtitleText(
                         text = practitioner?.fullName ?: doctorId,
-                        color = TextPrimary
+                        color = TextPrimary,
                     )
                     if (practitioner != null) {
                         AppCaptionText(text = practitioner.specialty, color = Primary)
@@ -126,28 +136,29 @@ fun BookingScreen(
 
         // ── Card 2: Appointment selected ──────────────────────────────
         AppCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.paddingL)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.paddingL),
         ) {
             Column {
                 BookingCardHeader(
                     icon = Icons.Filled.CalendarMonth,
                     label = stringResource(R.string.booking_header_selected),
-                    tint = Primary
+                    tint = Primary,
                 )
                 CheckRow(
                     label = stringResource(R.string.booking_row_reason),
-                    value = consultationReason.ifEmpty { stringResource(R.string.booking_reason_placeholder) }
+                    value = consultationReason.ifEmpty { stringResource(R.string.booking_reason_placeholder) },
                 )
                 CheckRow(
                     label = stringResource(R.string.booking_row_datetime),
-                    value = slotSummary
+                    value = slotSummary,
                 )
                 CheckRow(
                     label = stringResource(R.string.booking_row_institute),
                     value = practitioner?.clinicName ?: "",
-                    isLast = true
+                    isLast = true,
                 )
             }
         }
@@ -157,31 +168,32 @@ fun BookingScreen(
 
             // ── Card 3: Old appointment ───────────────────────────────
             AppCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.paddingL)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Dimens.paddingL),
             ) {
                 Column {
                     BookingCardHeader(
                         icon = Icons.Filled.History,
                         label = stringResource(R.string.booking_header_old_selected),
-                        tint = OldApptAmber
+                        tint = OldApptAmber,
                     )
                     CheckRow(
                         label = stringResource(R.string.booking_row_reason),
                         value = bookingUiState.previousAppointment?.consultationReason ?: "",
-                        accentColor = OldApptAmberIcon
+                        accentColor = OldApptAmberIcon,
                     )
                     CheckRow(
                         label = stringResource(R.string.booking_row_datetime),
                         value = bookingUiState.previousAppointment?.let { DateUtil.formatSlotSummary(it.dateTime) } ?: "",
-                        accentColor = OldApptAmberIcon
+                        accentColor = OldApptAmberIcon,
                     )
                     CheckRow(
                         label = stringResource(R.string.booking_row_institute),
                         value = bookingUiState.previousAppointment?.clinicName ?: "",
                         accentColor = OldApptAmberIcon,
-                        isLast = true
+                        isLast = true,
                     )
                 }
             }
@@ -191,24 +203,25 @@ fun BookingScreen(
 
         // ── Policy warning ────────────────────────────────────────────
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.paddingL)
-                .clip(RoundedCornerShape(Dimens.radiusCard))
-                .background(WarningBg)
-                .padding(Dimens.paddingM),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.paddingL)
+                    .clip(RoundedCornerShape(Dimens.radiusCard))
+                    .background(WarningBg)
+                    .padding(Dimens.paddingM),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             AppIcon(
                 imageVector = Icons.Filled.Info,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = Warning,
-                size = Dimens.iconSizeSm
+                size = Dimens.iconSizeSm,
             )
             HSpace(Dimens.paddingS)
             AppCaptionText(
                 text = stringResource(R.string.booking_policy),
-                color = Warning
+                color = Warning,
             )
         }
 
@@ -216,20 +229,21 @@ fun BookingScreen(
 
         // ── Card 4: Confirmation ──────────────────────────────────────
         AppCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.paddingL)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.paddingL),
         ) {
             Column {
                 BookingCardHeader(
                     icon = Icons.Filled.Info,
                     label = stringResource(R.string.booking_header_confirmation),
-                    tint = Primary
+                    tint = Primary,
                 )
                 Column(modifier = Modifier.padding(Dimens.paddingPlus)) {
                     AppCaptionText(
                         text = stringResource(R.string.booking_confirmation_hint),
-                        color = TextSecondary
+                        color = TextSecondary,
                     )
                     VSpace(Dimens.paddingM)
                     TextAreaField(
@@ -237,7 +251,7 @@ fun BookingScreen(
                         value = consultationReason,
                         onValueChange = { consultationReason = it },
                         placeholder = stringResource(R.string.booking_reason_placeholder),
-                        minLines = 2
+                        minLines = 2,
                     )
                     VSpace(Dimens.paddingM)
                     TextAreaField(
@@ -245,7 +259,7 @@ fun BookingScreen(
                         value = reason,
                         onValueChange = { reason = it },
                         placeholder = stringResource(R.string.booking_message_commentary),
-                        minLines = 4
+                        minLines = 4,
                     )
                 }
             }
@@ -254,29 +268,30 @@ fun BookingScreen(
         if (!isAuthenticated) {
             VSpace(Dimens.paddingM)
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.paddingL)
-                    .clip(RoundedCornerShape(Dimens.radiusCard))
-                    .background(PrimaryLight)
-                    .padding(Dimens.paddingM),
-                verticalAlignment = Alignment.CenterVertically
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Dimens.paddingL)
+                        .clip(RoundedCornerShape(Dimens.radiusCard))
+                        .background(PrimaryLight)
+                        .padding(Dimens.paddingM),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 AppIcon(
                     imageVector = Icons.Filled.Lock,
                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                     tint = Primary,
-                    size = Dimens.iconSizeSm
+                    size = Dimens.iconSizeSm,
                 )
                 HSpace(Dimens.paddingS)
                 Column {
                     AppLabelText(
                         text = stringResource(R.string.booking_auth_required),
-                        color = Primary
+                        color = Primary,
                     )
                     AppCaptionText(
                         text = stringResource(R.string.booking_auth_subtitle),
-                        color = TextSecondary
+                        color = TextSecondary,
                     )
                 }
             }
@@ -287,12 +302,17 @@ fun BookingScreen(
 }
 
 @Composable
-private fun BookingCardHeader(icon: ImageVector, label: String, tint: Color) {
+private fun BookingCardHeader(
+    icon: ImageVector,
+    label: String,
+    tint: Color,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = Dimens.paddingM, vertical = Dimens.paddingS),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = Dimens.paddingM, vertical = Dimens.paddingS),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AppIcon(
             imageVector = icon,

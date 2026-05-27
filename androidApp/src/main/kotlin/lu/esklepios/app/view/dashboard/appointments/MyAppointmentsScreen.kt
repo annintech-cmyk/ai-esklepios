@@ -12,7 +12,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -20,12 +19,12 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
-import lu.esklepios.app.domain.model.Appointment
-import lu.esklepios.app.domain.model.AppointmentStatus
-import lu.esklepios.app.presentation.viewmodel.MyAppointmentsViewModel
 import lu.esklepios.app.core.navigation.NavDestination
 import lu.esklepios.app.core.ui.components.*
 import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.domain.model.Appointment
+import lu.esklepios.app.domain.model.AppointmentStatus
+import lu.esklepios.app.presentation.viewmodel.MyAppointmentsViewModel
 import lu.esklepios.app.utils.DateUtil
 import org.koin.androidx.compose.koinViewModel
 
@@ -33,7 +32,7 @@ import org.koin.androidx.compose.koinViewModel
 fun MyAppointmentsScreen(
     navController: NavController,
     onMenuClick: () -> Unit = {},
-    viewModel: MyAppointmentsViewModel = koinViewModel()
+    viewModel: MyAppointmentsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var cancelTargetId by remember { mutableStateOf<String?>(null) }
@@ -41,9 +40,10 @@ fun MyAppointmentsScreen(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) viewModel.loadAppointments()
-        }
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) viewModel.loadAppointments()
+            }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
@@ -71,7 +71,7 @@ fun MyAppointmentsScreen(
                         viewModel.cancelAppointment(id)
                         cancelTargetId = null
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Danger)
+                    colors = ButtonDefaults.buttonColors(containerColor = Danger),
                 ) {
                     AppButtonText(text = stringResource(R.string.appointments_cancel_yes))
                 }
@@ -80,40 +80,44 @@ fun MyAppointmentsScreen(
                 TextButton(onClick = { cancelTargetId = null }) {
                     AppButtonText(
                         text = stringResource(R.string.appointments_keep),
-                        color = Primary
+                        color = Primary,
                     )
                 }
-            }
+            },
         )
     }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = Background
+        containerColor = Background,
     ) { _ ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Background)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Background),
         ) {
             AppGradientHeader(
-                leadingAction = HeaderAction.IconButtonAction(
-                    icon = Icons.Filled.Menu,
-                    contentDescription = stringResource(R.string.cd_open_menu),
-                    onClick = onMenuClick
-                ),
-                centerAction = HeaderAction.TitleAction(
-                    text = stringResource(R.string.appointments_title),
-                    style = MaterialTheme.typography.headlineMedium
-                )
+                leadingAction =
+                    HeaderAction.IconButtonAction(
+                        icon = Icons.Filled.Menu,
+                        contentDescription = stringResource(R.string.cd_open_menu),
+                        onClick = onMenuClick,
+                    ),
+                centerAction =
+                    HeaderAction.TitleAction(
+                        text = stringResource(R.string.appointments_title),
+                        style = MaterialTheme.typography.headlineMedium,
+                    ),
             )
 
             AppTabRow(
                 selectedIndex = uiState.selectedTab,
-                tabs = listOf(
-                    AppTabItem(stringResource(R.string.appointments_upcoming)) { viewModel.selectTab(0) },
-                    AppTabItem(stringResource(R.string.appointments_past))     { viewModel.selectTab(1) },
-                ),
+                tabs =
+                    listOf(
+                        AppTabItem(stringResource(R.string.appointments_upcoming)) { viewModel.selectTab(0) },
+                        AppTabItem(stringResource(R.string.appointments_past)) { viewModel.selectTab(1) },
+                    ),
             )
 
             when {
@@ -124,33 +128,43 @@ fun MyAppointmentsScreen(
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                             EmptyStateView(
                                 icon = Icons.Filled.CalendarMonth,
-                                title = if (uiState.selectedTab == 0)
-                                    stringResource(R.string.appointments_empty_upcoming_title)
-                                else
-                                    stringResource(R.string.appointments_empty_past_title),
-                                subtitle = if (uiState.selectedTab == 0)
-                                    stringResource(R.string.appointments_empty_upcoming_subtitle)
-                                else
-                                    stringResource(R.string.appointments_empty_past_subtitle),
-                                actionLabel = if (uiState.selectedTab == 0)
-                                    stringResource(R.string.appointments_find_practitioners)
-                                else null,
-                                onAction = if (uiState.selectedTab == 0) {
-                                    { navController.navigate(NavDestination.Home.route) }
-                                } else null
+                                title =
+                                    if (uiState.selectedTab == 0) {
+                                        stringResource(R.string.appointments_empty_upcoming_title)
+                                    } else {
+                                        stringResource(R.string.appointments_empty_past_title)
+                                    },
+                                subtitle =
+                                    if (uiState.selectedTab == 0) {
+                                        stringResource(R.string.appointments_empty_upcoming_subtitle)
+                                    } else {
+                                        stringResource(R.string.appointments_empty_past_subtitle)
+                                    },
+                                actionLabel =
+                                    if (uiState.selectedTab == 0) {
+                                        stringResource(R.string.appointments_find_practitioners)
+                                    } else {
+                                        null
+                                    },
+                                onAction =
+                                    if (uiState.selectedTab == 0) {
+                                        { navController.navigate(NavDestination.Home.route) }
+                                    } else {
+                                        null
+                                    },
                             )
                         }
                     } else {
                         LazyColumn(
                             contentPadding = PaddingValues(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
-                            verticalArrangement = Arrangement.spacedBy(Dimens.paddingM)
+                            verticalArrangement = Arrangement.spacedBy(Dimens.paddingM),
                         ) {
                             items(appointments, key = { it.id }) { appointment ->
                                 AppointmentItemCard(
                                     appointment = appointment,
                                     isUpcoming = uiState.selectedTab == 0,
                                     onCancel = { cancelTargetId = appointment.id },
-                                    onModify = {}
+                                    onModify = {},
                                 )
                             }
                         }
@@ -166,14 +180,14 @@ private fun AppointmentItemCard(
     appointment: Appointment,
     isUpcoming: Boolean,
     onCancel: () -> Unit,
-    onModify: () -> Unit
+    onModify: () -> Unit,
 ) {
     AppCard(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(Dimens.paddingL)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+                verticalAlignment = Alignment.Top,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     AppSubtitleText(text = appointment.practitionerName)
@@ -190,7 +204,7 @@ private fun AppointmentItemCard(
                     Icons.Filled.CalendarMonth,
                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                     tint = TextSecondary,
-                    size = Dimens.iconSizeSm
+                    size = Dimens.iconSizeSm,
                 )
                 Spacer(Modifier.width(Dimens.paddingS))
                 AppCaptionText(text = DateUtil.formatAppointmentDateTime(appointment.dateTime))
@@ -202,20 +216,21 @@ private fun AppointmentItemCard(
                     SecondaryButton(
                         text = stringResource(R.string.appointments_modify),
                         onClick = onModify,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                     Button(
                         onClick = onCancel,
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = DangerBg,
-                            contentColor = Danger
-                        ),
-                        shape = RoundedCornerShape(Dimens.radiusPill)
+                        colors =
+                            ButtonDefaults.buttonColors(
+                                containerColor = DangerBg,
+                                contentColor = Danger,
+                            ),
+                        shape = RoundedCornerShape(Dimens.radiusPill),
                     ) {
                         AppButtonText(
                             text = stringResource(R.string.action_cancel),
-                            color = Danger
+                            color = Danger,
                         )
                     }
                 }
@@ -223,4 +238,3 @@ private fun AppointmentItemCard(
         }
     }
 }
-

@@ -12,24 +12,25 @@ import lu.esklepios.app.core.ui.theme.TextSecondary
 @Composable
 fun LoadingIndicator(
     modifier: Modifier = Modifier,
-    message: String? = null
+    message: String? = null,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(Dimens.paddingXXL),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(Dimens.paddingXXL),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CircularProgressIndicator(
             color = Primary,
-            strokeWidth = Dimens.paddingXS / 2
+            strokeWidth = Dimens.paddingXS / 2,
         )
         if (message != null) {
             Spacer(modifier = Modifier.height(Dimens.paddingL))
             AppBodyText(
                 text = message,
-                color = TextSecondary
+                color = TextSecondary,
             )
         }
     }

@@ -5,6 +5,5 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import lu.esklepios.app.db.ESklepiosDatabase
 
 actual class DatabaseDriverFactory {
-    actual fun createDriver(): SqlDriver =
-        NativeSqliteDriver(ESklepiosDatabase.Schema, "esklepios.db")
+    actual fun createDriver(): SqlDriver = NativeSqliteDriver(ESklepiosDatabase.Schema, "esklepios.db")
 }

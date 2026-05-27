@@ -9,7 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import lu.esklepios.app.core.ui.theme.*
 
@@ -17,18 +16,19 @@ import lu.esklepios.app.core.ui.theme.*
 fun AppCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val shape = RoundedCornerShape(Dimens.radiusCard)
     Card(
-        modifier = modifier
-            .then(
-                if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier
-            ),
+        modifier =
+            modifier
+                .then(
+                    if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier,
+                ),
         shape = shape,
         colors = CardDefaults.cardColors(containerColor = Surface),
         elevation = CardDefaults.cardElevation(defaultElevation = Dimens.cardElevation),
-        border = BorderStroke(Dimens.borderHairline, BorderColor)
+        border = BorderStroke(Dimens.borderHairline, BorderColor),
     ) {
         Column(content = content)
     }
@@ -39,33 +39,34 @@ fun InfoCard(
     modifier: Modifier = Modifier,
     title: String,
     icon: ImageVector,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     AppCard(modifier = modifier) {
         // Header
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(PrimaryLight)
-                .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(PrimaryLight)
+                    .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Dimens.paddingS)
+            horizontalArrangement = Arrangement.spacedBy(Dimens.paddingS),
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = Primary,
-                modifier = Modifier.size(Dimens.iconSizeMd)
+                modifier = Modifier.size(Dimens.iconSizeMd),
             )
             AppLabelText(
                 text = title,
-                color = Primary
+                color = Primary,
             )
         }
         // Body
         Column(
             modifier = Modifier.padding(Dimens.paddingL),
-            content = content
+            content = content,
         )
     }
 }

@@ -1,8 +1,10 @@
 package lu.esklepios.app.core.navigation
 
-import androidx.activity.ComponentActivity
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.ComponentActivity
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -21,8 +23,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionLayout
 import kotlinx.coroutines.launch
 import lu.esklepios.app.core.ui.LocalNavAnimatedVisibilityScope
 import lu.esklepios.app.core.ui.LocalSharedTransitionScope
@@ -31,24 +31,24 @@ import lu.esklepios.app.core.ui.components.AppDrawerContent
 import lu.esklepios.app.core.ui.theme.GradientStart
 import lu.esklepios.app.core.ui.theme.Primary
 import lu.esklepios.app.core.ui.theme.Surface
-import lu.esklepios.app.util.AppUrls
 import lu.esklepios.app.presentation.viewmodel.HomeViewModel
-import lu.esklepios.app.view.dashboard.appointments.booking.BookingScreen
-import org.koin.androidx.compose.koinViewModel
-import lu.esklepios.app.view.dashboard.appointments.booking.AppointmentSuccessScreen
-import lu.esklepios.app.view.dashboard.appointments.MyAppointmentsScreen
+import lu.esklepios.app.util.AppUrls
 import lu.esklepios.app.view.auth.forgotpassword.ForgotPasswordScreen
 import lu.esklepios.app.view.auth.login.LoginScreen
 import lu.esklepios.app.view.auth.register.RegisterScreen
+import lu.esklepios.app.view.dashboard.appointments.MyAppointmentsScreen
+import lu.esklepios.app.view.dashboard.appointments.booking.AppointmentSuccessScreen
+import lu.esklepios.app.view.dashboard.appointments.booking.BookingScreen
 import lu.esklepios.app.view.dashboard.home.HomeScreen
-import lu.esklepios.app.view.dashboard.home.practitioners.PractitionerListScreen
-import lu.esklepios.app.view.landing.LandingScreen
 import lu.esklepios.app.view.dashboard.home.practitioner_data.PractitionerDetailScreen
-import lu.esklepios.app.view.splash.SplashScreen
+import lu.esklepios.app.view.dashboard.home.practitioners.PractitionerListScreen
 import lu.esklepios.app.view.dashboard.profile.ProfileScreen
 import lu.esklepios.app.view.dashboard.profile.profile_edit.ChangeEmailScreen
 import lu.esklepios.app.view.dashboard.profile.profile_edit.ChangePasswordScreen
 import lu.esklepios.app.view.dashboard.profile.profile_edit.EditProfileScreen
+import lu.esklepios.app.view.landing.LandingScreen
+import lu.esklepios.app.view.splash.SplashScreen
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -62,11 +62,12 @@ fun AppNavGraph() {
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStack?.destination?.route
 
-    val bottomNavRoutes = setOf(
-        NavDestination.Home.route,
-        NavDestination.MyAppointments.route,
-        NavDestination.Profile.route
-    )
+    val bottomNavRoutes =
+        setOf(
+            NavDestination.Home.route,
+            NavDestination.MyAppointments.route,
+            NavDestination.Profile.route,
+        )
 
     val showDrawer = currentRoute in bottomNavRoutes
     val onMenuClick: () -> Unit = { scope.launch { drawerState.open() } }
@@ -77,7 +78,7 @@ fun AppNavGraph() {
         SideEffect {
             val window = (view.context as ComponentActivity).window
             WindowCompat.getInsetsController(window, view).apply {
-                isAppearanceLightStatusBars = false   // white icons on blue bg
+                isAppearanceLightStatusBars = false // white icons on blue bg
                 isAppearanceLightNavigationBars = false
             }
         }
@@ -85,9 +86,10 @@ fun AppNavGraph() {
 
     // ── Primary-blue layer sits behind the transparent status bar for ALL screens ──
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GradientStart)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(GradientStart),
     ) {
         ModalNavigationDrawer(
             drawerState = drawerState,
@@ -97,7 +99,7 @@ fun AppNavGraph() {
                 // own status-bar padding on top of the padding AppDrawerContent already applies.
                 ModalDrawerSheet(
                     drawerContainerColor = Surface,
-                    windowInsets = WindowInsets(0)
+                    windowInsets = WindowInsets(0),
                 ) {
                     val context = LocalContext.current
                     AppDrawerContent(
@@ -117,13 +119,13 @@ fun AppNavGraph() {
                                 context.startActivity(
                                     Intent(Intent.ACTION_SENDTO).apply {
                                         data = Uri.parse(AppUrls.CONTACT_EMAIL)
-                                    }
+                                    },
                                 )
                             }
-                        }
+                        },
                     )
                 }
-            }
+            },
         ) {
             // Scaffold is transparent so the GradientStart box shows through the
             // transparent status bar on every screen.
@@ -133,17 +135,17 @@ fun AppNavGraph() {
                     if (currentRoute in bottomNavRoutes) {
                         AppBottomNavBar(
                             navController = navController,
-                            currentRoute = currentRoute
+                            currentRoute = currentRoute,
                         )
                     }
-                }
+                },
             ) { innerPadding ->
                 SharedTransitionLayout {
                     CompositionLocalProvider(LocalSharedTransitionScope provides this) {
                         NavHost(
                             navController = navController,
                             startDestination = NavDestination.Splash.route,
-                            modifier = Modifier.padding(innerPadding)
+                            modifier = Modifier.padding(innerPadding),
                         ) {
                             composable(NavDestination.Splash.route) { SplashScreen(navController) }
                             composable(NavDestination.Landing.route) { LandingScreen(navController, homeViewModel) }
@@ -162,7 +164,7 @@ fun AppNavGraph() {
                             }
                             composable(
                                 route = NavDestination.PractitionerDetail.route,
-                                arguments = listOf(navArgument("practitionerId") { type = NavType.StringType })
+                                arguments = listOf(navArgument("practitionerId") { type = NavType.StringType }),
                             ) { backStackEntry ->
                                 val practitionerId =
                                     backStackEntry.arguments?.getString("practitionerId") ?: ""
@@ -172,10 +174,11 @@ fun AppNavGraph() {
                             }
                             composable(
                                 route = NavDestination.BookAppointment.route,
-                                arguments = listOf(
-                                    navArgument("practitionerId") { type = NavType.StringType },
-                                    navArgument("slotId") { type = NavType.StringType }
-                                )
+                                arguments =
+                                    listOf(
+                                        navArgument("practitionerId") { type = NavType.StringType },
+                                        navArgument("slotId") { type = NavType.StringType },
+                                    ),
                             ) { backStackEntry ->
                                 val practitionerId =
                                     backStackEntry.arguments?.getString("practitionerId") ?: ""
@@ -184,9 +187,10 @@ fun AppNavGraph() {
                             }
                             composable(
                                 route = NavDestination.AppointmentSuccess.route,
-                                arguments = listOf(
-                                    navArgument("appointmentId") { type = NavType.StringType }
-                                )
+                                arguments =
+                                    listOf(
+                                        navArgument("appointmentId") { type = NavType.StringType },
+                                    ),
                             ) { backStackEntry ->
                                 val appointmentId =
                                     backStackEntry.arguments?.getString("appointmentId") ?: ""
@@ -205,14 +209,15 @@ fun AppNavGraph() {
                             }
                             composable(
                                 route = NavDestination.Booking.route,
-                                arguments = listOf(
-                                    navArgument("doctorId") { type = NavType.StringType },
-                                    navArgument("slotId") { type = NavType.StringType },
-                                    navArgument("isChange") {
-                                        type = NavType.StringType
-                                        defaultValue = "false"
-                                    }
-                                )
+                                arguments =
+                                    listOf(
+                                        navArgument("doctorId") { type = NavType.StringType },
+                                        navArgument("slotId") { type = NavType.StringType },
+                                        navArgument("isChange") {
+                                            type = NavType.StringType
+                                            defaultValue = "false"
+                                        },
+                                    ),
                             ) { backStackEntry ->
                                 val doctorId = backStackEntry.arguments?.getString("doctorId") ?: ""
                                 val slotId = backStackEntry.arguments?.getString("slotId") ?: ""
@@ -230,12 +235,16 @@ fun AppNavGraph() {
 data class BottomNavItem(val label: String, val icon: ImageVector, val route: String)
 
 @Composable
-fun AppBottomNavBar(navController: NavHostController, currentRoute: String?) {
-    val items = listOf(
-        BottomNavItem("Home", Icons.Filled.Home, NavDestination.Home.route),
-        BottomNavItem("Appointments", Icons.Filled.CalendarMonth, NavDestination.MyAppointments.route),
-        BottomNavItem("Profile", Icons.Filled.Person, NavDestination.Profile.route)
-    )
+fun AppBottomNavBar(
+    navController: NavHostController,
+    currentRoute: String?,
+) {
+    val items =
+        listOf(
+            BottomNavItem("Home", Icons.Filled.Home, NavDestination.Home.route),
+            BottomNavItem("Appointments", Icons.Filled.CalendarMonth, NavDestination.MyAppointments.route),
+            BottomNavItem("Profile", Icons.Filled.Person, NavDestination.Profile.route),
+        )
     NavigationBar(containerColor = Surface) {
         items.forEach { item ->
             NavigationBarItem(
@@ -249,11 +258,12 @@ fun AppBottomNavBar(navController: NavHostController, currentRoute: String?) {
                 },
                 icon = { Icon(item.icon, contentDescription = item.label) },
                 label = { AppCaptionText(text = item.label) },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Primary,
-                    selectedTextColor = Primary,
-                    indicatorColor = Primary.copy(alpha = 0.12f)
-                )
+                colors =
+                    NavigationBarItemDefaults.colors(
+                        selectedIconColor = Primary,
+                        selectedTextColor = Primary,
+                        indicatorColor = Primary.copy(alpha = 0.12f),
+                    ),
             )
         }
     }

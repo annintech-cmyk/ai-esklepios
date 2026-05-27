@@ -30,15 +30,17 @@ fun CheckRow(
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.paddingPlus, vertical = Dimens.paddingS),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.paddingPlus, vertical = Dimens.paddingS),
             verticalAlignment = Alignment.Top,
         ) {
             Box(
-                modifier = Modifier
-                    .size(Dimens.iconSizeCompact)
-                    .background(accentColor, CircleShape),
+                modifier =
+                    Modifier
+                        .size(Dimens.iconSizeCompact)
+                        .background(accentColor, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 AppIcon(

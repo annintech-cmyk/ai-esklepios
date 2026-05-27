@@ -38,7 +38,7 @@ fun SearchCard(
     onSearchClick: () -> Unit,
     enabled: Boolean = true,
     variant: SearchInputVariant = SearchInputVariant.Light,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         SearchInputField(
@@ -47,7 +47,7 @@ fun SearchCard(
             placeholder = stringResource(R.string.landing_search_hint),
             leadingIcon = Icons.Outlined.MedicalServices,
             iconTint = TextHint,
-            variant = variant
+            variant = variant,
         )
         VSpace(Dimens.paddingS)
         SearchInputField(
@@ -56,36 +56,37 @@ fun SearchCard(
             placeholder = stringResource(R.string.landing_location_hint),
             leadingIcon = Icons.Outlined.LocationOn,
             iconTint = PrimaryMid,
-            variant = variant
+            variant = variant,
         )
         VSpace(Dimens.paddingS)
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(Dimens.buttonHeight)
-                .clip(RoundedCornerShape(Dimens.radiusPill))
-                .background(if (enabled) Primary else Primary.copy(alpha = 0.5f))
-                .clickable(enabled = enabled, onClick = onSearchClick)
-                .padding(horizontal = Dimens.paddingL),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(Dimens.buttonHeight)
+                    .clip(RoundedCornerShape(Dimens.radiusPill))
+                    .background(if (enabled) Primary else Primary.copy(alpha = 0.5f))
+                    .clickable(enabled = enabled, onClick = onSearchClick)
+                    .padding(horizontal = Dimens.paddingL),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             AppIcon(
                 imageVector = Icons.Filled.Search,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = Color.White,
-                size = Dimens.iconSizeMd
+                size = Dimens.iconSizeMd,
             )
             AppButtonText(
                 text = stringResource(R.string.landing_find_practitioners),
                 modifier = Modifier.weight(1f),
                 color = Color.White,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             AppIcon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = Color.White,
-                size = Dimens.iconSizeMd
+                size = Dimens.iconSizeMd,
             )
         }
     }
@@ -100,7 +101,7 @@ fun LandingSearchCard(
     onSearchClick: () -> Unit,
     enabled: Boolean = true,
     showPoints: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -110,10 +111,11 @@ fun LandingSearchCard(
         tonalElevation = Dimens.elevationNone,
     ) {
         Column(
-            modifier = Modifier.padding(
-                horizontal = Dimens.paddingXXL,
-                vertical = Dimens.paddingXXL + Dimens.paddingS
-            )
+            modifier =
+                Modifier.padding(
+                    horizontal = Dimens.paddingXXL,
+                    vertical = Dimens.paddingXXL + Dimens.paddingS,
+                ),
         ) {
             SearchCard(
                 searchQuery = searchQuery,
@@ -121,7 +123,7 @@ fun LandingSearchCard(
                 locationQuery = locationQuery,
                 onLocationQueryChange = onLocationQueryChange,
                 onSearchClick = onSearchClick,
-                enabled = enabled
+                enabled = enabled,
             )
             if (showPoints) {
                 VSpace(Dimens.paddingXL)
@@ -136,13 +138,16 @@ fun LandingSearchCard(
 }
 
 @Composable
-private fun LandingTrustRow(icon: ImageVector, label: String) {
+private fun LandingTrustRow(
+    icon: ImageVector,
+    label: String,
+) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         AppIcon(
             imageVector = icon,
             contentDescription = null, // a11y: decorative — labelled by adjacent Text
             tint = PrimaryMid,
-            size = Dimens.iconSizeMd
+            size = Dimens.iconSizeMd,
         )
         HSpace(Dimens.paddingS + Dimens.paddingXS)
         AppBodyText(text = label, color = TextSecondary)

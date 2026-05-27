@@ -10,7 +10,7 @@ data class User(
     val dateOfBirth: String,
     val cnsNumber: String,
     val profileType: ProfileType,
-    val language: String
+    val language: String,
 ) {
     val fullName: String get() = "$firstName $lastName"
     val initials: String get() = "${firstName.firstOrNull() ?: ""}${lastName.firstOrNull() ?: ""}".uppercase()
@@ -18,11 +18,13 @@ data class User(
 
 enum class ProfileType {
     PATIENT,
-    PRACTITIONER;
+    PRACTITIONER,
+    ;
 
     companion object {
-        fun fromString(value: String): ProfileType = entries.find {
-            it.name.equals(value, ignoreCase = true)
-        } ?: PATIENT
+        fun fromString(value: String): ProfileType =
+            entries.find {
+                it.name.equals(value, ignoreCase = true)
+            } ?: PATIENT
     }
 }

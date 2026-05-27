@@ -10,8 +10,7 @@ object CnsFormatter {
      * Returns `cns` unchanged if it has 9 characters or fewer, otherwise
      * `"<first 9> ••••"`.
      */
-    fun mask(cns: String): String =
-        if (cns.length > VISIBLE_PREFIX_LENGTH) "${cns.take(VISIBLE_PREFIX_LENGTH)} ••••" else cns
+    fun mask(cns: String): String = if (cns.length > VISIBLE_PREFIX_LENGTH) "${cns.take(VISIBLE_PREFIX_LENGTH)} ••••" else cns
 
     private const val VISIBLE_PREFIX_LENGTH = 9
 }

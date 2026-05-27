@@ -18,20 +18,22 @@ fun AppToolbar(
     title: String,
     onNavigateBack: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
-    useGradient: Boolean = true
+    useGradient: Boolean = true,
 ) {
-    val backgroundModifier = if (useGradient) {
-        Modifier.background(brush = Gradients.primaryBrush)
-    } else {
-        Modifier.background(color = Surface)
-    }
+    val backgroundModifier =
+        if (useGradient) {
+            Modifier.background(brush = Gradients.primaryBrush)
+        } else {
+            Modifier.background(color = Surface)
+        }
     val contentColor = if (useGradient) Color.White else TextPrimary
 
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(Dimens.appBarHeight)
-            .then(backgroundModifier)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(Dimens.appBarHeight)
+                .then(backgroundModifier),
     ) {
         // Back button on left
         if (onNavigateBack != null) {
@@ -41,9 +43,10 @@ fun AppToolbar(
                 onClick = onNavigateBack,
                 tint = contentColor,
                 iconSize = Dimens.iconSizeLg,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = Dimens.paddingS)
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = Dimens.paddingS),
             )
         }
 
@@ -51,16 +54,17 @@ fun AppToolbar(
         AppToolbarTitle(
             text = title,
             color = contentColor,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
 
         // Actions on right
         Row(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(end = Dimens.paddingS),
+            modifier =
+                Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = Dimens.paddingS),
             horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             actions()
         }

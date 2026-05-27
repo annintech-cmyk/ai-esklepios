@@ -24,7 +24,7 @@ fun AppTitleText(
     modifier: Modifier = Modifier,
     color: Color = TextPrimary,
     textAlign: TextAlign? = null,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -33,7 +33,7 @@ fun AppTitleText(
         textAlign = textAlign,
         maxLines = maxLines,
         overflow = if (maxLines < Int.MAX_VALUE) TextOverflow.Ellipsis else TextOverflow.Clip,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -43,7 +43,7 @@ fun AppSubtitleText(
     modifier: Modifier = Modifier,
     color: Color = TextPrimary,
     textAlign: TextAlign? = null,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -52,7 +52,7 @@ fun AppSubtitleText(
         textAlign = textAlign,
         maxLines = maxLines,
         overflow = if (maxLines < Int.MAX_VALUE) TextOverflow.Ellipsis else TextOverflow.Clip,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -62,7 +62,7 @@ fun AppBodyText(
     modifier: Modifier = Modifier,
     color: Color = TextSecondary,
     textAlign: TextAlign? = null,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -71,7 +71,7 @@ fun AppBodyText(
         textAlign = textAlign,
         maxLines = maxLines,
         overflow = if (maxLines < Int.MAX_VALUE) TextOverflow.Ellipsis else TextOverflow.Clip,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -81,7 +81,7 @@ fun AppCaptionText(
     modifier: Modifier = Modifier,
     color: Color = TextSecondary,
     textAlign: TextAlign? = null,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -90,7 +90,7 @@ fun AppCaptionText(
         textAlign = textAlign,
         maxLines = maxLines,
         overflow = if (maxLines < Int.MAX_VALUE) TextOverflow.Ellipsis else TextOverflow.Clip,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -98,7 +98,7 @@ fun AppCaptionText(
 fun AppToolbarTitle(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = TextPrimary
+    color: Color = TextPrimary,
 ) {
     Text(
         text = text,
@@ -106,7 +106,7 @@ fun AppToolbarTitle(
         color = color,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -115,7 +115,7 @@ fun AppButtonText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.White,
-    textAlign: TextAlign? = null
+    textAlign: TextAlign? = null,
 ) {
     Text(
         text = text,
@@ -124,7 +124,7 @@ fun AppButtonText(
         textAlign = textAlign,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -133,14 +133,14 @@ fun AppLabelText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = TextPrimary,
-    textAlign: TextAlign? = null
+    textAlign: TextAlign? = null,
 ) {
     Text(
         text = text,
         style = MaterialTheme.typography.labelLarge,
         color = color,
         textAlign = textAlign,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -148,14 +148,14 @@ fun AppLabelText(
 fun AppErrorText(
     text: String,
     modifier: Modifier = Modifier,
-    textAlign: TextAlign? = null
+    textAlign: TextAlign? = null,
 ) {
     Text(
         text = text,
         style = MaterialTheme.typography.bodySmall,
         color = Danger,
         textAlign = textAlign,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -163,7 +163,7 @@ fun AppErrorText(
 fun AppSectionHeaderText(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = TextPrimary
+    color: Color = TextPrimary,
 ) {
     Text(
         text = text,
@@ -171,7 +171,7 @@ fun AppSectionHeaderText(
         fontWeight = FontWeight.Bold,
         letterSpacing = Dimens.letterSpacingWide,
         color = color,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -179,14 +179,14 @@ fun AppSectionHeaderText(
 fun AppFieldValueText(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = TextPrimary
+    color: Color = TextPrimary,
 ) {
     Text(
         text = text,
         fontSize = Dimens.fontSizeXs,
         fontWeight = FontWeight.SemiBold,
         color = color,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -204,15 +204,16 @@ fun AppSpannedText(
     style: TextStyle = MaterialTheme.typography.bodyMedium,
 ) {
     Text(
-        text = buildAnnotatedString {
-            spans.forEach { span ->
-                if (span.spanStyle != null) {
-                    withStyle(span.spanStyle) { append(span.text) }
-                } else {
-                    append(span.text)
+        text =
+            buildAnnotatedString {
+                spans.forEach { span ->
+                    if (span.spanStyle != null) {
+                        withStyle(span.spanStyle) { append(span.text) }
+                    } else {
+                        append(span.text)
+                    }
                 }
-            }
-        },
+            },
         modifier = modifier,
         style = style,
     )
@@ -224,7 +225,7 @@ fun AppSpannedText(
 fun FormFieldLabel(
     text: String,
     required: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(modifier = modifier) {
         AppLabelText(text = text)

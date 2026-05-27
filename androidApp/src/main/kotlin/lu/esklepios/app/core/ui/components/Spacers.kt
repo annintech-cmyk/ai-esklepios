@@ -9,8 +9,12 @@ import androidx.compose.ui.unit.Dp
 
 /** Vertical gap using a Dimens token. Prefer Arrangement.spacedBy() in Columns when possible. */
 @Composable
-fun VSpace(height: Dp) { Spacer(Modifier.height(height)) }
+fun VSpace(height: Dp) {
+    Spacer(Modifier.height(height))
+}
 
 /** Horizontal gap using a Dimens token. */
 @Composable
-fun HSpace(width: Dp) { Spacer(Modifier.width(width)) }
+fun HSpace(width: Dp) {
+    Spacer(Modifier.width(width))
+}

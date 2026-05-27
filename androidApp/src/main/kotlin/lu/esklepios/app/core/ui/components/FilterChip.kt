@@ -17,7 +17,7 @@ fun FilterChip(
     text: String,
     isSelected: Boolean,
     onClick: () -> Unit,
-    icon: ImageVector? = null
+    icon: ImageVector? = null,
 ) {
     val shape = RoundedCornerShape(Dimens.radiusPill)
     val bgColor = if (isSelected) PrimaryLight else Surface
@@ -25,27 +25,28 @@ fun FilterChip(
     val borderColor = if (isSelected) Primary else BorderColor
 
     Row(
-        modifier = Modifier
-            .height(Dimens.filterChipHeight)
-            .clip(shape)
-            .background(color = bgColor, shape = shape)
-            .border(width = Dimens.borderThin, color = borderColor, shape = shape)
-            .clickable(onClick = onClick)
-            .padding(horizontal = Dimens.paddingM, vertical = Dimens.paddingXS),
+        modifier =
+            Modifier
+                .height(Dimens.filterChipHeight)
+                .clip(shape)
+                .background(color = bgColor, shape = shape)
+                .border(width = Dimens.borderThin, color = borderColor, shape = shape)
+                .clickable(onClick = onClick)
+                .padding(horizontal = Dimens.paddingM, vertical = Dimens.paddingXS),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Dimens.paddingXS)
+        horizontalArrangement = Arrangement.spacedBy(Dimens.paddingXS),
     ) {
         if (icon != null) {
             AppIcon(
                 imageVector = icon,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = textColor,
-                size = Dimens.iconSizeSm
+                size = Dimens.iconSizeSm,
             )
         }
         AppLabelText(
             text = text,
-            color = textColor
+            color = textColor,
         )
     }
 }

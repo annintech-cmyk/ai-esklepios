@@ -11,16 +11,18 @@ import lu.esklepios.app.core.ui.theme.Warning
 import lu.esklepios.app.util.PasswordStrength
 
 @Composable
-fun PasswordStrength.strengthLabel(): String = when (this) {
-    PasswordStrength.STRONG -> stringResource(R.string.change_password_strength_strong)
-    PasswordStrength.GOOD   -> stringResource(R.string.change_password_strength_good)
-    PasswordStrength.FAIR   -> stringResource(R.string.change_password_strength_fair)
-    else                    -> stringResource(R.string.change_password_strength_weak)
-}
+fun PasswordStrength.strengthLabel(): String =
+    when (this) {
+        PasswordStrength.STRONG -> stringResource(R.string.change_password_strength_strong)
+        PasswordStrength.GOOD -> stringResource(R.string.change_password_strength_good)
+        PasswordStrength.FAIR -> stringResource(R.string.change_password_strength_fair)
+        else -> stringResource(R.string.change_password_strength_weak)
+    }
 
-fun PasswordStrength.strengthColor(): Color = when (this) {
-    PasswordStrength.STRONG -> Success
-    PasswordStrength.GOOD   -> StrengthGood
-    PasswordStrength.FAIR   -> Warning
-    else                    -> Danger
-}
+fun PasswordStrength.strengthColor(): Color =
+    when (this) {
+        PasswordStrength.STRONG -> Success
+        PasswordStrength.GOOD -> StrengthGood
+        PasswordStrength.FAIR -> Warning
+        else -> Danger
+    }

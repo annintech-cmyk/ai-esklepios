@@ -1,6 +1,5 @@
 package lu.esklepios.app.domain.model
 
-import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,5 +8,5 @@ data class AppointmentSlot(
     val practitionerId: String,
     val dateTime: String,
     val available: Boolean,
-    val durationMinutes: Int = 30
+    val durationMinutes: Int = 30,
 )

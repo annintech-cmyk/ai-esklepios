@@ -7,7 +7,7 @@ interface PractitionerRepository {
         location: String,
         specialty: String,
         page: Int,
-        limit: Int
+        limit: Int,
     ): Result<List<Practitioner>>
 
     suspend fun getPractitionerById(id: String): Result<Practitioner>

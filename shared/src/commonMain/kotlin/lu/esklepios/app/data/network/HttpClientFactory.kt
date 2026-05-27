@@ -19,17 +19,19 @@ expect fun createHttpEngine(): io.ktor.client.engine.HttpClientEngine
 
 class HttpClientFactory(
     private val tokenStorage: TokenStorage,
-    private val enableLogging: Boolean
+    private val enableLogging: Boolean,
 ) {
     fun create(): HttpClient {
         return HttpClient(createHttpEngine()) {
             install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = false
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                    encodeDefaults = true
-                })
+                json(
+                    Json {
+                        prettyPrint = false
+                        isLenient = true
+                        ignoreUnknownKeys = true
+                        encodeDefaults = true
+                    },
+                )
             }
 
             install(io.ktor.client.plugins.HttpTimeout) {
@@ -61,7 +63,7 @@ class HttpClientFactory(
                         if (refreshToken != null) {
                             BearerTokens(
                                 accessToken = tokenStorage.getToken() ?: "",
-                                refreshToken = refreshToken
+                                refreshToken = refreshToken,
                             )
                         } else {
                             null

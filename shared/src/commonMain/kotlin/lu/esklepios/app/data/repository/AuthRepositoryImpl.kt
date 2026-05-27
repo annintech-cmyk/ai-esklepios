@@ -11,10 +11,12 @@ import lu.esklepios.app.domain.repository.AuthRepository
 class AuthRepositoryImpl(
     private val apiService: ApiService,
     private val tokenStorage: TokenStorage,
-    private val database: ESklepiosDatabase
+    private val database: ESklepiosDatabase,
 ) : AuthRepository {
-
-    override suspend fun login(email: String, password: String): Result<User> {
+    override suspend fun login(
+        email: String,
+        password: String,
+    ): Result<User> {
         return apiService.login(email, password).map { response ->
             tokenStorage.setToken(response.token)
             tokenStorage.setRefreshToken(response.refreshToken)
@@ -24,7 +26,10 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun register(user: User, password: String): Result<User> {
+    override suspend fun register(
+        user: User,
+        password: String,
+    ): Result<User> {
         return apiService.register(user.toRegisterRequest(password)).map { response ->
             val registeredUser = response.user.toDomain()
             cacheUser(registeredUser)
@@ -37,8 +42,9 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun refreshToken(): Result<String> {
-        val currentRefreshToken = tokenStorage.getRefreshToken()
-            ?: return Result.failure(Exception("No refresh token available"))
+        val currentRefreshToken =
+            tokenStorage.getRefreshToken()
+                ?: return Result.failure(Exception("No refresh token available"))
 
         return apiService.refreshToken(currentRefreshToken).map { response ->
             tokenStorage.setToken(response.token)
@@ -79,20 +85,21 @@ class AuthRepositoryImpl(
             dateOfBirth = user.dateOfBirth,
             cnsNumber = user.cnsNumber,
             profileType = user.profileType.name,
-            language = user.language
+            language = user.language,
         )
     }
 
-    private fun lu.esklepios.app.db.UserEntity.toDomain(): User = User(
-        id = id,
-        firstName = firstName,
-        lastName = lastName,
-        email = email,
-        phone = phone,
-        gender = gender,
-        dateOfBirth = dateOfBirth,
-        cnsNumber = cnsNumber,
-        profileType = lu.esklepios.app.domain.model.ProfileType.fromString(profileType),
-        language = language
-    )
+    private fun lu.esklepios.app.db.UserEntity.toDomain(): User =
+        User(
+            id = id,
+            firstName = firstName,
+            lastName = lastName,
+            email = email,
+            phone = phone,
+            gender = gender,
+            dateOfBirth = dateOfBirth,
+            cnsNumber = cnsNumber,
+            profileType = lu.esklepios.app.domain.model.ProfileType.fromString(profileType),
+            language = language,
+        )
 }

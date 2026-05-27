@@ -6,7 +6,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ValidationUtilTest {
-
     // ── isValidEmail ─────────────────────────────────────────────────────────
 
     @Test
@@ -85,8 +84,8 @@ class ValidationUtilTest {
     @Test
     fun `passwordCriteria detects number plus symbol`() {
         assertTrue(PasswordCriterion.NUM_AND_SYMBOL in ValidationUtil.passwordCriteria("a1!"))
-        assertFalse(PasswordCriterion.NUM_AND_SYMBOL in ValidationUtil.passwordCriteria("a1"))   // digit but no symbol
-        assertFalse(PasswordCriterion.NUM_AND_SYMBOL in ValidationUtil.passwordCriteria("a!"))   // symbol but no digit
+        assertFalse(PasswordCriterion.NUM_AND_SYMBOL in ValidationUtil.passwordCriteria("a1")) // digit but no symbol
+        assertFalse(PasswordCriterion.NUM_AND_SYMBOL in ValidationUtil.passwordCriteria("a!")) // symbol but no digit
     }
 
     @Test

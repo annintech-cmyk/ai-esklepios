@@ -23,14 +23,17 @@ class MyAppointmentsViewModelTest {
     private lateinit var modifyUseCase: ModifyAppointmentUseCase
     private lateinit var viewModel: MyAppointmentsViewModel
 
-    private fun makeAppointment(id: String, status: AppointmentStatus = AppointmentStatus.CONFIRMED) = Appointment(
+    private fun makeAppointment(
+        id: String,
+        status: AppointmentStatus = AppointmentStatus.CONFIRMED,
+    ) = Appointment(
         id = id,
         practitionerId = "prac1",
         practitionerName = "Dr. Smith",
         clinicName = "Clinic A",
         specialty = "GP",
         dateTime = "2025-06-01T10:00",
-        status = status
+        status = status,
     )
 
     @Before
@@ -53,90 +56,97 @@ class MyAppointmentsViewModelTest {
     }
 
     @Test
-    fun `init loads both upcoming and past appointments`() = runTest {
-        coVerify { getUpcomingUseCase(any()) }
-        coVerify { getPastUseCase(any()) }
-    }
+    fun `init loads both upcoming and past appointments`() =
+        runTest {
+            coVerify { getUpcomingUseCase(any()) }
+            coVerify { getPastUseCase(any()) }
+        }
 
     @Test
-    fun `loadUpcoming populates upcomingAppointments`() = runTest {
-        val upcoming = listOf(makeAppointment("1"), makeAppointment("2"))
-        coEvery { getUpcomingUseCase(any()) } returns Result.success(upcoming)
+    fun `loadUpcoming populates upcomingAppointments`() =
+        runTest {
+            val upcoming = listOf(makeAppointment("1"), makeAppointment("2"))
+            coEvery { getUpcomingUseCase(any()) } returns Result.success(upcoming)
 
-        viewModel.loadUpcoming()
+            viewModel.loadUpcoming()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertEquals(2, state.upcomingAppointments.size)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertEquals(2, state.upcomingAppointments.size)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `loadPast populates pastAppointments`() = runTest {
-        val past = listOf(makeAppointment("3", AppointmentStatus.COMPLETED))
-        coEvery { getPastUseCase(any()) } returns Result.success(past)
+    fun `loadPast populates pastAppointments`() =
+        runTest {
+            val past = listOf(makeAppointment("3", AppointmentStatus.COMPLETED))
+            coEvery { getPastUseCase(any()) } returns Result.success(past)
 
-        viewModel.loadPast()
+            viewModel.loadPast()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertEquals(1, state.pastAppointments.size)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertEquals(1, state.pastAppointments.size)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `cancelAppointment removes appointment from upcoming list`() = runTest {
-        val upcoming = listOf(makeAppointment("1"), makeAppointment("2"))
-        coEvery { getUpcomingUseCase(any()) } returns Result.success(upcoming)
-        coEvery { cancelUseCase("1") } returns Result.success(Unit)
+    fun `cancelAppointment removes appointment from upcoming list`() =
+        runTest {
+            val upcoming = listOf(makeAppointment("1"), makeAppointment("2"))
+            coEvery { getUpcomingUseCase(any()) } returns Result.success(upcoming)
+            coEvery { cancelUseCase("1") } returns Result.success(Unit)
 
-        viewModel.loadUpcoming()
-        viewModel.cancelAppointment("1")
+            viewModel.loadUpcoming()
+            viewModel.cancelAppointment("1")
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertFalse(state.upcomingAppointments.any { it.id == "1" })
-            assertTrue(state.upcomingAppointments.any { it.id == "2" })
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertFalse(state.upcomingAppointments.any { it.id == "1" })
+                assertTrue(state.upcomingAppointments.any { it.id == "2" })
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `cancelAppointment failure sets error`() = runTest {
-        coEvery { cancelUseCase(any()) } returns Result.failure(Exception("Cancel failed"))
+    fun `cancelAppointment failure sets error`() =
+        runTest {
+            coEvery { cancelUseCase(any()) } returns Result.failure(Exception("Cancel failed"))
 
-        viewModel.cancelAppointment("1")
+            viewModel.cancelAppointment("1")
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertNotNull(state.error)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertNotNull(state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `selectTab updates selectedTab`() = runTest {
-        viewModel.selectTab(1)
+    fun `selectTab updates selectedTab`() =
+        runTest {
+            viewModel.selectTab(1)
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertEquals(1, state.selectedTab)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertEquals(1, state.selectedTab)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `clearError resets error to null`() = runTest {
-        coEvery { cancelUseCase(any()) } returns Result.failure(Exception("error"))
-        viewModel.cancelAppointment("1")
-        viewModel.clearError()
+    fun `clearError resets error to null`() =
+        runTest {
+            coEvery { cancelUseCase(any()) } returns Result.failure(Exception("error"))
+            viewModel.cancelAppointment("1")
+            viewModel.clearError()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertEquals(null, state.error)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertEquals(null, state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 }

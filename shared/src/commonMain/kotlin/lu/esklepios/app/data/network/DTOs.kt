@@ -6,14 +6,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LoginRequest(
     @SerialName("email") val email: String,
-    @SerialName("password") val password: String
+    @SerialName("password") val password: String,
 )
 
 @Serializable
 data class LoginResponse(
     @SerialName("token") val token: String,
     @SerialName("refresh_token") val refreshToken: String,
-    @SerialName("user") val user: UserDto
+    @SerialName("user") val user: UserDto,
 )
 
 @Serializable
@@ -27,33 +27,33 @@ data class RegisterRequest(
     @SerialName("date_of_birth") val dateOfBirth: String,
     @SerialName("cns_number") val cnsNumber: String,
     @SerialName("profile_type") val profileType: String,
-    @SerialName("language") val language: String
+    @SerialName("language") val language: String,
 )
 
 @Serializable
 data class RegisterResponse(
-    @SerialName("user") val user: UserDto
+    @SerialName("user") val user: UserDto,
 )
 
 @Serializable
 data class ForgotPasswordRequest(
-    @SerialName("email") val email: String
+    @SerialName("email") val email: String,
 )
 
 @Serializable
 data class ForgotPasswordResponse(
-    @SerialName("message") val message: String
+    @SerialName("message") val message: String,
 )
 
 @Serializable
 data class RefreshTokenRequest(
-    @SerialName("refresh_token") val refreshToken: String
+    @SerialName("refresh_token") val refreshToken: String,
 )
 
 @Serializable
 data class RefreshTokenResponse(
     @SerialName("token") val token: String,
-    @SerialName("refresh_token") val refreshToken: String
+    @SerialName("refresh_token") val refreshToken: String,
 )
 
 @Serializable
@@ -62,7 +62,7 @@ data class AppointmentSlotDto(
     @SerialName("practitioner_id") val practitionerId: String,
     @SerialName("date_time") val dateTime: String,
     @SerialName("is_available") val isAvailable: Boolean,
-    @SerialName("duration_minutes") val durationMinutes: Int = 30
+    @SerialName("duration_minutes") val durationMinutes: Int = 30,
 )
 
 @Serializable
@@ -70,7 +70,7 @@ data class ScheduleDayDto(
     @SerialName("day_of_week") val dayOfWeek: String,
     @SerialName("open_time") val openTime: String,
     @SerialName("close_time") val closeTime: String,
-    @SerialName("is_open") val isOpen: Boolean
+    @SerialName("is_open") val isOpen: Boolean,
 )
 
 @Serializable
@@ -91,7 +91,7 @@ data class PractitionerDto(
     @SerialName("schedule") val schedule: List<ScheduleDayDto> = emptyList(),
     @SerialName("payment_methods") val paymentMethods: List<String> = emptyList(),
     @SerialName("diplomas") val diplomas: List<String> = emptyList(),
-    @SerialName("is_favorite") val isFavorite: Boolean = false
+    @SerialName("is_favorite") val isFavorite: Boolean = false,
 )
 
 @Serializable
@@ -104,7 +104,7 @@ data class AppointmentDto(
     @SerialName("date_time") val dateTime: String,
     @SerialName("status") val status: String,
     @SerialName("message_to_doctor") val messageToDoctor: String = "",
-    @SerialName("consultation_reason") val consultationReason: String = ""
+    @SerialName("consultation_reason") val consultationReason: String = "",
 )
 
 @Serializable
@@ -118,7 +118,7 @@ data class UserDto(
     @SerialName("date_of_birth") val dateOfBirth: String,
     @SerialName("cns_number") val cnsNumber: String,
     @SerialName("profile_type") val profileType: String,
-    @SerialName("language") val language: String
+    @SerialName("language") val language: String,
 )
 
 @Serializable
@@ -126,14 +126,14 @@ data class CreateAppointmentRequest(
     @SerialName("practitioner_id") val practitionerId: String,
     @SerialName("date_time") val dateTime: String,
     @SerialName("message_to_doctor") val messageToDoctor: String,
-    @SerialName("consultation_reason") val consultationReason: String
+    @SerialName("consultation_reason") val consultationReason: String,
 )
 
 @Serializable
 data class ModifyAppointmentRequest(
     @SerialName("date_time") val dateTime: String,
     @SerialName("message_to_doctor") val messageToDoctor: String,
-    @SerialName("consultation_reason") val consultationReason: String
+    @SerialName("consultation_reason") val consultationReason: String,
 )
 
 @Serializable
@@ -144,17 +144,17 @@ data class UpdateProfileRequest(
     @SerialName("gender") val gender: String,
     @SerialName("date_of_birth") val dateOfBirth: String,
     @SerialName("cns_number") val cnsNumber: String,
-    @SerialName("language") val language: String
+    @SerialName("language") val language: String,
 )
 
 @Serializable
 data class ChangeEmailRequest(
     @SerialName("new_email") val newEmail: String,
-    @SerialName("password") val password: String
+    @SerialName("password") val password: String,
 )
 
 @Serializable
 data class ChangePasswordRequest(
     @SerialName("old_password") val oldPassword: String,
-    @SerialName("new_password") val newPassword: String
+    @SerialName("new_password") val newPassword: String,
 )

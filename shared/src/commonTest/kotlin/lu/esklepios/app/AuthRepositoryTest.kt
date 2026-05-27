@@ -10,7 +10,6 @@ import kotlin.test.*
  * Verifies login stores token, logout clears state, and isLoggedIn reflects auth state.
  */
 class AuthRepositoryTest {
-
     private class FakeAuthRepository : AuthRepository {
         private var token: String? = null
         private var currentUser: User? = null
@@ -23,20 +22,24 @@ class AuthRepositoryTest {
             this.registerSuccess = registerSuccess
         }
 
-        val testUser = User(
-            id = "u1",
-            firstName = "Test",
-            lastName = "User",
-            email = "test@esklepios.lu",
-            phone = "+352 000",
-            gender = "Other",
-            dateOfBirth = "1990-01-01",
-            cnsNumber = "0000000000",
-            profileType = ProfileType.PATIENT,
-            language = "en"
-        )
+        val testUser =
+            User(
+                id = "u1",
+                firstName = "Test",
+                lastName = "User",
+                email = "test@esklepios.lu",
+                phone = "+352 000",
+                gender = "Other",
+                dateOfBirth = "1990-01-01",
+                cnsNumber = "0000000000",
+                profileType = ProfileType.PATIENT,
+                language = "en",
+            )
 
-        override suspend fun login(email: String, password: String): Result<User> {
+        override suspend fun login(
+            email: String,
+            password: String,
+        ): Result<User> {
             return if (loginSuccess) {
                 token = "fake-jwt-token"
                 currentUser = testUser
@@ -46,7 +49,10 @@ class AuthRepositoryTest {
             }
         }
 
-        override suspend fun register(user: User, password: String): Result<User> {
+        override suspend fun register(
+            user: User,
+            password: String,
+        ): Result<User> {
             return if (registerSuccess) {
                 token = "fake-jwt-token-new"
                 currentUser = user
@@ -57,6 +63,7 @@ class AuthRepositoryTest {
         }
 
         override suspend fun forgotPassword(email: String): Result<Unit> = Result.success(Unit)
+
         override suspend fun refreshToken(): Result<String> = Result.success("new-token")
 
         override suspend fun logout(): Result<Unit> {
@@ -66,63 +73,69 @@ class AuthRepositoryTest {
         }
 
         override fun isLoggedIn(): Boolean = token != null
+
         override fun getCurrentUser(): User? = currentUser
     }
 
     @Test
-    fun `login stores token and sets isLoggedIn to true`() = runTest {
-        val repo = FakeAuthRepository(loginSuccess = true)
-        assertFalse(repo.isLoggedIn())
+    fun `login stores token and sets isLoggedIn to true`() =
+        runTest {
+            val repo = FakeAuthRepository(loginSuccess = true)
+            assertFalse(repo.isLoggedIn())
 
-        val result = repo.login("test@test.lu", "password")
+            val result = repo.login("test@test.lu", "password")
 
-        assertTrue(result.isSuccess)
-        assertTrue(repo.isLoggedIn())
-    }
-
-    @Test
-    fun `login returns user on success`() = runTest {
-        val repo = FakeAuthRepository(loginSuccess = true)
-
-        val result = repo.login("test@test.lu", "password")
-
-        assertTrue(result.isSuccess)
-        assertNotNull(result.getOrNull())
-        assertEquals("u1", result.getOrNull()?.id)
-    }
+            assertTrue(result.isSuccess)
+            assertTrue(repo.isLoggedIn())
+        }
 
     @Test
-    fun `login failure does not set isLoggedIn`() = runTest {
-        val repo = FakeAuthRepository(loginSuccess = false)
+    fun `login returns user on success`() =
+        runTest {
+            val repo = FakeAuthRepository(loginSuccess = true)
 
-        val result = repo.login("bad@test.lu", "wrongpass")
+            val result = repo.login("test@test.lu", "password")
 
-        assertTrue(result.isFailure)
-        assertFalse(repo.isLoggedIn())
-    }
-
-    @Test
-    fun `logout clears token and sets isLoggedIn to false`() = runTest {
-        val repo = FakeAuthRepository(loginSuccess = true)
-        repo.login("test@test.lu", "password")
-        assertTrue(repo.isLoggedIn())
-
-        val result = repo.logout()
-
-        assertTrue(result.isSuccess)
-        assertFalse(repo.isLoggedIn())
-    }
+            assertTrue(result.isSuccess)
+            assertNotNull(result.getOrNull())
+            assertEquals("u1", result.getOrNull()?.id)
+        }
 
     @Test
-    fun `logout clears current user`() = runTest {
-        val repo = FakeAuthRepository(loginSuccess = true)
-        repo.login("test@test.lu", "password")
-        assertNotNull(repo.getCurrentUser())
+    fun `login failure does not set isLoggedIn`() =
+        runTest {
+            val repo = FakeAuthRepository(loginSuccess = false)
 
-        repo.logout()
+            val result = repo.login("bad@test.lu", "wrongpass")
 
-        assertNull(repo.getCurrentUser())
-    }
+            assertTrue(result.isFailure)
+            assertFalse(repo.isLoggedIn())
+        }
+
+    @Test
+    fun `logout clears token and sets isLoggedIn to false`() =
+        runTest {
+            val repo = FakeAuthRepository(loginSuccess = true)
+            repo.login("test@test.lu", "password")
+            assertTrue(repo.isLoggedIn())
+
+            val result = repo.logout()
+
+            assertTrue(result.isSuccess)
+            assertFalse(repo.isLoggedIn())
+        }
+
+    @Test
+    fun `logout clears current user`() =
+        runTest {
+            val repo = FakeAuthRepository(loginSuccess = true)
+            repo.login("test@test.lu", "password")
+            assertNotNull(repo.getCurrentUser())
+
+            repo.logout()
+
+            assertNull(repo.getCurrentUser())
+        }
 
     @Test
     fun `isLoggedIn returns false initially`() {
@@ -137,24 +150,26 @@ class AuthRepositoryTest {
     }
 
     @Test
-    fun `register success sets isLoggedIn`() = runTest {
-        val repo = FakeAuthRepository(registerSuccess = true)
-        val user = User("", "New", "User", "new@test.lu", "", "", "", "", ProfileType.PATIENT, "en")
+    fun `register success sets isLoggedIn`() =
+        runTest {
+            val repo = FakeAuthRepository(registerSuccess = true)
+            val user = User("", "New", "User", "new@test.lu", "", "", "", "", ProfileType.PATIENT, "en")
 
-        val result = repo.register(user, "password123")
+            val result = repo.register(user, "password123")
 
-        assertTrue(result.isSuccess)
-        assertTrue(repo.isLoggedIn())
-    }
+            assertTrue(result.isSuccess)
+            assertTrue(repo.isLoggedIn())
+        }
 
     @Test
-    fun `register failure does not set isLoggedIn`() = runTest {
-        val repo = FakeAuthRepository(registerSuccess = false)
-        val user = User("", "New", "User", "new@test.lu", "", "", "", "", ProfileType.PATIENT, "en")
+    fun `register failure does not set isLoggedIn`() =
+        runTest {
+            val repo = FakeAuthRepository(registerSuccess = false)
+            val user = User("", "New", "User", "new@test.lu", "", "", "", "", ProfileType.PATIENT, "en")
 
-        val result = repo.register(user, "password123")
+            val result = repo.register(user, "password123")
 
-        assertTrue(result.isFailure)
-        assertFalse(repo.isLoggedIn())
-    }
+            assertTrue(result.isFailure)
+            assertFalse(repo.isLoggedIn())
+        }
 }

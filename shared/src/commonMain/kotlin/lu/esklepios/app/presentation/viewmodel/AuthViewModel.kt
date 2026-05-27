@@ -15,7 +15,15 @@ import lu.esklepios.app.domain.usecase.LogoutUseCase
 import lu.esklepios.app.domain.usecase.RegisterUseCase
 
 enum class AuthField {
-    EMAIL, PASSWORD, CONFIRM_PASSWORD, FIRST_NAME, LAST_NAME, PHONE, GENDER, DATE_OF_BIRTH, CNS_NUMBER
+    EMAIL,
+    PASSWORD,
+    CONFIRM_PASSWORD,
+    FIRST_NAME,
+    LAST_NAME,
+    PHONE,
+    GENDER,
+    DATE_OF_BIRTH,
+    CNS_NUMBER,
 }
 
 data class AuthUiState(
@@ -33,16 +41,15 @@ data class AuthUiState(
     val cnsNumber: String = "",
     val profileType: ProfileType = ProfileType.PATIENT,
     val step: Int = 1,
-    val forgotPasswordSent: Boolean = false
+    val forgotPasswordSent: Boolean = false,
 )
 
 class AuthViewModel(
     private val loginUseCase: LoginUseCase,
     private val registerUseCase: RegisterUseCase,
     private val forgotPasswordUseCase: ForgotPasswordUseCase,
-    private val logoutUseCase: LogoutUseCase
+    private val logoutUseCase: LogoutUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
@@ -59,9 +66,8 @@ class AuthViewModel(
                     _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
                 }
                 .onFailure { throwable ->
-                   // _uiState.update { it.copy(isLoading = false, error = throwable.message ?: "Login failed") }
+                    // _uiState.update { it.copy(isLoading = false, error = throwable.message ?: "Login failed") }
                     _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
-
                 }
         }
     }
@@ -74,18 +80,19 @@ class AuthViewModel(
         }
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            val user = User(
-                id = "",
-                firstName = state.firstName,
-                lastName = state.lastName,
-                email = state.email,
-                phone = state.phone,
-                gender = state.gender,
-                dateOfBirth = state.dateOfBirth,
-                cnsNumber = state.cnsNumber,
-                profileType = state.profileType,
-                language = "en"
-            )
+            val user =
+                User(
+                    id = "",
+                    firstName = state.firstName,
+                    lastName = state.lastName,
+                    email = state.email,
+                    phone = state.phone,
+                    gender = state.gender,
+                    dateOfBirth = state.dateOfBirth,
+                    cnsNumber = state.cnsNumber,
+                    profileType = state.profileType,
+                    language = "en",
+                )
             registerUseCase(user, state.password)
                 .onSuccess {
                     _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
@@ -127,7 +134,10 @@ class AuthViewModel(
         }
     }
 
-    fun updateField(field: AuthField, value: String) {
+    fun updateField(
+        field: AuthField,
+        value: String,
+    ) {
         _uiState.update { state ->
             when (field) {
                 AuthField.EMAIL -> state.copy(email = value)
@@ -151,7 +161,10 @@ class AuthViewModel(
         _uiState.update { it.copy(error = null) }
     }
 
-    fun login(email: String, password: String) {
+    fun login(
+        email: String,
+        password: String,
+    ) {
         updateField(AuthField.EMAIL, email)
         updateField(AuthField.PASSWORD, password)
         login()
@@ -165,7 +178,7 @@ class AuthViewModel(
         phone: String,
         dateOfBirth: String,
         gender: String,
-        profileType: String
+        profileType: String,
     ) {
         updateField(AuthField.FIRST_NAME, firstName)
         updateField(AuthField.LAST_NAME, lastName)

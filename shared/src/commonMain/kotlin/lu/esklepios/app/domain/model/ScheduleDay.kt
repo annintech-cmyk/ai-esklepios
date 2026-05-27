@@ -7,5 +7,5 @@ data class ScheduleDay(
     val dayOfWeek: String,
     val openTime: String,
     val closeTime: String,
-    val isOpen: Boolean
+    val isOpen: Boolean,
 )

@@ -9,7 +9,7 @@ data class Appointment(
     val dateTime: String,
     val status: AppointmentStatus,
     val messageToDoctor: String = "",
-    val consultationReason: String = ""
+    val consultationReason: String = "",
 )
 
 enum class AppointmentStatus {
@@ -17,11 +17,13 @@ enum class AppointmentStatus {
     CONFIRMED,
     CANCELLED,
     COMPLETED,
-    NO_SHOW;
+    NO_SHOW,
+    ;
 
     companion object {
-        fun fromString(value: String): AppointmentStatus = entries.find {
-            it.name.equals(value, ignoreCase = true)
-        } ?: PENDING
+        fun fromString(value: String): AppointmentStatus =
+            entries.find {
+                it.name.equals(value, ignoreCase = true)
+            } ?: PENDING
     }
 }

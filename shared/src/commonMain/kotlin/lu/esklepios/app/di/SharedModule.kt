@@ -45,52 +45,53 @@ import lu.esklepios.app.presentation.viewmodel.SplashViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-fun sharedModule() = module {
-    // Utilities
-    single<Clock> { Clock.System }
+fun sharedModule() =
+    module {
+        // Utilities
+        single<Clock> { Clock.System }
 
-    // Database
-    single { get<DatabaseDriverFactory>().createDriver() }
-    single { ESklepiosDatabase(get()) }
+        // Database
+        single { get<DatabaseDriverFactory>().createDriver() }
+        single { ESklepiosDatabase(get()) }
 
-    // Network
-    single { HttpClientFactory(get(), BuildKonfig.ENABLE_LOGGING).create() }
-    single<ApiService> { KtorApiService(get(), BuildKonfig.BASE_API_URL) }
+        // Network
+        single { HttpClientFactory(get(), BuildKonfig.ENABLE_LOGGING).create() }
+        single<ApiService> { KtorApiService(get(), BuildKonfig.BASE_API_URL) }
 
-    // Repositories
-    single<AuthRepository> { AuthRepositoryImpl(get(), get(), get()) }
-    single<PractitionerRepository> { PractitionerRepositoryImpl(get(), get()) }
-    single<AppointmentRepository> { AppointmentRepositoryImpl(get(), get()) }
-    single<UserRepository> { UserRepositoryImpl(get()) }
+        // Repositories
+        single<AuthRepository> { AuthRepositoryImpl(get(), get(), get()) }
+        single<PractitionerRepository> { PractitionerRepositoryImpl(get(), get()) }
+        single<AppointmentRepository> { AppointmentRepositoryImpl(get(), get()) }
+        single<UserRepository> { UserRepositoryImpl(get()) }
 
-    // Use cases
-    factoryOf(::LoginUseCase)
-    factoryOf(::RegisterUseCase)
-    factoryOf(::ForgotPasswordUseCase)
-    factoryOf(::LogoutUseCase)
-    factoryOf(::SearchPractitionersUseCase)
-    factoryOf(::GetPractitionerDetailUseCase)
-    factoryOf(::ToggleFavoriteUseCase)
-    factoryOf(::CreateAppointmentUseCase)
-    factoryOf(::GetUpcomingAppointmentsUseCase)
-    factoryOf(::GetPastAppointmentsUseCase)
-    factoryOf(::CancelAppointmentUseCase)
-    factoryOf(::ModifyAppointmentUseCase)
-    factoryOf(::GetProfileUseCase)
-    factoryOf(::UpdateProfileUseCase)
-    factoryOf(::ChangeEmailUseCase)
-    factoryOf(::ChangePasswordUseCase)
+        // Use cases
+        factoryOf(::LoginUseCase)
+        factoryOf(::RegisterUseCase)
+        factoryOf(::ForgotPasswordUseCase)
+        factoryOf(::LogoutUseCase)
+        factoryOf(::SearchPractitionersUseCase)
+        factoryOf(::GetPractitionerDetailUseCase)
+        factoryOf(::ToggleFavoriteUseCase)
+        factoryOf(::CreateAppointmentUseCase)
+        factoryOf(::GetUpcomingAppointmentsUseCase)
+        factoryOf(::GetPastAppointmentsUseCase)
+        factoryOf(::CancelAppointmentUseCase)
+        factoryOf(::ModifyAppointmentUseCase)
+        factoryOf(::GetProfileUseCase)
+        factoryOf(::UpdateProfileUseCase)
+        factoryOf(::ChangeEmailUseCase)
+        factoryOf(::ChangePasswordUseCase)
 
-    // ViewModels
-    factoryOf(::SplashViewModel)
-    factoryOf(::AuthViewModel)
-    factoryOf(::HomeViewModel)
-    factoryOf(::PractitionerDetailViewModel)
-    factoryOf(::BookAppointmentViewModel)
-    factoryOf(::AppointmentSuccessViewModel)
-    factoryOf(::MyAppointmentsViewModel)
-    factoryOf(::ProfileViewModel)
-    factoryOf(::EditProfileViewModel)
-    factoryOf(::ChangeEmailViewModel)
-    factoryOf(::ChangePasswordViewModel)
-}
+        // ViewModels
+        factoryOf(::SplashViewModel)
+        factoryOf(::AuthViewModel)
+        factoryOf(::HomeViewModel)
+        factoryOf(::PractitionerDetailViewModel)
+        factoryOf(::BookAppointmentViewModel)
+        factoryOf(::AppointmentSuccessViewModel)
+        factoryOf(::MyAppointmentsViewModel)
+        factoryOf(::ProfileViewModel)
+        factoryOf(::EditProfileViewModel)
+        factoryOf(::ChangeEmailViewModel)
+        factoryOf(::ChangePasswordViewModel)
+    }

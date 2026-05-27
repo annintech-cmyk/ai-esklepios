@@ -15,21 +15,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
+import lu.esklepios.app.core.navigation.NavDestination
+import lu.esklepios.app.core.ui.components.*
+import lu.esklepios.app.core.ui.theme.*
 import lu.esklepios.app.presentation.viewmodel.AuthField
 import lu.esklepios.app.presentation.viewmodel.AuthViewModel
-import lu.esklepios.app.core.ui.components.*
-import lu.esklepios.app.core.navigation.NavDestination
-import lu.esklepios.app.core.ui.theme.*
 import lu.esklepios.app.util.Gender
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    viewModel: AuthViewModel = koinViewModel()
+    viewModel: AuthViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -44,27 +44,31 @@ fun RegisterScreen(
     AppFormScreen(
         title = stringResource(R.string.screen_register),
         onNavigateBack = {
-            if (uiState.step > 1) viewModel.setStep(uiState.step - 1)
-            else navController.popBackStack()
+            if (uiState.step > 1) {
+                viewModel.setStep(uiState.step - 1)
+            } else {
+                navController.popBackStack()
+            }
         },
         error = uiState.error,
-        onErrorDismissed = { viewModel.clearError() }
+        onErrorDismissed = { viewModel.clearError() },
     ) {
         Column(modifier = Modifier.padding(vertical = Dimens.paddingL)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.paddingS)
+                horizontalArrangement = Arrangement.spacedBy(Dimens.paddingS),
             ) {
                 repeat(3) { index ->
                     val isActive = index < uiState.step
                     Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(Dimens.progressBarHeight)
-                            .background(
-                                color = if (isActive) Primary else BorderColor,
-                                shape = RoundedCornerShape(Dimens.progressBarRadius)
-                            )
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .height(Dimens.progressBarHeight)
+                                .background(
+                                    color = if (isActive) Primary else BorderColor,
+                                    shape = RoundedCornerShape(Dimens.progressBarRadius),
+                                ),
                     )
                 }
             }
@@ -84,14 +88,14 @@ fun RegisterScreen(
             PrimaryButton(
                 text = stringResource(R.string.action_next),
                 onClick = { viewModel.setStep(uiState.step + 1) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         } else {
             PrimaryButton(
                 text = stringResource(R.string.action_register),
                 onClick = { viewModel.register() },
                 isLoading = uiState.isLoading,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
 
@@ -100,12 +104,12 @@ fun RegisterScreen(
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             AppBodyText(text = stringResource(R.string.register_have_account) + " ", color = TextSecondary)
             AppTextLink(
                 text = stringResource(R.string.action_sign_in),
-                onClick = { navController.navigate(NavDestination.Home.route) }
+                onClick = { navController.navigate(NavDestination.Home.route) },
             )
         }
 
@@ -120,7 +124,7 @@ private fun RegisterStep1(
     lastName: String,
     dateOfBirth: String,
     gender: String,
-    cnsNumber: String
+    cnsNumber: String,
 ) {
     AppTitleText(text = stringResource(R.string.register_step_personal))
     Spacer(Modifier.height(Dimens.paddingXL))
@@ -131,7 +135,7 @@ private fun RegisterStep1(
         onValueChange = { viewModel.updateField(AuthField.FIRST_NAME, it) },
         placeholder = "John",
         leadingIcon = Icons.Filled.Person,
-        isRequired = true
+        isRequired = true,
     )
     Spacer(Modifier.height(Dimens.paddingL))
     FormField(
@@ -140,7 +144,7 @@ private fun RegisterStep1(
         onValueChange = { viewModel.updateField(AuthField.LAST_NAME, it) },
         placeholder = "Doe",
         leadingIcon = Icons.Filled.Person,
-        isRequired = true
+        isRequired = true,
     )
     Spacer(Modifier.height(Dimens.paddingL))
     FormField(
@@ -148,7 +152,7 @@ private fun RegisterStep1(
         value = dateOfBirth,
         onValueChange = { viewModel.updateField(AuthField.DATE_OF_BIRTH, it) },
         placeholder = "DD/MM/YYYY",
-        isRequired = true
+        isRequired = true,
     )
     Spacer(Modifier.height(Dimens.paddingL))
 
@@ -156,21 +160,25 @@ private fun RegisterStep1(
     Spacer(Modifier.height(Dimens.paddingS))
     Row(horizontalArrangement = Arrangement.spacedBy(Dimens.paddingM)) {
         Gender.entries.forEach { g ->
-            val label = stringResource(when (g) {
-                Gender.MALE   -> R.string.gender_male
-                Gender.FEMALE -> R.string.gender_female
-                Gender.OTHER  -> R.string.gender_other
-            })
+            val label =
+                stringResource(
+                    when (g) {
+                        Gender.MALE -> R.string.gender_male
+                        Gender.FEMALE -> R.string.gender_female
+                        Gender.OTHER -> R.string.gender_other
+                    },
+                )
             // Material3 FilterChip (not our custom FilterChip) — label slot requires a Composable
             // and uses its own text slot API. AppCaptionText used inside the label lambda.
             FilterChip(
                 selected = gender == g.apiValue,
                 onClick = { viewModel.updateField(AuthField.GENDER, g.apiValue) },
                 label = { AppCaptionText(text = label) },
-                colors = FilterChipDefaults.filterChipColors(
-                    selectedContainerColor = Primary,
-                    selectedLabelColor = Color.White
-                )
+                colors =
+                    FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = Primary,
+                        selectedLabelColor = Color.White,
+                    ),
             )
         }
     }
@@ -181,7 +189,7 @@ private fun RegisterStep1(
         value = cnsNumber,
         onValueChange = { viewModel.updateField(AuthField.CNS_NUMBER, it) },
         placeholder = "0000000000",
-        keyboardType = KeyboardType.Number
+        keyboardType = KeyboardType.Number,
     )
 }
 
@@ -189,7 +197,7 @@ private fun RegisterStep1(
 private fun RegisterStep2(
     viewModel: AuthViewModel,
     email: String,
-    phone: String
+    phone: String,
 ) {
     AppTitleText(text = stringResource(R.string.register_step_contact))
     Spacer(Modifier.height(Dimens.paddingXL))
@@ -201,7 +209,7 @@ private fun RegisterStep2(
         placeholder = "your@email.com",
         leadingIcon = Icons.Filled.Email,
         keyboardType = KeyboardType.Email,
-        isRequired = true
+        isRequired = true,
     )
     Spacer(Modifier.height(Dimens.paddingL))
     FormField(
@@ -210,7 +218,7 @@ private fun RegisterStep2(
         onValueChange = { viewModel.updateField(AuthField.PHONE, it) },
         placeholder = "+352 000 000 000",
         leadingIcon = Icons.Filled.Phone,
-        keyboardType = KeyboardType.Phone
+        keyboardType = KeyboardType.Phone,
     )
 }
 
@@ -218,7 +226,7 @@ private fun RegisterStep2(
 private fun RegisterStep3(
     viewModel: AuthViewModel,
     password: String,
-    confirmPassword: String
+    confirmPassword: String,
 ) {
     AppTitleText(text = stringResource(R.string.register_step_account))
     Spacer(Modifier.height(Dimens.paddingXL))
@@ -230,7 +238,7 @@ private fun RegisterStep3(
         placeholder = stringResource(R.string.error_password_too_short),
         leadingIcon = Icons.Filled.Lock,
         isPassword = true,
-        isRequired = true
+        isRequired = true,
     )
     Spacer(Modifier.height(Dimens.paddingL))
     FormField(
@@ -240,6 +248,6 @@ private fun RegisterStep3(
         placeholder = stringResource(R.string.error_password_too_short),
         leadingIcon = Icons.Filled.Lock,
         isPassword = true,
-        isRequired = true
+        isRequired = true,
     )
 }

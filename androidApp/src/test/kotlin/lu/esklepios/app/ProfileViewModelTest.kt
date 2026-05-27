@@ -21,18 +21,19 @@ class ProfileViewModelTest {
     private lateinit var logoutUseCase: LogoutUseCase
     private lateinit var viewModel: ProfileViewModel
 
-    private val testUser = User(
-        id = "user1",
-        firstName = "Anna",
-        lastName = "Test",
-        email = "anna@test.lu",
-        phone = "+352 123 456",
-        gender = "Female",
-        dateOfBirth = "01/01/1990",
-        cnsNumber = "1234567890",
-        profileType = ProfileType.PATIENT,
-        language = "en"
-    )
+    private val testUser =
+        User(
+            id = "user1",
+            firstName = "Anna",
+            lastName = "Test",
+            email = "anna@test.lu",
+            phone = "+352 123 456",
+            gender = "Female",
+            dateOfBirth = "01/01/1990",
+            cnsNumber = "1234567890",
+            profileType = ProfileType.PATIENT,
+            language = "en",
+        )
 
     @Before
     fun setUp() {
@@ -51,75 +52,81 @@ class ProfileViewModelTest {
     }
 
     @Test
-    fun `init calls loadProfile and populates user`() = runTest {
-        coVerify { getProfileUseCase() }
+    fun `init calls loadProfile and populates user`() =
+        runTest {
+            coVerify { getProfileUseCase() }
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertEquals(testUser, state.user)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertEquals(testUser, state.user)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `loadProfile failure sets error state`() = runTest {
-        coEvery { getProfileUseCase() } returns Result.failure(Exception("Profile not found"))
-        val vm = ProfileViewModel(getProfileUseCase, logoutUseCase)
+    fun `loadProfile failure sets error state`() =
+        runTest {
+            coEvery { getProfileUseCase() } returns Result.failure(Exception("Profile not found"))
+            val vm = ProfileViewModel(getProfileUseCase, logoutUseCase)
 
-        vm.uiState.test {
-            val state = awaitItem()
-            assertNotNull(state.error)
-            assertNull(state.user)
-            cancelAndIgnoreRemainingEvents()
+            vm.uiState.test {
+                val state = awaitItem()
+                assertNotNull(state.error)
+                assertNull(state.user)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `logout success sets isLoggedOut to true`() = runTest {
-        coEvery { logoutUseCase() } returns Result.success(Unit)
+    fun `logout success sets isLoggedOut to true`() =
+        runTest {
+            coEvery { logoutUseCase() } returns Result.success(Unit)
 
-        viewModel.logout()
+            viewModel.logout()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertTrue(state.isLoggedOut)
-            assertNull(state.user)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertTrue(state.isLoggedOut)
+                assertNull(state.user)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `logout failure sets error`() = runTest {
-        coEvery { logoutUseCase() } returns Result.failure(Exception("Logout failed"))
+    fun `logout failure sets error`() =
+        runTest {
+            coEvery { logoutUseCase() } returns Result.failure(Exception("Logout failed"))
 
-        viewModel.logout()
+            viewModel.logout()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertNotNull(state.error)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertNotNull(state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `clearError resets error to null`() = runTest {
-        coEvery { getProfileUseCase() } returns Result.failure(Exception("error"))
-        val vm = ProfileViewModel(getProfileUseCase, logoutUseCase)
-        vm.clearError()
+    fun `clearError resets error to null`() =
+        runTest {
+            coEvery { getProfileUseCase() } returns Result.failure(Exception("error"))
+            val vm = ProfileViewModel(getProfileUseCase, logoutUseCase)
+            vm.clearError()
 
-        vm.uiState.test {
-            val state = awaitItem()
-            assertNull(state.error)
-            cancelAndIgnoreRemainingEvents()
+            vm.uiState.test {
+                val state = awaitItem()
+                assertNull(state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `user initials derived correctly`() = runTest {
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertEquals("AT", state.user?.initials)
-            cancelAndIgnoreRemainingEvents()
+    fun `user initials derived correctly`() =
+        runTest {
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertEquals("AT", state.user?.initials)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 }

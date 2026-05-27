@@ -12,16 +12,15 @@ import lu.esklepios.app.domain.repository.PractitionerRepository
 
 class PractitionerRepositoryImpl(
     private val apiService: ApiService,
-    private val database: ESklepiosDatabase
+    private val database: ESklepiosDatabase,
 ) : PractitionerRepository {
-
     private val json = Json { ignoreUnknownKeys = true }
 
     override suspend fun searchPractitioners(
         location: String,
         specialty: String,
         page: Int,
-        limit: Int
+        limit: Int,
     ): Result<List<Practitioner>> {
         return apiService.searchPractitioners(location, specialty, page, limit)
             .map { dtos ->
@@ -74,7 +73,7 @@ class PractitionerRepositoryImpl(
             scheduleJson = json.encodeToString(practitioner.schedule),
             paymentMethodsJson = json.encodeToString(practitioner.paymentMethods),
             diplomasJson = json.encodeToString(practitioner.diplomas),
-            isFavorite = if (practitioner.isFavorite) 1L else 0L
+            isFavorite = if (practitioner.isFavorite) 1L else 0L,
         )
     }
 
@@ -100,7 +99,7 @@ class PractitionerRepositoryImpl(
             schedule = schedule,
             paymentMethods = paymentMethods,
             diplomas = diplomas,
-            isFavorite = isFavorite != 0L
+            isFavorite = isFavorite != 0L,
         )
     }
 }

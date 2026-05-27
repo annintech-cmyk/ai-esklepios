@@ -11,15 +11,17 @@ plugins {
     alias(libs.plugins.buildkonfig)
 }
 
-val devProperties = Properties().apply {
-    val file = rootProject.file("dev.properties")
-    if (file.exists()) load(file.inputStream())
-}
+val devProperties =
+    Properties().apply {
+        val file = rootProject.file("dev.properties")
+        if (file.exists()) load(file.inputStream())
+    }
 
-val prodProperties = Properties().apply {
-    val file = rootProject.file("prod.properties")
-    if (file.exists()) load(file.inputStream())
-}
+val prodProperties =
+    Properties().apply {
+        val file = rootProject.file("prod.properties")
+        if (file.exists()) load(file.inputStream())
+    }
 
 kotlin {
     androidTarget {
@@ -115,23 +117,22 @@ buildkonfig {
         buildConfigField(
             STRING,
             "BASE_API_URL",
-            devProperties.getProperty("BASE_API_URL", "https://dev-api.esklepios.lu/v1")
+            devProperties.getProperty("BASE_API_URL", "https://dev-api.esklepios.lu/v1"),
         )
         buildConfigField(
             INT,
             "API_TIMEOUT_SECONDS",
-            devProperties.getProperty("API_TIMEOUT_SECONDS", "30")
+            devProperties.getProperty("API_TIMEOUT_SECONDS", "30"),
         )
         buildConfigField(
             BOOLEAN,
             "ENABLE_LOGGING",
-            devProperties.getProperty("ENABLE_LOGGING", "true")
+            devProperties.getProperty("ENABLE_LOGGING", "true"),
         )
         buildConfigField(
             STRING,
             "MAPS_API_KEY",
-            devProperties.getProperty("MAPS_API_KEY", "DEV_MAPS_KEY_HERE")
+            devProperties.getProperty("MAPS_API_KEY", "DEV_MAPS_KEY_HERE"),
         )
     }
-
 }

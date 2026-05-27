@@ -5,7 +5,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 class DateUtilTest {
-
     @Test
     fun `extractSlotTime returns formatted time from valid slotId`() {
         assertEquals("08:30", DateUtil.extractSlotTime("slot_d1_20260526_0830"))

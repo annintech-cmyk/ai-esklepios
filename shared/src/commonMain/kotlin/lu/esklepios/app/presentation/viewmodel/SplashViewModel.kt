@@ -11,13 +11,12 @@ import lu.esklepios.app.domain.repository.AuthRepository
 
 data class SplashUiState(
     val isLoading: Boolean = true,
-    val isAuthenticated: Boolean = false
+    val isAuthenticated: Boolean = false,
 )
 
 class SplashViewModel(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(SplashUiState())
     val uiState: StateFlow<SplashUiState> = _uiState.asStateFlow()
 
@@ -26,7 +25,7 @@ class SplashViewModel(
             _uiState.update {
                 it.copy(
                     isLoading = false,
-                    isAuthenticated = authRepository.isLoggedIn()
+                    isAuthenticated = authRepository.isLoggedIn(),
                 )
             }
         }

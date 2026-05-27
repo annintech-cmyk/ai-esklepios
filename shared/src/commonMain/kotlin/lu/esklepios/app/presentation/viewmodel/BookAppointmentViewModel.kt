@@ -25,15 +25,14 @@ data class BookAppointmentUiState(
     val isAuthenticated: Boolean = false,
     val isConfirmed: Boolean = false,
     val confirmedAppointmentId: String = "",
-    val error: String? = null
+    val error: String? = null,
 )
 
 class BookAppointmentViewModel(
     private val createAppointmentUseCase: CreateAppointmentUseCase,
     private val authRepository: AuthRepository,
-    private val getPractitionerDetailUseCase: GetPractitionerDetailUseCase
+    private val getPractitionerDetailUseCase: GetPractitionerDetailUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(BookAppointmentUiState())
     val uiState: StateFlow<BookAppointmentUiState> = _uiState.asStateFlow()
 
@@ -45,7 +44,11 @@ class BookAppointmentViewModel(
         _uiState.update { it.copy(isAuthenticated = authRepository.isLoggedIn()) }
     }
 
-    fun loadData(practitionerId: String, slotId: String, practitioner: Practitioner?) {
+    fun loadData(
+        practitionerId: String,
+        slotId: String,
+        practitioner: Practitioner?,
+    ) {
         if (practitioner != null) {
             val slot = practitioner.availableSlots.find { it.id == slotId }
             _uiState.update { it.copy(practitioner = practitioner, selectedSlot = slot) }
@@ -54,7 +57,10 @@ class BookAppointmentViewModel(
         }
     }
 
-    fun loadData(practitionerId: String, slotId: String) {
+    fun loadData(
+        practitionerId: String,
+        slotId: String,
+    ) {
         viewModelScope.launch {
             getPractitionerDetailUseCase(practitionerId).onSuccess { p ->
                 val slot = p.availableSlots.find { it.id == slotId }
@@ -65,27 +71,30 @@ class BookAppointmentViewModel(
 
     fun confirm() {
         val state = _uiState.value
-        val practitioner = state.practitioner ?: run {
-            _uiState.update { it.copy(error = "No practitioner selected") }
-            return
-        }
-        val slot = state.selectedSlot ?: run {
-            _uiState.update { it.copy(error = "No slot selected") }
-            return
-        }
+        val practitioner =
+            state.practitioner ?: run {
+                _uiState.update { it.copy(error = "No practitioner selected") }
+                return
+            }
+        val slot =
+            state.selectedSlot ?: run {
+                _uiState.update { it.copy(error = "No slot selected") }
+                return
+            }
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            val appointment = Appointment(
-                id = "",
-                practitionerId = practitioner.id,
-                practitionerName = practitioner.fullName,
-                clinicName = practitioner.clinicName,
-                specialty = practitioner.specialty,
-                dateTime = slot.dateTime,
-                status = AppointmentStatus.PENDING,
-                messageToDoctor = state.messageToDoctor,
-                consultationReason = state.consultationReason
-            )
+            val appointment =
+                Appointment(
+                    id = "",
+                    practitionerId = practitioner.id,
+                    practitionerName = practitioner.fullName,
+                    clinicName = practitioner.clinicName,
+                    specialty = practitioner.specialty,
+                    dateTime = slot.dateTime,
+                    status = AppointmentStatus.PENDING,
+                    messageToDoctor = state.messageToDoctor,
+                    consultationReason = state.consultationReason,
+                )
             createAppointmentUseCase(appointment)
                 .onSuccess { created ->
                     _uiState.update { it.copy(isLoading = false, isConfirmed = true, confirmedAppointmentId = created.id) }
@@ -108,7 +117,10 @@ class BookAppointmentViewModel(
         _uiState.update { it.copy(error = null) }
     }
 
-    fun confirmBooking(message: String, reason: String) {
+    fun confirmBooking(
+        message: String,
+        reason: String,
+    ) {
         updateMessageToDoctor(message)
         updateConsultationReason(reason)
         confirm()

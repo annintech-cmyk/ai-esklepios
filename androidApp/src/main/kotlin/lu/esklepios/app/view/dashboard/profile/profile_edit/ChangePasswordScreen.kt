@@ -14,7 +14,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
 import lu.esklepios.app.R
-import lu.esklepios.app.presentation.viewmodel.ChangePasswordViewModel
 import lu.esklepios.app.core.ui.components.*
 import lu.esklepios.app.core.ui.theme.BorderColor
 import lu.esklepios.app.core.ui.theme.Danger
@@ -24,7 +23,7 @@ import lu.esklepios.app.core.ui.theme.Primary
 import lu.esklepios.app.core.ui.theme.Success
 import lu.esklepios.app.core.ui.theme.TextHint
 import lu.esklepios.app.core.ui.theme.TextSecondary
-import lu.esklepios.app.util.PasswordStrength
+import lu.esklepios.app.presentation.viewmodel.ChangePasswordViewModel
 import lu.esklepios.app.util.ValidationUtil
 import lu.esklepios.app.utils.strengthColor
 import lu.esklepios.app.utils.strengthLabel
@@ -33,7 +32,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ChangePasswordScreen(
     navController: NavController,
-    viewModel: ChangePasswordViewModel = koinViewModel()
+    viewModel: ChangePasswordViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -43,15 +42,15 @@ fun ChangePasswordScreen(
     var showConfirmPw by remember { mutableStateOf(false) }
 
     val newPw = uiState.newPassword
-    val criteriaResult  = ValidationUtil.passwordCriteriaResult(newPw)
-    val hasMinLength    = criteriaResult.minLength
-    val hasMixedCase    = criteriaResult.mixedCase
+    val criteriaResult = ValidationUtil.passwordCriteriaResult(newPw)
+    val hasMinLength = criteriaResult.minLength
+    val hasMixedCase = criteriaResult.mixedCase
     val hasNumAndSymbol = criteriaResult.numAndSymbol
-    val strength        = ValidationUtil.passwordStrength(newPw)
+    val strength = ValidationUtil.passwordStrength(newPw)
     val strengthPercent = strength.percent
-    val strengthColor   = strength.strengthColor()
-    val strengthLabel   = strength.strengthLabel()
-    val passwordsMatch  = ValidationUtil.passwordsMatch(uiState.newPassword, uiState.confirmPassword)
+    val strengthColor = strength.strengthColor()
+    val strengthLabel = strength.strengthLabel()
+    val passwordsMatch = ValidationUtil.passwordsMatch(uiState.newPassword, uiState.confirmPassword)
 
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
@@ -65,27 +64,33 @@ fun ChangePasswordScreen(
         onNavigateBack = { navController.popBackStack() },
         error = uiState.error,
         onErrorDismissed = { viewModel.clearError() },
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) {
         Spacer(Modifier.height(Dimens.paddingXL))
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(DangerBg, RoundedCornerShape(Dimens.radiusMd))
-                .padding(Dimens.paddingL),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(DangerBg, RoundedCornerShape(Dimens.radiusMd))
+                    .padding(Dimens.paddingL),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Dimens.paddingM)
+            horizontalArrangement = Arrangement.spacedBy(Dimens.paddingM),
         ) {
-            Icon(Icons.Filled.Shield, contentDescription = null, tint = Danger, modifier = Modifier.size(Dimens.iconSizeLgInner)) // a11y: decorative — labelled by adjacent Text
+            Icon(
+                Icons.Filled.Shield,
+                contentDescription = null,
+                tint = Danger,
+                modifier = Modifier.size(Dimens.iconSizeLgInner),
+            ) // a11y: decorative — labelled by adjacent Text
             Column {
                 AppCaptionText(
                     text = stringResource(R.string.change_password_banner_title),
-                    color = Danger
+                    color = Danger,
                 )
                 AppCaptionText(
                     text = stringResource(R.string.change_password_banner_body),
-                    color = Danger.copy(alpha = 0.8f)
+                    color = Danger.copy(alpha = 0.8f),
                 )
             }
         }
@@ -100,7 +105,9 @@ fun ChangePasswordScreen(
             placeholder = stringResource(R.string.label_current_password_field),
             showPassword = showCurrentPw,
             onToggleShow = { showCurrentPw = !showCurrentPw },
-            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd)) } // a11y: decorative — labelled by adjacent Text
+            leadingIcon = {
+                Icon(Icons.Filled.Lock, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
+            }, // a11y: decorative — labelled by adjacent Text
         )
 
         Spacer(Modifier.height(Dimens.paddingXL))
@@ -113,22 +120,26 @@ fun ChangePasswordScreen(
             placeholder = stringResource(R.string.label_new_password_field),
             showPassword = showNewPw,
             onToggleShow = { showNewPw = !showNewPw },
-            leadingIcon = { Icon(Icons.Filled.LockPerson, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd)) } // a11y: decorative — labelled by adjacent Text
+            leadingIcon = {
+                Icon(Icons.Filled.LockPerson, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
+            }, // a11y: decorative — labelled by adjacent Text
         )
 
         if (newPw.isNotBlank()) {
             Spacer(Modifier.height(Dimens.paddingM))
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(Dimens.paddingTiny)
-                    .background(BorderColor, RoundedCornerShape(Dimens.radiusSm / 2))
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(Dimens.paddingTiny)
+                        .background(BorderColor, RoundedCornerShape(Dimens.radiusSm / 2)),
             ) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth(strengthPercent)
-                        .fillMaxHeight()
-                        .background(strengthColor, RoundedCornerShape(Dimens.radiusSm / 2))
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(strengthPercent)
+                            .fillMaxHeight()
+                            .background(strengthColor, RoundedCornerShape(Dimens.radiusSm / 2)),
                 )
             }
             Spacer(Modifier.height(Dimens.paddingS))
@@ -155,26 +166,38 @@ fun ChangePasswordScreen(
             showPassword = showConfirmPw,
             onToggleShow = { showConfirmPw = !showConfirmPw },
             isError = uiState.confirmPassword.isNotBlank() && !passwordsMatch,
-            leadingIcon = { Icon(Icons.Filled.LockReset, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd)) } // a11y: decorative — labelled by adjacent Text
+            leadingIcon = {
+                Icon(Icons.Filled.LockReset, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
+            }, // a11y: decorative — labelled by adjacent Text
         )
         if (passwordsMatch) {
             Spacer(Modifier.height(Dimens.paddingS))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = Success, modifier = Modifier.size(Dimens.iconSizeSm)) // a11y: decorative — labelled by adjacent Text
+                Icon(
+                    Icons.Filled.CheckCircle,
+                    contentDescription = null,
+                    tint = Success,
+                    modifier = Modifier.size(Dimens.iconSizeSm),
+                ) // a11y: decorative — labelled by adjacent Text
                 Spacer(Modifier.width(Dimens.paddingXS))
                 AppCaptionText(
                     text = stringResource(R.string.change_password_match),
-                    color = Success
+                    color = Success,
                 )
             }
         } else if (uiState.confirmPassword.isNotBlank()) {
             Spacer(Modifier.height(Dimens.paddingS))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Filled.Cancel, contentDescription = null, tint = Danger, modifier = Modifier.size(Dimens.iconSizeSm)) // a11y: decorative — labelled by adjacent Text
+                Icon(
+                    Icons.Filled.Cancel,
+                    contentDescription = null,
+                    tint = Danger,
+                    modifier = Modifier.size(Dimens.iconSizeSm),
+                ) // a11y: decorative — labelled by adjacent Text
                 Spacer(Modifier.width(Dimens.paddingXS))
                 AppCaptionText(
                     text = stringResource(R.string.error_password_mismatch),
-                    color = Danger
+                    color = Danger,
                 )
             }
         }
@@ -185,7 +208,7 @@ fun ChangePasswordScreen(
             text = stringResource(R.string.action_save),
             onClick = { viewModel.changePassword() },
             modifier = Modifier.fillMaxWidth(),
-            isLoading = uiState.isLoading
+            isLoading = uiState.isLoading,
         )
 
         Spacer(Modifier.height(Dimens.paddingM))
@@ -193,7 +216,7 @@ fun ChangePasswordScreen(
         SecondaryButton(
             text = stringResource(R.string.action_cancel),
             onClick = { navController.popBackStack() },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(Modifier.height(Dimens.paddingXXXL))
@@ -208,7 +231,7 @@ private fun PasswordInputField(
     showPassword: Boolean,
     onToggleShow: () -> Unit,
     isError: Boolean = false,
-    leadingIcon: @Composable (() -> Unit)? = null
+    leadingIcon: @Composable (() -> Unit)? = null,
 ) {
     OutlinedTextField(
         value = value,
@@ -221,9 +244,16 @@ private fun PasswordInputField(
             IconButton(onClick = onToggleShow) {
                 Icon(
                     if (showPassword) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                    contentDescription = if (showPassword) stringResource(R.string.cd_hide_password) else stringResource(R.string.cd_show_password),
+                    contentDescription =
+                        if (showPassword) {
+                            stringResource(
+                                R.string.cd_hide_password,
+                            )
+                        } else {
+                            stringResource(R.string.cd_show_password)
+                        },
                     tint = TextHint,
-                    modifier = Modifier.size(Dimens.iconSizeMd)
+                    modifier = Modifier.size(Dimens.iconSizeMd),
                 )
             }
         },
@@ -232,22 +262,26 @@ private fun PasswordInputField(
         },
         isError = isError,
         singleLine = true,
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = if (isError) Danger else Primary,
-            unfocusedBorderColor = if (isError) Danger else BorderColor,
-            errorBorderColor = Danger
-        )
+        colors =
+            OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = if (isError) Danger else Primary,
+                unfocusedBorderColor = if (isError) Danger else BorderColor,
+                errorBorderColor = Danger,
+            ),
     )
 }
 
 @Composable
-private fun PasswordCriterionRow(label: String, met: Boolean) {
+private fun PasswordCriterionRow(
+    label: String,
+    met: Boolean,
+) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
             if (met) Icons.Filled.CheckCircle else Icons.Filled.RadioButtonUnchecked,
             contentDescription = null, // a11y: decorative — labelled by adjacent Text
             tint = if (met) Success else TextHint,
-            modifier = Modifier.size(Dimens.iconSizeSm)
+            modifier = Modifier.size(Dimens.iconSizeSm),
         )
         Spacer(Modifier.width(Dimens.paddingS))
         AppCaptionText(text = label, color = if (met) Success else TextHint)

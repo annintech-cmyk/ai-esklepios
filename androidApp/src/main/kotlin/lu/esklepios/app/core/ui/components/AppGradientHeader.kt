@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -39,7 +37,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import lu.esklepios.app.R
 import lu.esklepios.app.core.ui.theme.Dimens
-import lu.esklepios.app.core.ui.theme.Gradients
 import lu.esklepios.app.core.ui.theme.PrimaryDark
 import lu.esklepios.app.core.ui.theme.TealAccent
 
@@ -50,12 +47,12 @@ sealed class HeaderAction {
         val icon: ImageVector,
         val contentDescription: String,
         val tint: Color = Color.White,
-        val onClick: () -> Unit
+        val onClick: () -> Unit,
     ) : HeaderAction()
 
     data class TitleAction(
         val text: String,
-        val style: TextStyle = TextStyle.Default
+        val style: TextStyle = TextStyle.Default,
     ) : HeaderAction()
 
     object None : HeaderAction()
@@ -70,7 +67,7 @@ sealed class HeaderProfile {
         val avatarSize: Dp = Dimens.avatarSizeLg,
         val name: String,
         val subtitle: String? = null,
-        val caption: String? = null
+        val caption: String? = null,
     ) : HeaderProfile()
 
     /** Centered avatar with ring + camera badge, name + email below (Profile) */
@@ -79,7 +76,7 @@ sealed class HeaderProfile {
         val avatarSize: Dp = Dimens.avatarSizeXl,
         val name: String,
         val email: String? = null,
-        val onCameraClick: (() -> Unit)? = null
+        val onCameraClick: (() -> Unit)? = null,
     ) : HeaderProfile()
 }
 
@@ -87,7 +84,7 @@ sealed class HeaderProfile {
 
 data class HeaderTextBlock(
     val overline: String? = null,
-    val title: String? = null
+    val title: String? = null,
 )
 
 data class HeaderSearch(
@@ -95,7 +92,7 @@ data class HeaderSearch(
     val onSearchQueryChange: (String) -> Unit,
     val locationQuery: String,
     val onLocationQueryChange: (String) -> Unit,
-    val onSearchClick: () -> Unit
+    val onSearchClick: () -> Unit,
 )
 
 // ── Main composable ───────────────────────────────────────────────────────────
@@ -109,20 +106,21 @@ fun AppGradientHeader(
     trailingAction: HeaderAction = HeaderAction.None,
     textBlock: HeaderTextBlock? = null,
     profile: HeaderProfile? = null,
-    search: HeaderSearch? = null
+    search: HeaderSearch? = null,
 ) {
     val compact = textBlock == null && profile == null && search == null
     GradientHeader(
         modifier = modifier,
         roundedBottom = roundedBottom,
         topPadding = Dimens.paddingS,
-        bottomPadding = if (compact) Dimens.paddingS else Dimens.paddingXXL
+        bottomPadding = if (compact) Dimens.paddingS else Dimens.paddingXXL,
     ) {
         // Toolbar row — three-position Box so center title is always pixel-centred
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(Dimens.iconButtonSize)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(Dimens.iconButtonSize),
         ) {
             HeaderActionSlot(leadingAction, Modifier.align(Alignment.CenterStart))
             HeaderActionSlot(centerAction, Modifier.align(Alignment.Center))
@@ -136,14 +134,14 @@ fun AppGradientHeader(
                 AppBodyText(
                     text = it,
                     color = Color.White.copy(alpha = 0.8f),
-                    modifier = Modifier.padding(horizontal = Dimens.paddingXXL)
+                    modifier = Modifier.padding(horizontal = Dimens.paddingXXL),
                 )
             }
             tb.title?.let {
                 AppTitleText(
                     text = it,
                     color = Color.White,
-                    modifier = Modifier.padding(horizontal = Dimens.paddingXXL)
+                    modifier = Modifier.padding(horizontal = Dimens.paddingXXL),
                 )
             }
         }
@@ -151,39 +149,42 @@ fun AppGradientHeader(
         // Optional search card
         if (search != null) {
             Column(
-                modifier = Modifier.padding(
-                    horizontal = Dimens.paddingM,
-                    vertical = Dimens.paddingS
-                )
+                modifier =
+                    Modifier.padding(
+                        horizontal = Dimens.paddingM,
+                        vertical = Dimens.paddingS,
+                    ),
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        withStyle(SpanStyle(color = Color.White, fontWeight = FontWeight.ExtraBold)) {
-                            append(stringResource(R.string.landing_hero_prefix))
-                        }
-                        withStyle(SpanStyle(color = TealAccent, fontWeight = FontWeight.ExtraBold)) {
-                            append(stringResource(R.string.landing_hero_accent))
-                        }
-                    },
-                    style = MaterialTheme.typography.displaySmall
+                    text =
+                        buildAnnotatedString {
+                            withStyle(SpanStyle(color = Color.White, fontWeight = FontWeight.ExtraBold)) {
+                                append(stringResource(R.string.landing_hero_prefix))
+                            }
+                            withStyle(SpanStyle(color = TealAccent, fontWeight = FontWeight.ExtraBold)) {
+                                append(stringResource(R.string.landing_hero_accent))
+                            }
+                        },
+                    style = MaterialTheme.typography.displaySmall,
                 )
                 Spacer(Modifier.height(Dimens.paddingM))
                 Surface(
-                    modifier = modifier
-                        .fillMaxWidth(),
+                    modifier =
+                        modifier
+                            .fillMaxWidth(),
                     shape = RoundedCornerShape(Dimens.paddingXXXL),
                     color = Color.White,
                     shadowElevation = Dimens.elevationNone,
                     tonalElevation = Dimens.elevationNone,
                 ) {
-                SearchCard(
-                    searchQuery = search.searchQuery,
-                    onSearchQueryChange = search.onSearchQueryChange,
-                    locationQuery = search.locationQuery,
-                    onLocationQueryChange = search.onLocationQueryChange,
-                    onSearchClick = search.onSearchClick,
-                    modifier = Modifier.padding(horizontal = Dimens.paddingM, vertical = Dimens.paddingXL)
-                )
+                    SearchCard(
+                        searchQuery = search.searchQuery,
+                        onSearchQueryChange = search.onSearchQueryChange,
+                        locationQuery = search.locationQuery,
+                        onLocationQueryChange = search.onLocationQueryChange,
+                        onSearchClick = search.onSearchClick,
+                        modifier = Modifier.padding(horizontal = Dimens.paddingM, vertical = Dimens.paddingXL),
+                    )
                 }
             }
         }
@@ -203,23 +204,28 @@ fun AppGradientHeader(
 // ── Private rendering helpers ─────────────────────────────────────────────────
 
 @Composable
-private fun HeaderActionSlot(action: HeaderAction, modifier: Modifier = Modifier) {
+private fun HeaderActionSlot(
+    action: HeaderAction,
+    modifier: Modifier = Modifier,
+) {
     when (action) {
         is HeaderAction.IconButtonAction -> {
             IconButton(onClick = action.onClick, modifier = modifier) {
                 Icon(
                     imageVector = action.icon,
                     contentDescription = action.contentDescription,
-                    tint = action.tint
+                    tint = action.tint,
                 )
             }
         }
 
         is HeaderAction.TitleAction -> {
-            val resolvedStyle = if (action.style == TextStyle.Default)
-                MaterialTheme.typography.headlineSmall
-            else
-                action.style
+            val resolvedStyle =
+                if (action.style == TextStyle.Default) {
+                    MaterialTheme.typography.headlineSmall
+                } else {
+                    action.style
+                }
             // AppTitleText doesn't support custom TextStyle, so we inline Text here
             // for the TitleAction slot which requires arbitrary style injection from callers.
             // This is a documented exception: HeaderAction.TitleAction carries a caller-supplied
@@ -229,7 +235,7 @@ private fun HeaderActionSlot(action: HeaderAction, modifier: Modifier = Modifier
                 color = Color.White,
                 style = resolvedStyle,
                 textAlign = TextAlign.Center,
-                modifier = modifier
+                modifier = modifier,
             )
         }
 
@@ -245,7 +251,7 @@ private fun InlineProfile(profile: HeaderProfile.Inline) {
         AvatarCircle(
             initials = profile.initials,
             size = profile.avatarSize,
-            fontSize = MaterialTheme.typography.headlineMedium.fontSize
+            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
         )
         Spacer(Modifier.width(Dimens.paddingL))
         Column {
@@ -253,13 +259,13 @@ private fun InlineProfile(profile: HeaderProfile.Inline) {
             profile.subtitle?.let {
                 AppBodyText(
                     text = it,
-                    color = Color.White.copy(alpha = 0.85f)
+                    color = Color.White.copy(alpha = 0.85f),
                 )
             }
             profile.caption?.let {
                 AppCaptionText(
                     text = it,
-                    color = Color.White.copy(alpha = 0.7f)
+                    color = Color.White.copy(alpha = 0.7f),
                 )
             }
         }
@@ -271,32 +277,34 @@ private fun CenteredProfile(profile: HeaderProfile.Centered) {
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         Box(modifier = Modifier.wrapContentSize()) {
             Box(
-                modifier = Modifier
-                    .size(profile.avatarSize + Dimens.paddingXS)
-                    .align(Alignment.Center)
-                    .border(Dimens.borderStrong, Color.White.copy(alpha = 0.45f), CircleShape)
+                modifier =
+                    Modifier
+                        .size(profile.avatarSize + Dimens.paddingXS)
+                        .align(Alignment.Center)
+                        .border(Dimens.borderStrong, Color.White.copy(alpha = 0.45f), CircleShape),
             )
             Box(modifier = Modifier.align(Alignment.Center)) {
                 AvatarCircle(
                     initials = profile.initials,
                     size = profile.avatarSize,
-                    fontSize = MaterialTheme.typography.headlineLarge.fontSize
+                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                 )
             }
             Box(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .offset(x = Dimens.offsetIconShadow, y = Dimens.offsetIconShadow)
-                    .size(Dimens.cameraBadgeSize)
-                    .background(PrimaryDark, CircleShape)
-                    .border(Dimens.borderMedium, Color.White, CircleShape),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomEnd)
+                        .offset(x = Dimens.offsetIconShadow, y = Dimens.offsetIconShadow)
+                        .size(Dimens.cameraBadgeSize)
+                        .background(PrimaryDark, CircleShape)
+                        .border(Dimens.borderMedium, Color.White, CircleShape),
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = Icons.Filled.CameraAlt,
                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                     tint = Color.White,
-                    modifier = Modifier.size(Dimens.iconSizeCamera)
+                    modifier = Modifier.size(Dimens.iconSizeCamera),
                 )
             }
         }
@@ -306,14 +314,14 @@ private fun CenteredProfile(profile: HeaderProfile.Centered) {
         text = profile.name,
         color = Color.White,
         textAlign = TextAlign.Center,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     )
     profile.email?.let { email ->
         AppCaptionText(
             text = email,
             color = Color.White.copy(alpha = 0.8f),
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }

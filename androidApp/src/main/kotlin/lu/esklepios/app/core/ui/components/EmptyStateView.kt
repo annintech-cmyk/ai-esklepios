@@ -18,45 +18,48 @@ fun EmptyStateView(
     title: String,
     subtitle: String,
     actionLabel: String? = null,
-    onAction: (() -> Unit)? = null
+    onAction: (() -> Unit)? = null,
 ) {
-    Column(modifier = modifier
-            .fillMaxWidth()
-            .padding(Dimens.paddingXXXL),
+    Column(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(Dimens.paddingXXXL),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
-            modifier = Modifier
-                .size(Dimens.emptyIconSize)
-                .padding(Dimens.paddingS),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(Dimens.emptyIconSize)
+                    .padding(Dimens.paddingS),
+            contentAlignment = Alignment.Center,
         ) {
             AppIcon(
                 imageVector = icon,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = Primary.copy(alpha = 0.3f),
-                size = Dimens.emptyIconSmSize
+                size = Dimens.emptyIconSmSize,
             )
         }
         VSpace(Dimens.paddingL)
         AppTitleText(
             text = title,
             color = TextPrimary,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         VSpace(Dimens.paddingS)
         AppBodyText(
             text = subtitle,
             color = TextSecondary,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         if (actionLabel != null && onAction != null) {
             VSpace(Dimens.paddingXXL)
             PrimaryButton(
                 text = actionLabel,
                 onClick = onAction,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

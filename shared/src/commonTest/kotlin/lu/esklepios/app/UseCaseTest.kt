@@ -39,18 +39,20 @@ class LoginUseCaseTest {
     private val useCase = LoginUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns success`() = runTest {
-        val result = useCase("user@test.lu", "pass")
-        assertTrue(result.isSuccess)
-        assertEquals(testUser, result.getOrNull())
-    }
+    fun `delegates to repository and returns success`() =
+        runTest {
+            val result = useCase("user@test.lu", "pass")
+            assertTrue(result.isSuccess)
+            assertEquals(testUser, result.getOrNull())
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.loginResult = Result.failure(Exception("bad credentials"))
-        val result = useCase("user@test.lu", "wrong")
-        assertTrue(result.isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.loginResult = Result.failure(Exception("bad credentials"))
+            val result = useCase("user@test.lu", "wrong")
+            assertTrue(result.isFailure)
+        }
 }
 
 class RegisterUseCaseTest {
@@ -58,17 +60,19 @@ class RegisterUseCaseTest {
     private val useCase = RegisterUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns registered user`() = runTest {
-        val result = useCase(testUser, "pass")
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns registered user`() =
+        runTest {
+            val result = useCase(testUser, "pass")
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.registerResult = Result.failure(Exception("email taken"))
-        val result = useCase(testUser, "pass")
-        assertTrue(result.isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.registerResult = Result.failure(Exception("email taken"))
+            val result = useCase(testUser, "pass")
+            assertTrue(result.isFailure)
+        }
 }
 
 class ForgotPasswordUseCaseTest {
@@ -76,17 +80,19 @@ class ForgotPasswordUseCaseTest {
     private val useCase = ForgotPasswordUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns success`() = runTest {
-        val result = useCase("user@test.lu")
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns success`() =
+        runTest {
+            val result = useCase("user@test.lu")
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.forgotPasswordResult = Result.failure(Exception("not found"))
-        val result = useCase("user@test.lu")
-        assertTrue(result.isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.forgotPasswordResult = Result.failure(Exception("not found"))
+            val result = useCase("user@test.lu")
+            assertTrue(result.isFailure)
+        }
 }
 
 class LogoutUseCaseTest2 {
@@ -94,17 +100,19 @@ class LogoutUseCaseTest2 {
     private val useCase = LogoutUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns success`() = runTest {
-        val result = useCase()
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns success`() =
+        runTest {
+            val result = useCase()
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.logoutResult = Result.failure(Exception("storage error"))
-        val result = useCase()
-        assertTrue(result.isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.logoutResult = Result.failure(Exception("storage error"))
+            val result = useCase()
+            assertTrue(result.isFailure)
+        }
 }
 
 // ── Practitioner use cases ───────────────────────────────────────────────────
@@ -114,18 +122,20 @@ class SearchPractitionersUseCaseTest {
     private val useCase = SearchPractitionersUseCase(repo)
 
     @Test
-    fun `delegates to repository with correct parameters`() = runTest {
-        val result = useCase("Luxembourg", "Cardiology", page = 2, limit = 10)
-        assertTrue(result.isSuccess)
-        assertEquals("Luxembourg", repo.lastLocation)
-        assertEquals("Cardiology", repo.lastSpecialty)
-    }
+    fun `delegates to repository with correct parameters`() =
+        runTest {
+            val result = useCase("Luxembourg", "Cardiology", page = 2, limit = 10)
+            assertTrue(result.isSuccess)
+            assertEquals("Luxembourg", repo.lastLocation)
+            assertEquals("Cardiology", repo.lastSpecialty)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.searchResult = Result.failure(Exception("network"))
-        assertTrue(useCase("", "").isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.searchResult = Result.failure(Exception("network"))
+            assertTrue(useCase("", "").isFailure)
+        }
 }
 
 class GetPractitionerDetailUseCaseTest {
@@ -133,17 +143,19 @@ class GetPractitionerDetailUseCaseTest {
     private val useCase = GetPractitionerDetailUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns practitioner`() = runTest {
-        val result = useCase("p1")
-        assertTrue(result.isSuccess)
-        assertEquals("p1", repo.lastId)
-    }
+    fun `delegates to repository and returns practitioner`() =
+        runTest {
+            val result = useCase("p1")
+            assertTrue(result.isSuccess)
+            assertEquals("p1", repo.lastId)
+        }
 
     @Test
-    fun `propagates not-found failure`() = runTest {
-        repo.getByIdResult = Result.failure(Exception("not found"))
-        assertTrue(useCase("p99").isFailure)
-    }
+    fun `propagates not-found failure`() =
+        runTest {
+            repo.getByIdResult = Result.failure(Exception("not found"))
+            assertTrue(useCase("p99").isFailure)
+        }
 }
 
 class ToggleFavoriteUseCaseTest {
@@ -151,17 +163,19 @@ class ToggleFavoriteUseCaseTest {
     private val useCase = ToggleFavoriteUseCase(repo)
 
     @Test
-    fun `delegates to repository with practitioner id`() = runTest {
-        val result = useCase("p1")
-        assertTrue(result.isSuccess)
-        assertEquals("p1", repo.lastToggleId)
-    }
+    fun `delegates to repository with practitioner id`() =
+        runTest {
+            val result = useCase("p1")
+            assertTrue(result.isSuccess)
+            assertEquals("p1", repo.lastToggleId)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.toggleResult = Result.failure(Exception("not cached"))
-        assertTrue(useCase("p99").isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.toggleResult = Result.failure(Exception("not cached"))
+            assertTrue(useCase("p99").isFailure)
+        }
 }
 
 // ── Appointment use cases ────────────────────────────────────────────────────
@@ -171,16 +185,18 @@ class CreateAppointmentUseCaseTest {
     private val useCase = CreateAppointmentUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns created appointment`() = runTest {
-        val result = useCase(testAppointment)
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns created appointment`() =
+        runTest {
+            val result = useCase(testAppointment)
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.createResult = Result.failure(Exception("slot unavailable"))
-        assertTrue(useCase(testAppointment).isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.createResult = Result.failure(Exception("slot unavailable"))
+            assertTrue(useCase(testAppointment).isFailure)
+        }
 }
 
 class ModifyAppointmentUseCaseTest {
@@ -188,16 +204,18 @@ class ModifyAppointmentUseCaseTest {
     private val useCase = ModifyAppointmentUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns modified appointment`() = runTest {
-        val result = useCase(testAppointment)
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns modified appointment`() =
+        runTest {
+            val result = useCase(testAppointment)
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.modifyResult = Result.failure(Exception("conflict"))
-        assertTrue(useCase(testAppointment).isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.modifyResult = Result.failure(Exception("conflict"))
+            assertTrue(useCase(testAppointment).isFailure)
+        }
 }
 
 class CancelAppointmentUseCaseTest {
@@ -205,17 +223,19 @@ class CancelAppointmentUseCaseTest {
     private val useCase = CancelAppointmentUseCase(repo)
 
     @Test
-    fun `delegates to repository with appointment id`() = runTest {
-        val result = useCase("appt1")
-        assertTrue(result.isSuccess)
-        assertEquals("appt1", repo.lastCancelledId)
-    }
+    fun `delegates to repository with appointment id`() =
+        runTest {
+            val result = useCase("appt1")
+            assertTrue(result.isSuccess)
+            assertEquals("appt1", repo.lastCancelledId)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.cancelResult = Result.failure(Exception("already cancelled"))
-        assertTrue(useCase("appt1").isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.cancelResult = Result.failure(Exception("already cancelled"))
+            assertTrue(useCase("appt1").isFailure)
+        }
 }
 
 class GetUpcomingAppointmentsUseCaseTest {
@@ -223,16 +243,18 @@ class GetUpcomingAppointmentsUseCaseTest {
     private val useCase = GetUpcomingAppointmentsUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns upcoming list`() = runTest {
-        val result = useCase("user1")
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns upcoming list`() =
+        runTest {
+            val result = useCase("user1")
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.upcomingResult = Result.failure(Exception("db error"))
-        assertTrue(useCase("user1").isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.upcomingResult = Result.failure(Exception("db error"))
+            assertTrue(useCase("user1").isFailure)
+        }
 }
 
 class GetPastAppointmentsUseCaseTest {
@@ -240,16 +262,18 @@ class GetPastAppointmentsUseCaseTest {
     private val useCase = GetPastAppointmentsUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns past list`() = runTest {
-        val result = useCase("user1")
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns past list`() =
+        runTest {
+            val result = useCase("user1")
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.pastResult = Result.failure(Exception("db error"))
-        assertTrue(useCase("user1").isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.pastResult = Result.failure(Exception("db error"))
+            assertTrue(useCase("user1").isFailure)
+        }
 }
 
 // ── User use cases ───────────────────────────────────────────────────────────
@@ -259,17 +283,19 @@ class GetProfileUseCaseTest {
     private val useCase = GetProfileUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns profile`() = runTest {
-        val result = useCase()
-        assertTrue(result.isSuccess)
-        assertEquals(testUser, result.getOrNull())
-    }
+    fun `delegates to repository and returns profile`() =
+        runTest {
+            val result = useCase()
+            assertTrue(result.isSuccess)
+            assertEquals(testUser, result.getOrNull())
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.profileResult = Result.failure(Exception("unauthenticated"))
-        assertTrue(useCase().isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.profileResult = Result.failure(Exception("unauthenticated"))
+            assertTrue(useCase().isFailure)
+        }
 }
 
 class UpdateProfileUseCaseTest {
@@ -277,16 +303,18 @@ class UpdateProfileUseCaseTest {
     private val useCase = UpdateProfileUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns updated user`() = runTest {
-        val result = useCase(testUser)
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns updated user`() =
+        runTest {
+            val result = useCase(testUser)
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.updateResult = Result.failure(Exception("validation error"))
-        assertTrue(useCase(testUser).isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.updateResult = Result.failure(Exception("validation error"))
+            assertTrue(useCase(testUser).isFailure)
+        }
 }
 
 class ChangeEmailUseCaseTest {
@@ -294,16 +322,18 @@ class ChangeEmailUseCaseTest {
     private val useCase = ChangeEmailUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns success`() = runTest {
-        val result = useCase("new@test.lu", "pass")
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns success`() =
+        runTest {
+            val result = useCase("new@test.lu", "pass")
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.changeEmailResult = Result.failure(Exception("wrong password"))
-        assertTrue(useCase("new@test.lu", "wrong").isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.changeEmailResult = Result.failure(Exception("wrong password"))
+            assertTrue(useCase("new@test.lu", "wrong").isFailure)
+        }
 }
 
 class ChangePasswordUseCaseTest {
@@ -311,62 +341,67 @@ class ChangePasswordUseCaseTest {
     private val useCase = ChangePasswordUseCase(repo)
 
     @Test
-    fun `delegates to repository and returns success`() = runTest {
-        val result = useCase("oldPass", "newPass123!")
-        assertTrue(result.isSuccess)
-    }
+    fun `delegates to repository and returns success`() =
+        runTest {
+            val result = useCase("oldPass", "newPass123!")
+            assertTrue(result.isSuccess)
+        }
 
     @Test
-    fun `propagates repository failure`() = runTest {
-        repo.changePasswordResult = Result.failure(Exception("wrong old password"))
-        assertTrue(useCase("wrong", "newPass").isFailure)
-    }
+    fun `propagates repository failure`() =
+        runTest {
+            repo.changePasswordResult = Result.failure(Exception("wrong old password"))
+            assertTrue(useCase("wrong", "newPass").isFailure)
+        }
 }
 
 // ── Shared test data ─────────────────────────────────────────────────────────
 
-private val testUser = User(
-    id = "u1",
-    firstName = "Anna",
-    lastName = "Test",
-    email = "anna@test.lu",
-    phone = "+352600000000",
-    gender = "female",
-    dateOfBirth = "1990-01-01",
-    cnsNumber = "1234567890",
-    profileType = ProfileType.PATIENT,
-    language = "fr"
-)
+private val testUser =
+    User(
+        id = "u1",
+        firstName = "Anna",
+        lastName = "Test",
+        email = "anna@test.lu",
+        phone = "+352600000000",
+        gender = "female",
+        dateOfBirth = "1990-01-01",
+        cnsNumber = "1234567890",
+        profileType = ProfileType.PATIENT,
+        language = "fr",
+    )
 
-private val testAppointment = Appointment(
-    id = "appt1",
-    practitionerId = "p1",
-    practitionerName = "Dr Smith",
-    clinicName = "Clinic A",
-    specialty = "General",
-    dateTime = "2026-06-01T10:00:00",
-    status = AppointmentStatus.PENDING
-)
+private val testAppointment =
+    Appointment(
+        id = "appt1",
+        practitionerId = "p1",
+        practitionerName = "Dr Smith",
+        clinicName = "Clinic A",
+        specialty = "General",
+        dateTime = "2026-06-01T10:00:00",
+        status = AppointmentStatus.PENDING,
+    )
 
-private val testPractitioner = Practitioner(
-    id = "p1",
-    firstName = "Dr",
-    lastName = "Smith",
-    specialty = "General",
-    clinicName = "Clinic A",
-    address = "1 Main St",
-    city = "Luxembourg",
-    phone = "+352000000",
-    email = "doc@clinic.lu",
-    latitude = 49.6,
-    longitude = 6.1,
-    acceptingNewPatients = true,
-    availableSlots = emptyList(),
-    schedule = emptyList(),
-    paymentMethods = emptyList(),
-    diplomas = emptyList(),
-    isFavorite = false
-)
+private val testPractitioner =
+    Practitioner(
+        id = "p1",
+        firstName = "Dr",
+        lastName = "Smith",
+        specialty = "General",
+        clinicName = "Clinic A",
+        address = "1 Main St",
+        city = "Luxembourg",
+        phone = "+352000000",
+        email = "doc@clinic.lu",
+        latitude = 49.6,
+        longitude = 6.1,
+        acceptingNewPatients = true,
+        availableSlots = emptyList(),
+        schedule = emptyList(),
+        paymentMethods = emptyList(),
+        diplomas = emptyList(),
+        isFavorite = false,
+    )
 
 // ── Fakes ────────────────────────────────────────────────────────────────────
 
@@ -376,12 +411,24 @@ private class FakeAuthRepo : AuthRepository {
     var forgotPasswordResult: Result<Unit> = Result.success(Unit)
     var logoutResult: Result<Unit> = Result.success(Unit)
 
-    override suspend fun login(email: String, password: String) = loginResult
-    override suspend fun register(user: User, password: String) = registerResult
+    override suspend fun login(
+        email: String,
+        password: String,
+    ) = loginResult
+
+    override suspend fun register(
+        user: User,
+        password: String,
+    ) = registerResult
+
     override suspend fun forgotPassword(email: String) = forgotPasswordResult
+
     override suspend fun refreshToken(): Result<String> = Result.success("token")
+
     override suspend fun logout() = logoutResult
+
     override fun isLoggedIn() = true
+
     override fun getCurrentUser() = testUser
 }
 
@@ -394,7 +441,12 @@ private class FakePractRepo : PractitionerRepository {
     var lastId = ""
     var lastToggleId = ""
 
-    override suspend fun searchPractitioners(location: String, specialty: String, page: Int, limit: Int): Result<List<Practitioner>> {
+    override suspend fun searchPractitioners(
+        location: String,
+        specialty: String,
+        page: Int,
+        limit: Int,
+    ): Result<List<Practitioner>> {
         lastLocation = location
         lastSpecialty = specialty
         return searchResult
@@ -420,10 +472,15 @@ private class FakeApptRepo : AppointmentRepository {
     var lastCancelledId = ""
 
     override suspend fun createAppointment(appointment: Appointment) = createResult
+
     override fun getAppointments(userId: String): Flow<List<Appointment>> = flowOf(listOf(testAppointment))
+
     override suspend fun getUpcomingAppointments(userId: String) = upcomingResult
+
     override suspend fun getPastAppointments(userId: String) = pastResult
+
     override suspend fun modifyAppointment(appointment: Appointment) = modifyResult
+
     override suspend fun cancelAppointment(id: String): Result<Unit> {
         lastCancelledId = id
         return cancelResult
@@ -437,7 +494,16 @@ private class FakeUserRepo : UserRepository {
     var changePasswordResult: Result<Unit> = Result.success(Unit)
 
     override suspend fun getProfile() = profileResult
+
     override suspend fun updateProfile(user: User) = updateResult
-    override suspend fun changeEmail(newEmail: String, password: String) = changeEmailResult
-    override suspend fun changePassword(oldPassword: String, newPassword: String) = changePasswordResult
+
+    override suspend fun changeEmail(
+        newEmail: String,
+        password: String,
+    ) = changeEmailResult
+
+    override suspend fun changePassword(
+        oldPassword: String,
+        newPassword: String,
+    ) = changePasswordResult
 }

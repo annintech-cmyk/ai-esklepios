@@ -15,24 +15,26 @@ import lu.esklepios.app.utils.labelStringRes
 
 /** Maps the shared [AppointmentStatusColorScheme] to concrete platform colour tokens. */
 @Composable
-internal fun colorsForScheme(scheme: AppointmentStatusColorScheme): Pair<Color, Color> = when (scheme) {
-    AppointmentStatusColorScheme.SUCCESS -> SuccessBg to Success
-    AppointmentStatusColorScheme.WARNING -> WarningBg to Warning
-    AppointmentStatusColorScheme.DANGER  -> DangerBg to Danger
-    AppointmentStatusColorScheme.PRIMARY -> PrimaryLight to Primary
-}
+internal fun colorsForScheme(scheme: AppointmentStatusColorScheme): Pair<Color, Color> =
+    when (scheme) {
+        AppointmentStatusColorScheme.SUCCESS -> SuccessBg to Success
+        AppointmentStatusColorScheme.WARNING -> WarningBg to Warning
+        AppointmentStatusColorScheme.DANGER -> DangerBg to Danger
+        AppointmentStatusColorScheme.PRIMARY -> PrimaryLight to Primary
+    }
 
 @Composable
 fun StatusBadge(status: AppointmentStatus) {
     val (bgColor, textColor) = colorsForScheme(status.colorScheme())
     Box(
-        modifier = Modifier
-            .background(color = bgColor, shape = RoundedCornerShape(Dimens.radiusPill))
-            .padding(horizontal = Dimens.paddingM, vertical = Dimens.paddingXS)
+        modifier =
+            Modifier
+                .background(color = bgColor, shape = RoundedCornerShape(Dimens.radiusPill))
+                .padding(horizontal = Dimens.paddingM, vertical = Dimens.paddingXS),
     ) {
         AppCaptionText(
             text = stringResource(status.labelStringRes()),
-            color = textColor
+            color = textColor,
         )
     }
 }

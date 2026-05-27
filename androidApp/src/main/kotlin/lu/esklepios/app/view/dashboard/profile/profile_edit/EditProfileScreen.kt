@@ -18,9 +18,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
-import lu.esklepios.app.presentation.viewmodel.EditProfileViewModel
 import lu.esklepios.app.core.ui.components.*
 import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.presentation.viewmodel.EditProfileViewModel
 import lu.esklepios.app.util.Gender
 import lu.esklepios.app.util.PhoneParser
 import lu.esklepios.app.util.supportedDialCodes
@@ -32,7 +32,7 @@ import java.time.ZoneOffset
 @Composable
 fun EditProfileScreen(
     navController: NavController,
-    viewModel: EditProfileViewModel = koinViewModel()
+    viewModel: EditProfileViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -80,10 +80,11 @@ fun EditProfileScreen(
         }
     }
 
-    val dobDisplay = dobValue.takeIf { it.isNotBlank() }?.let { dob ->
-        val parts = dob.split("-")
-        if (parts.size == 3) "${parts[2]} / ${parts[1]} / ${parts[0]}" else dob
-    } ?: ""
+    val dobDisplay =
+        dobValue.takeIf { it.isNotBlank() }?.let { dob ->
+            val parts = dob.split("-")
+            if (parts.size == 3) "${parts[2]} / ${parts[1]} / ${parts[0]}" else dob
+        } ?: ""
 
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState()
@@ -98,16 +99,16 @@ fun EditProfileScreen(
                             dobValue = "${date.year}-${date.monthValue.toString().padStart(2, '0')}-${date.dayOfMonth.toString().padStart(2, '0')}"
                         }
                         showDatePicker = false
-                    }
+                    },
                 )
             },
             dismissButton = {
                 GhostButton(
                     text = stringResource(R.string.action_cancel),
                     onClick = { showDatePicker = false },
-                    textColor = TextSecondary
+                    textColor = TextSecondary,
                 )
-            }
+            },
         ) {
             DatePicker(state = datePickerState)
         }
@@ -120,7 +121,7 @@ fun EditProfileScreen(
             phone = "${selectedDialCode.code} $phoneNumber",
             dateOfBirth = dobValue,
             gender = selectedGender?.apiValue ?: Gender.OTHER.apiValue,
-            address = ""
+            address = "",
         )
     }
 
@@ -129,7 +130,7 @@ fun EditProfileScreen(
         onNavigateBack = { navController.popBackStack() },
         error = uiState.error,
         onErrorDismissed = { viewModel.clearError() },
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) {
         VSpace(Dimens.paddingXXL)
 
@@ -138,28 +139,31 @@ fun EditProfileScreen(
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Dimens.paddingNone)) {
             Gender.entries.forEachIndexed { index, gender ->
                 val isSelected = selectedGender == gender
-                val genderLabel = when (gender) {
-                    Gender.MALE -> stringResource(R.string.gender_male)
-                    Gender.FEMALE -> stringResource(R.string.gender_female)
-                    Gender.OTHER -> stringResource(R.string.gender_other)
-                }
-                val shape = when (index) {
-                    0 -> RoundedCornerShape(topStart = Dimens.radiusMd, bottomStart = Dimens.radiusMd)
-                    Gender.entries.lastIndex -> RoundedCornerShape(topEnd = Dimens.radiusMd, bottomEnd = Dimens.radiusMd)
-                    else -> RoundedCornerShape(Dimens.cornerNone)
-                }
+                val genderLabel =
+                    when (gender) {
+                        Gender.MALE -> stringResource(R.string.gender_male)
+                        Gender.FEMALE -> stringResource(R.string.gender_female)
+                        Gender.OTHER -> stringResource(R.string.gender_other)
+                    }
+                val shape =
+                    when (index) {
+                        0 -> RoundedCornerShape(topStart = Dimens.radiusMd, bottomStart = Dimens.radiusMd)
+                        Gender.entries.lastIndex -> RoundedCornerShape(topEnd = Dimens.radiusMd, bottomEnd = Dimens.radiusMd)
+                        else -> RoundedCornerShape(Dimens.cornerNone)
+                    }
                 Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(Dimens.paddingXL + Dimens.paddingXXL)
-                        .background(if (isSelected) Primary else Surface, shape)
-                        .border(Dimens.borderThin, if (isSelected) Primary else BorderColor, shape)
-                        .clickable { selectedGender = gender },
-                    contentAlignment = Alignment.Center
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .height(Dimens.paddingXL + Dimens.paddingXXL)
+                            .background(if (isSelected) Primary else Surface, shape)
+                            .border(Dimens.borderThin, if (isSelected) Primary else BorderColor, shape)
+                            .clickable { selectedGender = gender },
+                    contentAlignment = Alignment.Center,
                 ) {
                     AppBodyText(
                         text = genderLabel,
-                        color = if (isSelected) Color.White else TextPrimary
+                        color = if (isSelected) Color.White else TextPrimary,
                     )
                 }
             }
@@ -176,17 +180,23 @@ fun EditProfileScreen(
             modifier = Modifier.fillMaxWidth().clickable { showDatePicker = true },
             shape = RoundedCornerShape(Dimens.radiusMd),
             leadingIcon = {
-                Icon(Icons.Filled.CalendarMonth, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd)) // a11y: decorative — labelled by adjacent Text
+                Icon(
+                    Icons.Filled.CalendarMonth,
+                    contentDescription = null,
+                    tint = TextSecondary,
+                    modifier = Modifier.size(Dimens.iconSizeMd),
+                ) // a11y: decorative — labelled by adjacent Text
             },
             placeholder = {
                 AppCaptionText(text = stringResource(R.string.edit_placeholder_dob), color = TextHint)
             },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Primary,
-                unfocusedBorderColor = BorderColor,
-                disabledBorderColor = BorderColor
-            ),
-            enabled = false
+            colors =
+                OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Primary,
+                    unfocusedBorderColor = BorderColor,
+                    disabledBorderColor = BorderColor,
+                ),
+            enabled = false,
         )
 
         VSpace(Dimens.paddingXL)
@@ -199,7 +209,7 @@ fun EditProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(Dimens.radiusMd),
             placeholder = { AppCaptionText(text = stringResource(R.string.edit_placeholder_first_name), color = TextHint) },
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor)
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor),
         )
 
         VSpace(Dimens.paddingXL)
@@ -212,7 +222,7 @@ fun EditProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(Dimens.radiusMd),
             placeholder = { AppCaptionText(text = stringResource(R.string.edit_placeholder_last_name), color = TextHint) },
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor)
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor),
         )
 
         VSpace(Dimens.paddingXL)
@@ -223,7 +233,7 @@ fun EditProfileScreen(
             ExposedDropdownMenuBox(
                 expanded = prefixExpanded,
                 onExpandedChange = { prefixExpanded = !prefixExpanded },
-                modifier = Modifier.width(Dimens.countryCodeWidth)
+                modifier = Modifier.width(Dimens.countryCodeWidth),
             ) {
                 OutlinedTextField(
                     value = "${selectedDialCode.flagEmoji} ${selectedDialCode.code}",
@@ -232,13 +242,16 @@ fun EditProfileScreen(
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = prefixExpanded) },
                     modifier = Modifier.menuAnchor(),
                     shape = RoundedCornerShape(Dimens.radiusMd),
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor)
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor),
                 )
                 ExposedDropdownMenu(expanded = prefixExpanded, onDismissRequest = { prefixExpanded = false }) {
                     supportedDialCodes.forEach { dial ->
                         DropdownMenuItem(
                             text = { AppBodyText(text = "${dial.flagEmoji} ${dial.code}") },
-                            onClick = { selectedDialCode = dial; prefixExpanded = false }
+                            onClick = {
+                                selectedDialCode = dial
+                                prefixExpanded = false
+                            },
                         )
                     }
                 }
@@ -250,7 +263,7 @@ fun EditProfileScreen(
                 shape = RoundedCornerShape(Dimens.radiusMd),
                 placeholder = { AppCaptionText(text = stringResource(R.string.edit_placeholder_phone), color = TextHint) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor)
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor),
             )
         }
 
@@ -264,11 +277,16 @@ fun EditProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(Dimens.radiusMd),
             leadingIcon = {
-                Icon(Icons.Filled.Badge, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd)) // a11y: decorative — labelled by adjacent Text
+                Icon(
+                    Icons.Filled.Badge,
+                    contentDescription = null,
+                    tint = TextSecondary,
+                    modifier = Modifier.size(Dimens.iconSizeMd),
+                ) // a11y: decorative — labelled by adjacent Text
             },
             placeholder = { AppCaptionText(text = stringResource(R.string.edit_placeholder_cns), color = TextHint) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor)
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor),
         )
 
         VSpace(Dimens.paddingXXXL)
@@ -277,7 +295,7 @@ fun EditProfileScreen(
             text = stringResource(R.string.action_save),
             onClick = { save() },
             modifier = Modifier.fillMaxWidth(),
-            isLoading = uiState.isLoading
+            isLoading = uiState.isLoading,
         )
 
         VSpace(Dimens.paddingM)
@@ -285,7 +303,7 @@ fun EditProfileScreen(
         SecondaryButton(
             text = stringResource(R.string.action_cancel),
             onClick = { navController.popBackStack() },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         VSpace(Dimens.paddingXXXL)

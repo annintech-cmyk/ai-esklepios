@@ -14,19 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
-import lu.esklepios.app.presentation.viewmodel.AuthField
-import lu.esklepios.app.presentation.viewmodel.AuthViewModel
 import lu.esklepios.app.core.ui.components.*
 import lu.esklepios.app.core.ui.theme.*
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import lu.esklepios.app.presentation.viewmodel.AuthField
+import lu.esklepios.app.presentation.viewmodel.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ForgotPasswordScreen(
     navController: NavController,
-    viewModel: AuthViewModel = koinViewModel()
+    viewModel: AuthViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -44,29 +44,30 @@ fun ForgotPasswordScreen(
         error = uiState.error,
         onErrorDismissed = { viewModel.clearError() },
         snackbarHostState = snackbarHostState,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(Modifier.height(Dimens.paddingXXXL + Dimens.paddingS))
 
         Box(
-            modifier = Modifier
-                .size(Dimens.avatarSizeLg + Dimens.paddingXXXL)
-                .background(color = PrimaryLight, shape = CircleShape),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(Dimens.avatarSizeLg + Dimens.paddingXXXL)
+                    .background(color = PrimaryLight, shape = CircleShape),
+            contentAlignment = Alignment.Center,
         ) {
             if (uiState.forgotPasswordSent) {
                 AppIcon(
                     Icons.Filled.CheckCircle,
                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                     tint = Success,
-                    size = Dimens.avatarSizeMd
+                    size = Dimens.avatarSizeMd,
                 )
             } else {
                 AppIcon(
                     Icons.Filled.Lock,
                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                     tint = Primary,
-                    size = Dimens.avatarSizeMd
+                    size = Dimens.avatarSizeMd,
                 )
             }
         }
@@ -76,28 +77,28 @@ fun ForgotPasswordScreen(
         if (uiState.forgotPasswordSent) {
             AppTitleText(
                 text = stringResource(R.string.forgot_password_sent_title),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(Dimens.paddingM))
             AppBodyText(
                 text = stringResource(R.string.forgot_password_sent_subtitle, uiState.email),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(Dimens.paddingXXXL))
             PrimaryButton(
                 text = stringResource(R.string.forgot_password_back),
                 onClick = { navController.popBackStack() },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         } else {
             AppTitleText(
                 text = stringResource(R.string.forgot_password_title),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(Dimens.paddingM))
             AppBodyText(
                 text = stringResource(R.string.forgot_password_description),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(Dimens.paddingXXXL))
 
@@ -108,7 +109,7 @@ fun ForgotPasswordScreen(
                 placeholder = "your@email.com",
                 leadingIcon = Icons.Filled.Email,
                 keyboardType = KeyboardType.Email,
-                isRequired = true
+                isRequired = true,
             )
 
             Spacer(Modifier.height(Dimens.paddingXXL))
@@ -117,7 +118,7 @@ fun ForgotPasswordScreen(
                 text = stringResource(R.string.forgot_password_send_link),
                 onClick = { viewModel.forgotPassword() },
                 isLoading = uiState.isLoading,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
 

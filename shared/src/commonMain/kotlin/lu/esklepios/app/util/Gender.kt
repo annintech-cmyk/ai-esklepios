@@ -13,7 +13,8 @@ package lu.esklepios.app.util
 enum class Gender(val apiValue: String, val labelKey: String) {
     MALE("male", "gender_male"),
     FEMALE("female", "gender_female"),
-    OTHER("other", "gender_other");
+    OTHER("other", "gender_other"),
+    ;
 
     companion object {
         /**

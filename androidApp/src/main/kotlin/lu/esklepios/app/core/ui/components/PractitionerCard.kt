@@ -25,8 +25,8 @@ import lu.esklepios.app.core.ui.sharedElementModifier
 import lu.esklepios.app.core.ui.theme.*
 import lu.esklepios.app.utils.DateUtil
 import java.time.LocalDate
-import java.time.format.TextStyle as JavaTextStyle
 import java.util.Locale
+import java.time.format.TextStyle as JavaTextStyle
 
 data class PractitionerUiModel(
     val id: String,
@@ -36,15 +36,15 @@ data class PractitionerUiModel(
     val clinic: String,
     val address: String,
     val isAcceptingNewPatients: Boolean,
-    val availableSlots: List<SlotDayUiModel>
+    val availableSlots: List<SlotDayUiModel>,
 ) {
     val initials: String get() = "${firstName.firstOrNull() ?: ""}${lastName.firstOrNull() ?: ""}"
     val fullName: String get() = "Dr. $firstName $lastName"
 }
 
 data class SlotDayUiModel(
-    val dayLabel: String,   // ISO date "2026-05-26"
-    val slots: List<String> // slot IDs
+    val dayLabel: String, // ISO date "2026-05-26"
+    val slots: List<String>, // slot IDs
 )
 
 @Composable
@@ -52,7 +52,7 @@ fun PractitionerCard(
     practitioner: PractitionerUiModel,
     onBook: (slotId: String) -> Unit,
     onSeeProfile: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var weekOffset by remember { mutableIntStateOf(0) }
     var expanded by remember { mutableStateOf(false) }
@@ -62,65 +62,70 @@ fun PractitionerCard(
     val weekDays = (0..4).map { startDay.plusDays(it.toLong()) }
 
     val lastDay = weekDays.last()
-    val monthLabel = if (startDay.month == lastDay.month) {
-        "${startDay.month.getDisplayName(JavaTextStyle.FULL, Locale.ENGLISH)} ${startDay.year}"
-    } else {
-        "${startDay.month.getDisplayName(JavaTextStyle.SHORT, Locale.ENGLISH)} / " +
-            "${lastDay.month.getDisplayName(JavaTextStyle.SHORT, Locale.ENGLISH)} ${lastDay.year}"
-    }
-
-    val slotsByDate: Map<String, List<Pair<String, String>>> = practitioner.availableSlots
-        .groupBy { it.dayLabel }
-        .mapValues { (_, daySlots) ->
-            daySlots.flatMap { day ->
-                day.slots.map { id -> Pair(id, DateUtil.extractSlotTime(id)) }
-            }
+    val monthLabel =
+        if (startDay.month == lastDay.month) {
+            "${startDay.month.getDisplayName(JavaTextStyle.FULL, Locale.ENGLISH)} ${startDay.year}"
+        } else {
+            "${startDay.month.getDisplayName(JavaTextStyle.SHORT, Locale.ENGLISH)} / " +
+                "${lastDay.month.getDisplayName(JavaTextStyle.SHORT, Locale.ENGLISH)} ${lastDay.year}"
         }
+
+    val slotsByDate: Map<String, List<Pair<String, String>>> =
+        practitioner.availableSlots
+            .groupBy { it.dayLabel }
+            .mapValues { (_, daySlots) ->
+                daySlots.flatMap { day ->
+                    day.slots.map { id -> Pair(id, DateUtil.extractSlotTime(id)) }
+                }
+            }
 
     val maxSlotsInView = weekDays.maxOf { day -> slotsByDate[day.toString()]?.size ?: 0 }
     val showMoreEnabled = maxSlotsInView > 4
     val noSlotsInView = weekDays.all { day -> (slotsByDate[day.toString()]?.size ?: 0) == 0 }
 
-    val nextAvailableDate: LocalDate? = if (noSlotsInView) {
-        practitioner.availableSlots
-            .map { it.dayLabel }
-            .mapNotNull { runCatching { LocalDate.parse(it) }.getOrNull() }
-            .filter { !it.isBefore(today) }
-            .minOrNull()
-    } else null
+    val nextAvailableDate: LocalDate? =
+        if (noSlotsInView) {
+            practitioner.availableSlots
+                .map { it.dayLabel }
+                .mapNotNull { runCatching { LocalDate.parse(it) }.getOrNull() }
+                .filter { !it.isBefore(today) }
+                .minOrNull()
+        } else {
+            null
+        }
 
     AppCard(modifier = modifier.fillMaxWidth()) {
         Column(modifier = Modifier.fillMaxWidth()) {
-
             // ── Header (clickable → onSeeProfile) ─────────────────────────────
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onSeeProfile() }
-                    .padding(
-                        start = Dimens.paddingL,
-                        end = Dimens.paddingL,
-                        top = Dimens.paddingL
-                    ),
-                verticalAlignment = Alignment.Top
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable { onSeeProfile() }
+                        .padding(
+                            start = Dimens.paddingL,
+                            end = Dimens.paddingL,
+                            top = Dimens.paddingL,
+                        ),
+                verticalAlignment = Alignment.Top,
             ) {
                 AvatarCircle(
                     initials = practitioner.initials,
                     size = Dimens.avatarSizeLg,
                     fontSize = MaterialTheme.typography.headlineSmall.fontSize,
-                    modifier = sharedElementModifier("practitioner-avatar-${practitioner.id}")
+                    modifier = sharedElementModifier("practitioner-avatar-${practitioner.id}"),
                 )
                 HSpace(Dimens.paddingM)
                 Column(Modifier.weight(1f)) {
                     AppSubtitleText(
                         text = practitioner.fullName,
                         color = TextPrimary,
-                        modifier = sharedElementModifier("practitioner-name-${practitioner.id}")
+                        modifier = sharedElementModifier("practitioner-name-${practitioner.id}"),
                     )
                     AppCaptionText(
                         text = practitioner.specialty,
                         color = Primary,
-                        maxLines = 1
+                        maxLines = 1,
                     )
                 }
             }
@@ -130,19 +135,19 @@ fun PractitionerCard(
             // ── Clinic name ───────────────────────────────────────────────────
             Row(
                 modifier = Modifier.padding(horizontal = Dimens.paddingL),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 AppIcon(
                     imageVector = Icons.Filled.Business,
                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                     tint = TextSecondary,
-                    size = Dimens.iconSizeSm
+                    size = Dimens.iconSizeSm,
                 )
                 HSpace(Dimens.paddingXXS)
                 AppCaptionText(
                     text = practitioner.clinic,
                     color = TextSecondary,
-                    maxLines = 1
+                    maxLines = 1,
                 )
             }
 
@@ -151,19 +156,19 @@ fun PractitionerCard(
             // ── Address ───────────────────────────────────────────────────────
             Row(
                 modifier = Modifier.padding(horizontal = Dimens.paddingL),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 AppIcon(
                     imageVector = Icons.Filled.LocationOn,
                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                     tint = TextSecondary,
-                    size = Dimens.iconSizeSm
+                    size = Dimens.iconSizeSm,
                 )
                 HSpace(Dimens.paddingXXS)
                 AppCaptionText(
                     text = practitioner.address,
                     color = TextSecondary,
-                    maxLines = 1
+                    maxLines = 1,
                 )
             }
 
@@ -172,25 +177,25 @@ fun PractitionerCard(
             // ── Slot strip — edge-to-edge, light-blue background ──────────────
             Box(modifier = Modifier.fillMaxWidth().background(PrimaryLight)) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-
                     // ── Month label ───────────────────────────────────────────
                     // fontSizeTiny/Xxs texts in this section are intentionally small for the
                     // compact calendar grid — no matching typography wrapper exists at this size.
                     Text(
                         text = monthLabel,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = Dimens.paddingS),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(top = Dimens.paddingS),
                         fontSize = Dimens.fontSizeXxs,
                         fontWeight = FontWeight.SemiBold,
                         color = TextSecondary,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
 
                     // ── Date area with flanking chevrons ──────────────────────
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AppIconButton(
                             icon = Icons.Filled.ChevronLeft,
@@ -199,48 +204,52 @@ fun PractitionerCard(
                             enabled = weekOffset > 0,
                             tint = TextSecondary,
                             iconSize = Dimens.iconSizeLg,
-                            modifier = Modifier
-                                .size(Dimens.iconButtonSize)
-                                .alpha(if (weekOffset > 0) 1f else 0.35f)
+                            modifier =
+                                Modifier
+                                    .size(Dimens.iconButtonSize)
+                                    .alpha(if (weekOffset > 0) 1f else 0.35f),
                         )
 
                         Row(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(vertical = Dimens.paddingS)
+                            modifier =
+                                Modifier
+                                    .weight(1f)
+                                    .padding(vertical = Dimens.paddingS),
                         ) {
                             weekDays.forEach { day ->
                                 val isToday = day == today
-                                val dayAbbr = day.dayOfWeek
-                                    .getDisplayName(JavaTextStyle.SHORT, Locale.ENGLISH)
-                                    .take(3)
+                                val dayAbbr =
+                                    day.dayOfWeek
+                                        .getDisplayName(JavaTextStyle.SHORT, Locale.ENGLISH)
+                                        .take(3)
 
                                 Column(
                                     modifier = Modifier.weight(1f),
                                     horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.spacedBy(Dimens.paddingXXS)
+                                    verticalArrangement = Arrangement.spacedBy(Dimens.paddingXXS),
                                 ) {
                                     Text(
                                         text = dayAbbr,
                                         fontSize = Dimens.fontSizeTiny,
                                         color = TextHint,
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Center,
                                     )
                                     Box(
-                                        modifier = Modifier
-                                            .size(Dimens.scheduleDayCircleSize)
-                                            .background(
-                                                color = if (isToday) Primary else Color.Transparent,
-                                                shape = CircleShape
-                                            ),
-                                        contentAlignment = Alignment.Center
+                                        modifier =
+                                            Modifier
+                                                .size(Dimens.scheduleDayCircleSize)
+                                                .background(
+                                                    color = if (isToday) Primary else Color.Transparent,
+                                                    shape = CircleShape,
+                                                ),
+                                        contentAlignment = Alignment.Center,
                                     ) {
                                         Text(
                                             text = day.dayOfMonth.toString(),
                                             fontSize = Dimens.fontSizeTiny,
                                             fontWeight = FontWeight.Bold,
                                             color = if (isToday) Color.White else TextPrimary,
-                                            textAlign = TextAlign.Center
+                                            textAlign = TextAlign.Center,
                                         )
                                     }
                                 }
@@ -253,17 +262,18 @@ fun PractitionerCard(
                             onClick = { weekOffset++ },
                             tint = TextSecondary,
                             iconSize = Dimens.iconSizeLg,
-                            modifier = Modifier.size(Dimens.iconButtonSize)
+                            modifier = Modifier.size(Dimens.iconButtonSize),
                         )
                     }
 
                     // ── Slot buttons area (overlay covers this when noSlotsInView) ──
                     Box(modifier = Modifier.fillMaxWidth()) {
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = Dimens.paddingS),
-                            verticalAlignment = Alignment.Top
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = Dimens.paddingS),
+                            verticalAlignment = Alignment.Top,
                         ) {
                             // Fixed-width spacers align slot columns with day header columns above
                             HSpace(Dimens.iconButtonSize)
@@ -272,18 +282,22 @@ fun PractitionerCard(
                                     val dateKey = day.toString()
                                     val allSlots = slotsByDate[dateKey] ?: emptyList()
 
-                                    val slotsToDisplay: List<Pair<String, String>?> = if (expanded) {
-                                        if (allSlots.size >= 4) allSlots
-                                        else allSlots + List(4 - allSlots.size) { null }
-                                    } else {
-                                        val real = allSlots.take(4)
-                                        real + List(maxOf(0, 4 - real.size)) { null }
-                                    }
+                                    val slotsToDisplay: List<Pair<String, String>?> =
+                                        if (expanded) {
+                                            if (allSlots.size >= 4) {
+                                                allSlots
+                                            } else {
+                                                allSlots + List(4 - allSlots.size) { null }
+                                            }
+                                        } else {
+                                            val real = allSlots.take(4)
+                                            real + List(maxOf(0, 4 - real.size)) { null }
+                                        }
 
                                     Column(
                                         modifier = Modifier.weight(1f),
                                         horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.spacedBy(Dimens.paddingXXS)
+                                        verticalArrangement = Arrangement.spacedBy(Dimens.paddingXXS),
                                     ) {
                                         slotsToDisplay.forEach { slot ->
                                             if (slot != null) {
@@ -292,46 +306,51 @@ fun PractitionerCard(
                                                     border = BorderStroke(Dimens.borderThin, Primary),
                                                     shape = RoundedCornerShape(Dimens.radiusXs),
                                                     contentPadding = PaddingValues(Dimens.paddingNone),
-                                                    colors = ButtonDefaults.outlinedButtonColors(
-                                                        containerColor = Surface,
-                                                        contentColor = Primary
-                                                    ),
-                                                    modifier = Modifier
-                                                        .fillMaxWidth()
-                                                        .padding(horizontal = Dimens.borderThin)
+                                                    colors =
+                                                        ButtonDefaults.outlinedButtonColors(
+                                                            containerColor = Surface,
+                                                            contentColor = Primary,
+                                                        ),
+                                                    modifier =
+                                                        Modifier
+                                                            .fillMaxWidth()
+                                                            .padding(horizontal = Dimens.borderThin),
                                                 ) {
                                                     Text(
                                                         text = slot.second,
                                                         fontSize = Dimens.fontSizeTiny,
                                                         fontWeight = FontWeight.Bold,
                                                         color = Primary,
-                                                        textAlign = TextAlign.Center
+                                                        textAlign = TextAlign.Center,
                                                     )
                                                 }
                                             } else {
                                                 OutlinedButton(
                                                     onClick = {},
                                                     enabled = false,
-                                                    border = BorderStroke(
-                                                        Dimens.borderThin,
-                                                        TextHint.copy(alpha = 0.3f)
-                                                    ),
+                                                    border =
+                                                        BorderStroke(
+                                                            Dimens.borderThin,
+                                                            TextHint.copy(alpha = 0.3f),
+                                                        ),
                                                     shape = RoundedCornerShape(Dimens.radiusXs),
                                                     contentPadding = PaddingValues(Dimens.paddingNone),
-                                                    colors = ButtonDefaults.outlinedButtonColors(
-                                                        disabledContainerColor = Color.Transparent,
-                                                        disabledContentColor = TextHint
-                                                    ),
-                                                    modifier = Modifier
-                                                        .fillMaxWidth()
-                                                        .padding(horizontal = Dimens.borderThin)
+                                                    colors =
+                                                        ButtonDefaults.outlinedButtonColors(
+                                                            disabledContainerColor = Color.Transparent,
+                                                            disabledContentColor = TextHint,
+                                                        ),
+                                                    modifier =
+                                                        Modifier
+                                                            .fillMaxWidth()
+                                                            .padding(horizontal = Dimens.borderThin),
                                                 ) {
                                                     Text(
                                                         text = stringResource(R.string.home_schedule_no_slots),
                                                         fontSize = Dimens.fontSizeTiny,
                                                         fontWeight = FontWeight.Bold,
                                                         color = TextHint,
-                                                        textAlign = TextAlign.Center
+                                                        textAlign = TextAlign.Center,
                                                     )
                                                 }
                                             }
@@ -345,44 +364,48 @@ fun PractitionerCard(
                         // Overlay card when no slots visible in this week
                         if (noSlotsInView) {
                             Box(
-                                modifier = Modifier
-                                    .matchParentSize()
-                                    .background(PrimaryLight.copy(alpha = 0.92f)),
-                                contentAlignment = Alignment.Center
+                                modifier =
+                                    Modifier
+                                        .matchParentSize()
+                                        .background(PrimaryLight.copy(alpha = 0.92f)),
+                                contentAlignment = Alignment.Center,
                             ) {
                                 Card(
                                     shape = RoundedCornerShape(Dimens.radiusMd),
                                     colors = CardDefaults.cardColors(containerColor = Surface),
-                                    elevation = CardDefaults.cardElevation(
-                                        defaultElevation = Dimens.cardElevation
-                                    )
+                                    elevation =
+                                        CardDefaults.cardElevation(
+                                            defaultElevation = Dimens.cardElevation,
+                                        ),
                                 ) {
                                     Column(
-                                        modifier = Modifier.padding(
-                                            horizontal = Dimens.paddingL,
-                                            vertical = Dimens.paddingS
-                                        ),
-                                        horizontalAlignment = Alignment.CenterHorizontally
+                                        modifier =
+                                            Modifier.padding(
+                                                horizontal = Dimens.paddingL,
+                                                vertical = Dimens.paddingS,
+                                            ),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
                                     ) {
                                         if (nextAvailableDate != null) {
                                             AppCaptionText(
                                                 text = stringResource(R.string.card_next_appointment_on),
                                                 color = TextSecondary,
-                                                textAlign = TextAlign.Center
+                                                textAlign = TextAlign.Center,
                                             )
                                             AppCaptionText(
-                                                text = DateUtil.formatIsoDate(
-                                                    nextAvailableDate.toString(),
-                                                    DateUtil.PATTERN_DISPLAY_LONG
-                                                ),
+                                                text =
+                                                    DateUtil.formatIsoDate(
+                                                        nextAvailableDate.toString(),
+                                                        DateUtil.PATTERN_DISPLAY_LONG,
+                                                    ),
                                                 color = TextPrimary,
-                                                textAlign = TextAlign.Center
+                                                textAlign = TextAlign.Center,
                                             )
                                         } else {
                                             AppCaptionText(
                                                 text = stringResource(R.string.card_slots_unavailable),
                                                 color = TextPrimary,
-                                                textAlign = TextAlign.Center
+                                                textAlign = TextAlign.Center,
                                             )
                                         }
                                     }
@@ -398,10 +421,11 @@ fun PractitionerCard(
 
             // ── Show more / week-nav row ───────────────────────────────────────
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.paddingXXS, vertical = Dimens.paddingS),
-                verticalAlignment = Alignment.CenterVertically
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Dimens.paddingXXS, vertical = Dimens.paddingS),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 AppIconButton(
                     icon = Icons.Filled.ChevronLeft,
@@ -410,9 +434,10 @@ fun PractitionerCard(
                     enabled = weekOffset > 0,
                     tint = TextSecondary,
                     iconSize = Dimens.iconSizeLg,
-                    modifier = Modifier
-                        .size(Dimens.iconButtonSize)
-                        .alpha(if (weekOffset > 0) 1f else 0.35f)
+                    modifier =
+                        Modifier
+                            .size(Dimens.iconButtonSize)
+                            .alpha(if (weekOffset > 0) 1f else 0.35f),
                 )
 
                 OutlinedButton(
@@ -420,21 +445,27 @@ fun PractitionerCard(
                     enabled = showMoreEnabled,
                     border = BorderStroke(Dimens.borderThin, BorderColor),
                     shape = RoundedCornerShape(Dimens.radiusXl),
-                    contentPadding = PaddingValues(
-                        horizontal = Dimens.paddingM,
-                        vertical = Dimens.paddingXXS
-                    ),
-                    modifier = Modifier
-                        .weight(1f)
-                        .alpha(if (showMoreEnabled) 1f else 0.4f)
+                    contentPadding =
+                        PaddingValues(
+                            horizontal = Dimens.paddingM,
+                            vertical = Dimens.paddingXXS,
+                        ),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .alpha(if (showMoreEnabled) 1f else 0.4f),
                 ) {
                     AppLabelText(
-                        text = stringResource(
-                            if (expanded) R.string.card_show_fewer_schedules
-                            else R.string.card_show_more_schedules
-                        ),
+                        text =
+                            stringResource(
+                                if (expanded) {
+                                    R.string.card_show_fewer_schedules
+                                } else {
+                                    R.string.card_show_more_schedules
+                                },
+                            ),
                         color = TextPrimary,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
                 }
 
@@ -444,7 +475,7 @@ fun PractitionerCard(
                     onClick = { weekOffset++ },
                     tint = TextSecondary,
                     iconSize = Dimens.iconSizeLg,
-                    modifier = Modifier.size(Dimens.iconButtonSize)
+                    modifier = Modifier.size(Dimens.iconButtonSize),
                 )
             }
 
@@ -453,18 +484,20 @@ fun PractitionerCard(
                 onClick = onSeeProfile,
                 border = BorderStroke(Dimens.borderThin, Primary),
                 shape = RoundedCornerShape(Dimens.radiusPill),
-                contentPadding = PaddingValues(
-                    horizontal = Dimens.paddingXL,
-                    vertical = Dimens.paddingXXS
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = Dimens.paddingL)
-                    .height(Dimens.filterChipHeight)
+                contentPadding =
+                    PaddingValues(
+                        horizontal = Dimens.paddingXL,
+                        vertical = Dimens.paddingXXS,
+                    ),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Dimens.paddingL)
+                        .height(Dimens.filterChipHeight),
             ) {
                 AppLabelText(
                     text = stringResource(R.string.action_see_profile),
-                    color = Primary
+                    color = Primary,
                 )
             }
 

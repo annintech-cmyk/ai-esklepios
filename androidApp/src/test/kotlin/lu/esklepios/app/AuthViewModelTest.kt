@@ -25,18 +25,19 @@ class AuthViewModelTest {
     private lateinit var logoutUseCase: LogoutUseCase
     private lateinit var viewModel: AuthViewModel
 
-    private val testUser = User(
-        id = "user1",
-        firstName = "Anna",
-        lastName = "Test",
-        email = "anna@test.lu",
-        phone = "+352 123 456",
-        gender = "Female",
-        dateOfBirth = "01/01/1990",
-        cnsNumber = "1234567890",
-        profileType = ProfileType.PATIENT,
-        language = "en"
-    )
+    private val testUser =
+        User(
+            id = "user1",
+            firstName = "Anna",
+            lastName = "Test",
+            email = "anna@test.lu",
+            phone = "+352 123 456",
+            gender = "Female",
+            dateOfBirth = "01/01/1990",
+            cnsNumber = "1234567890",
+            profileType = ProfileType.PATIENT,
+            language = "en",
+        )
 
     @Before
     fun setUp() {
@@ -54,135 +55,144 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `login success sets isLoggedIn to true`() = runTest {
-        coEvery { loginUseCase(any(), any()) } returns Result.success(testUser)
+    fun `login success sets isLoggedIn to true`() =
+        runTest {
+            coEvery { loginUseCase(any(), any()) } returns Result.success(testUser)
 
-        viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
-        viewModel.updateField(AuthField.PASSWORD, "password123")
-        viewModel.login()
+            viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
+            viewModel.updateField(AuthField.PASSWORD, "password123")
+            viewModel.login()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertTrue(state.isLoggedIn)
-            assertNull(state.error)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertTrue(state.isLoggedIn)
+                assertNull(state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `login failure sets error state`() = runTest {
-        coEvery { loginUseCase(any(), any()) } returns Result.failure(Exception("Invalid credentials"))
+    fun `login failure sets error state`() =
+        runTest {
+            coEvery { loginUseCase(any(), any()) } returns Result.failure(Exception("Invalid credentials"))
 
-        viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
-        viewModel.updateField(AuthField.PASSWORD, "wrongpass")
-        viewModel.login()
+            viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
+            viewModel.updateField(AuthField.PASSWORD, "wrongpass")
+            viewModel.login()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertFalse(state.isLoggedIn)
-            assertNotNull(state.error)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertFalse(state.isLoggedIn)
+                assertNotNull(state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `login with empty email sets validation error`() = runTest {
-        viewModel.updateField(AuthField.EMAIL, "")
-        viewModel.updateField(AuthField.PASSWORD, "password123")
-        viewModel.login()
+    fun `login with empty email sets validation error`() =
+        runTest {
+            viewModel.updateField(AuthField.EMAIL, "")
+            viewModel.updateField(AuthField.PASSWORD, "password123")
+            viewModel.login()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertFalse(state.isLoggedIn)
-            assertNotNull(state.error)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertFalse(state.isLoggedIn)
+                assertNotNull(state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `register calls registerUseCase with correct user data`() = runTest {
-        coEvery { registerUseCase(any(), any()) } returns Result.success(testUser)
+    fun `register calls registerUseCase with correct user data`() =
+        runTest {
+            coEvery { registerUseCase(any(), any()) } returns Result.success(testUser)
 
-        viewModel.updateField(AuthField.FIRST_NAME, "Anna")
-        viewModel.updateField(AuthField.LAST_NAME, "Test")
-        viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
-        viewModel.updateField(AuthField.PASSWORD, "password123")
-        viewModel.register()
+            viewModel.updateField(AuthField.FIRST_NAME, "Anna")
+            viewModel.updateField(AuthField.LAST_NAME, "Test")
+            viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
+            viewModel.updateField(AuthField.PASSWORD, "password123")
+            viewModel.register()
 
-        coVerify { registerUseCase(any(), "password123") }
+            coVerify { registerUseCase(any(), "password123") }
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertTrue(state.isLoggedIn)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertTrue(state.isLoggedIn)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `register failure sets error`() = runTest {
-        coEvery { registerUseCase(any(), any()) } returns Result.failure(Exception("Email already taken"))
+    fun `register failure sets error`() =
+        runTest {
+            coEvery { registerUseCase(any(), any()) } returns Result.failure(Exception("Email already taken"))
 
-        viewModel.updateField(AuthField.EMAIL, "taken@test.lu")
-        viewModel.updateField(AuthField.PASSWORD, "password123")
-        viewModel.register()
+            viewModel.updateField(AuthField.EMAIL, "taken@test.lu")
+            viewModel.updateField(AuthField.PASSWORD, "password123")
+            viewModel.register()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertFalse(state.isLoggedIn)
-            assertNotNull(state.error)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertFalse(state.isLoggedIn)
+                assertNotNull(state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `forgotPassword success sets forgotPasswordSent to true`() = runTest {
-        coEvery { forgotPasswordUseCase(any()) } returns Result.success(Unit)
+    fun `forgotPassword success sets forgotPasswordSent to true`() =
+        runTest {
+            coEvery { forgotPasswordUseCase(any()) } returns Result.success(Unit)
 
-        viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
-        viewModel.forgotPassword()
+            viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
+            viewModel.forgotPassword()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertTrue(state.forgotPasswordSent)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertTrue(state.forgotPasswordSent)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `clearError resets error to null`() = runTest {
-        coEvery { loginUseCase(any(), any()) } returns Result.failure(Exception("Error"))
+    fun `clearError resets error to null`() =
+        runTest {
+            coEvery { loginUseCase(any(), any()) } returns Result.failure(Exception("Error"))
 
-        viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
-        viewModel.updateField(AuthField.PASSWORD, "pass")
-        viewModel.login()
-        viewModel.clearError()
+            viewModel.updateField(AuthField.EMAIL, "anna@test.lu")
+            viewModel.updateField(AuthField.PASSWORD, "pass")
+            viewModel.login()
+            viewModel.clearError()
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertNull(state.error)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertNull(state.error)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `updateField correctly updates email`() = runTest {
-        viewModel.updateField(AuthField.EMAIL, "test@example.com")
+    fun `updateField correctly updates email`() =
+        runTest {
+            viewModel.updateField(AuthField.EMAIL, "test@example.com")
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertEquals("test@example.com", state.email)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertEquals("test@example.com", state.email)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 
     @Test
-    fun `setStep updates step in state`() = runTest {
-        viewModel.setStep(2)
+    fun `setStep updates step in state`() =
+        runTest {
+            viewModel.setStep(2)
 
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertEquals(2, state.step)
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertEquals(2, state.step)
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 }

@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GenderTest {
-
     @Test
     fun `fromApiString lowercase canonical values`() {
         assertEquals(Gender.MALE, Gender.fromApiString("male"))

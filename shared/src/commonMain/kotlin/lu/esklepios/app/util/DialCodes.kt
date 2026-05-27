@@ -18,13 +18,14 @@ data class DialCode(
  *
  * RULE A-13: Hardcoding `listOf("+352" to ..., "+33" to ...)` in a screen is forbidden.
  */
-val supportedDialCodes: List<DialCode> = listOf(
-    DialCode(code = "+352", flagEmoji = "🇱🇺", isoAlpha2 = "LU"),
-    DialCode(code = "+33",  flagEmoji = "🇫🇷", isoAlpha2 = "FR"),
-    DialCode(code = "+49",  flagEmoji = "🇩🇪", isoAlpha2 = "DE"),
-    DialCode(code = "+32",  flagEmoji = "🇧🇪", isoAlpha2 = "BE"),
-    DialCode(code = "+44",  flagEmoji = "🇬🇧", isoAlpha2 = "GB"),
-)
+val supportedDialCodes: List<DialCode> =
+    listOf(
+        DialCode(code = "+352", flagEmoji = "🇱🇺", isoAlpha2 = "LU"),
+        DialCode(code = "+33", flagEmoji = "🇫🇷", isoAlpha2 = "FR"),
+        DialCode(code = "+49", flagEmoji = "🇩🇪", isoAlpha2 = "DE"),
+        DialCode(code = "+32", flagEmoji = "🇧🇪", isoAlpha2 = "BE"),
+        DialCode(code = "+44", flagEmoji = "🇬🇧", isoAlpha2 = "GB"),
+    )
 
 /**
  * Splits a raw phone string into (recognized dial-code, remaining digits).

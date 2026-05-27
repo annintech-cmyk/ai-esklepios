@@ -15,13 +15,12 @@ data class PractitionerDetailUiState(
     val isLoading: Boolean = false,
     val practitioner: Practitioner? = null,
     val error: String? = null,
-    val selectedSlot: AppointmentSlot? = null
+    val selectedSlot: AppointmentSlot? = null,
 )
 
 class PractitionerDetailViewModel(
-    private val getPractitionerDetailUseCase: GetPractitionerDetailUseCase
+    private val getPractitionerDetailUseCase: GetPractitionerDetailUseCase,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(PractitionerDetailUiState())
     val uiState: StateFlow<PractitionerDetailUiState> = _uiState.asStateFlow()
 
@@ -33,7 +32,7 @@ class PractitionerDetailViewModel(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            practitioner = practitioner
+                            practitioner = practitioner,
                         )
                     }
                 }

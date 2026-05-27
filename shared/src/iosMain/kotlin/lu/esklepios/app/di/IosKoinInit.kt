@@ -9,7 +9,7 @@ fun doInitKoin(enableLogging: Boolean = false) {
     startKoin {
         modules(
             iosModule(),
-            sharedModule()
+            sharedModule(),
         )
     }
 }

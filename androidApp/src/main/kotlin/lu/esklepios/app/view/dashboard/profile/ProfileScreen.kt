@@ -20,14 +20,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
-import lu.esklepios.app.utils.DateUtil
-import lu.esklepios.app.presentation.viewmodel.ProfileViewModel
-import lu.esklepios.app.core.ui.components.*
 import lu.esklepios.app.core.navigation.NavDestination
+import lu.esklepios.app.core.ui.components.*
 import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.presentation.viewmodel.ProfileViewModel
 import lu.esklepios.app.util.CnsFormatter
 import lu.esklepios.app.util.Gender
 import lu.esklepios.app.util.supportedLanguages
+import lu.esklepios.app.utils.DateUtil
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +35,7 @@ import org.koin.androidx.compose.koinViewModel
 fun ProfileScreen(
     navController: NavController,
     onMenuClick: () -> Unit = {},
-    viewModel: ProfileViewModel = koinViewModel()
+    viewModel: ProfileViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showLogoutDialog by remember { mutableStateOf(false) }
@@ -43,11 +43,13 @@ fun ProfileScreen(
     var selectedLanguage by remember { mutableStateOf("fr") }
     var languageMenuExpanded by remember { mutableStateOf(false) }
 
-    val languageOptions = supportedLanguages.map { lang ->
-        lang.code to "${lang.flagEmoji}  ${lang.englishName}"
-    }
-    val languageLabel = languageOptions.find { it.first == selectedLanguage }?.second
-        ?: languageOptions.firstOrNull()?.second ?: ""
+    val languageOptions =
+        supportedLanguages.map { lang ->
+            lang.code to "${lang.flagEmoji}  ${lang.englishName}"
+        }
+    val languageLabel =
+        languageOptions.find { it.first == selectedLanguage }?.second
+            ?: languageOptions.firstOrNull()?.second ?: ""
 
     LaunchedEffect(uiState.user) {
         uiState.user?.language?.takeIf { it.isNotBlank() }?.let { selectedLanguage = it }
@@ -74,8 +76,11 @@ fun ProfileScreen(
                 // UI-14 exemption: AlertDialog confirmButton slot is a Material-API slot
                 // — PrimaryButton (full-width pill) doesn't fit the dialog layout.
                 Button(
-                    onClick = { showLogoutDialog = false; viewModel.logout() },
-                    colors = ButtonDefaults.buttonColors(containerColor = Danger)
+                    onClick = {
+                        showLogoutDialog = false
+                        viewModel.logout()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Danger),
                 ) {
                     AppButtonText(text = stringResource(R.string.action_logout))
                 }
@@ -85,83 +90,92 @@ fun ProfileScreen(
                 TextButton(onClick = { showLogoutDialog = false }) {
                     AppButtonText(
                         text = stringResource(R.string.action_cancel),
-                        color = Primary
+                        color = Primary,
                     )
                 }
-            }
+            },
         )
     }
 
     val user = uiState.user
-    val genderDisplay = user
-        ?.gender?.takeIf { it.isNotBlank() }
-        ?.let { raw ->
-            when (Gender.fromApiString(raw)) {
-                Gender.MALE -> stringResource(R.string.gender_male)
-                Gender.FEMALE -> stringResource(R.string.gender_female)
-                Gender.OTHER -> stringResource(R.string.gender_other)
-            }
-        } ?: "—"
-    val dobDisplay = user?.dateOfBirth?.takeIf { it.isNotBlank() }
-        ?.let { dob -> DateUtil.formatIsoDate(dob, DateUtil.PATTERN_DOB) }
-        ?: "—"
-    val maskedCns = user?.cnsNumber
-        ?.takeIf { it.isNotBlank() }
-        ?.let { CnsFormatter.mask(it) }
-        ?: "—"
+    val genderDisplay =
+        user
+            ?.gender?.takeIf { it.isNotBlank() }
+            ?.let { raw ->
+                when (Gender.fromApiString(raw)) {
+                    Gender.MALE -> stringResource(R.string.gender_male)
+                    Gender.FEMALE -> stringResource(R.string.gender_female)
+                    Gender.OTHER -> stringResource(R.string.gender_other)
+                }
+            } ?: "—"
+    val dobDisplay =
+        user?.dateOfBirth?.takeIf { it.isNotBlank() }
+            ?.let { dob -> DateUtil.formatIsoDate(dob, DateUtil.PATTERN_DOB) }
+            ?: "—"
+    val maskedCns =
+        user?.cnsNumber
+            ?.takeIf { it.isNotBlank() }
+            ?.let { CnsFormatter.mask(it) }
+            ?: "—"
 
     Column(modifier = Modifier.fillMaxSize().background(Background)) {
         AppGradientHeader(
             roundedBottom = true,
-            leadingAction = HeaderAction.IconButtonAction(
-                icon = Icons.Filled.Menu,
-                contentDescription = stringResource(R.string.cd_menu),
-                onClick = onMenuClick
-            ),
-            centerAction = HeaderAction.TitleAction(
-                text = stringResource(R.string.screen_profile),
-                style = MaterialTheme.typography.headlineSmall
-            ),
-            trailingAction = HeaderAction.IconButtonAction(
-                icon = Icons.AutoMirrored.Filled.ExitToApp,
-                contentDescription = stringResource(R.string.cd_sign_out),
-                onClick = { showLogoutDialog = true }
-            ),
-            profile = HeaderProfile.Centered(
-                initials = user?.initials ?: "?",
-                avatarSize = Dimens.avatarSizeXl,
-                name = user?.fullName ?: stringResource(R.string.profile_loading_name),
-                email = user?.email
-            )
+            leadingAction =
+                HeaderAction.IconButtonAction(
+                    icon = Icons.Filled.Menu,
+                    contentDescription = stringResource(R.string.cd_menu),
+                    onClick = onMenuClick,
+                ),
+            centerAction =
+                HeaderAction.TitleAction(
+                    text = stringResource(R.string.screen_profile),
+                    style = MaterialTheme.typography.headlineSmall,
+                ),
+            trailingAction =
+                HeaderAction.IconButtonAction(
+                    icon = Icons.AutoMirrored.Filled.ExitToApp,
+                    contentDescription = stringResource(R.string.cd_sign_out),
+                    onClick = { showLogoutDialog = true },
+                ),
+            profile =
+                HeaderProfile.Centered(
+                    initials = user?.initials ?: "?",
+                    avatarSize = Dimens.avatarSizeXl,
+                    name = user?.fullName ?: stringResource(R.string.profile_loading_name),
+                    email = user?.email,
+                ),
         )
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = Dimens.paddingL)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = Dimens.paddingL),
         ) {
             VSpace(Dimens.paddingL)
 
             AppCard(modifier = Modifier.fillMaxWidth()) {
                 Column {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = Dimens.paddingL, end = Dimens.paddingM, top = Dimens.paddingM, bottom = Dimens.paddingM),
-                        verticalAlignment = Alignment.CenterVertically
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(start = Dimens.paddingL, end = Dimens.paddingM, top = Dimens.paddingM, bottom = Dimens.paddingM),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AppIcon(
                             imageVector = Icons.Filled.Person,
                             contentDescription = null, // a11y: decorative — labelled by adjacent Text
                             tint = Primary,
-                            size = Dimens.iconSizeCompact
+                            size = Dimens.iconSizeCompact,
                         )
                         HSpace(Dimens.paddingS)
                         AppLabelText(
                             text = stringResource(R.string.profile_section_personal),
                             color = Primary,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
                         )
                         // UI-14 exemption: compact section-header "Edit" pill — height = filterChipHeight (32dp)
                         // doesn't match SecondaryButton (52dp pill). Pattern appears only once in the project;
@@ -172,29 +186,41 @@ fun ProfileScreen(
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = Primary),
                             border = BorderStroke(Dimens.borderThin, Primary),
                             contentPadding = PaddingValues(horizontal = Dimens.paddingM, vertical = Dimens.paddingNone),
-                            modifier = Modifier.height(Dimens.filterChipHeight)
+                            modifier = Modifier.height(Dimens.filterChipHeight),
                         ) {
                             AppIcon(
                                 imageVector = Icons.Filled.Edit,
                                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                                 tint = Primary,
-                                size = Dimens.iconSizeChevron
+                                size = Dimens.iconSizeChevron,
                             )
                             HSpace(Dimens.paddingXS)
                             AppLabelText(
                                 text = stringResource(R.string.action_edit),
-                                color = Primary
+                                color = Primary,
                             )
                         }
                     }
                     HorizontalDivider(color = BorderColor)
-                    ProfileInfoRow(Icons.Filled.Person, Primary, IconBgBlue, stringResource(R.string.profile_label_full_name), user?.fullName ?: "—")
+                    ProfileInfoRow(
+                        Icons.Filled.Person,
+                        Primary,
+                        IconBgBlue,
+                        stringResource(R.string.profile_label_full_name),
+                        user?.fullName ?: "—",
+                    )
                     HorizontalDivider(color = BorderColor, modifier = Modifier.padding(horizontal = Dimens.paddingL))
                     ProfileInfoRow(Icons.Filled.Face, Primary, IconBgBlue, stringResource(R.string.profile_label_gender), genderDisplay)
                     HorizontalDivider(color = BorderColor, modifier = Modifier.padding(horizontal = Dimens.paddingL))
                     ProfileInfoRow(Icons.Filled.Cake, Primary, IconBgBlue, stringResource(R.string.profile_label_dob), dobDisplay)
                     HorizontalDivider(color = BorderColor, modifier = Modifier.padding(horizontal = Dimens.paddingL))
-                    ProfileInfoRow(Icons.Filled.Phone, Primary, IconBgBlue, stringResource(R.string.profile_label_phone), user?.phone?.ifBlank { "—" } ?: "—")
+                    ProfileInfoRow(
+                        Icons.Filled.Phone,
+                        Primary,
+                        IconBgBlue,
+                        stringResource(R.string.profile_label_phone),
+                        user?.phone?.ifBlank { "—" } ?: "—",
+                    )
                     HorizontalDivider(color = BorderColor, modifier = Modifier.padding(horizontal = Dimens.paddingL))
                     ProfileInfoRow(Icons.Filled.Badge, Primary, IconBgBlue, stringResource(R.string.profile_label_cns), maskedCns)
                 }
@@ -205,43 +231,46 @@ fun ProfileScreen(
             AppCard(modifier = Modifier.fillMaxWidth()) {
                 Column {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
-                        verticalAlignment = Alignment.CenterVertically
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AppIcon(
                             imageVector = Icons.Filled.Notifications,
                             contentDescription = null, // a11y: decorative — labelled by adjacent Text
                             tint = Primary,
-                            size = Dimens.iconSizeCompact
+                            size = Dimens.iconSizeCompact,
                         )
                         HSpace(Dimens.paddingS)
                         AppLabelText(
                             text = stringResource(R.string.profile_section_preferences),
-                            color = Primary
+                            color = Primary,
                         )
                     }
                     HorizontalDivider(color = BorderColor)
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(
-                                modifier = Modifier
-                                    .size(Dimens.paddingXXXL + Dimens.paddingS)
-                                    .background(IconBgBlue, RoundedCornerShape(Dimens.radiusMd)),
-                                contentAlignment = Alignment.Center
+                                modifier =
+                                    Modifier
+                                        .size(Dimens.paddingXXXL + Dimens.paddingS)
+                                        .background(IconBgBlue, RoundedCornerShape(Dimens.radiusMd)),
+                                contentAlignment = Alignment.Center,
                             ) {
                                 AppIcon(
                                     imageVector = Icons.Filled.Email,
                                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                                     tint = Primary,
-                                    size = Dimens.iconSizeMd
+                                    size = Dimens.iconSizeMd,
                                 )
                             }
                             HSpace(Dimens.paddingL)
@@ -249,14 +278,14 @@ fun ProfileScreen(
                                 AppCaptionText(text = stringResource(R.string.profile_label_notifications))
                                 AppBodyText(
                                     text = stringResource(R.string.profile_label_notifications_email),
-                                    color = TextPrimary
+                                    color = TextPrimary,
                                 )
                             }
                         }
                         Switch(
                             checked = notificationsEnabled,
                             onCheckedChange = { notificationsEnabled = it },
-                            colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = Primary)
+                            colors = SwitchDefaults.colors(checkedThumbColor = Color.White, checkedTrackColor = Primary),
                         )
                     }
                     HorizontalDivider(color = BorderColor, modifier = Modifier.padding(horizontal = Dimens.paddingL))
@@ -265,7 +294,7 @@ fun ProfileScreen(
                         VSpace(Dimens.paddingS)
                         ExposedDropdownMenuBox(
                             expanded = languageMenuExpanded,
-                            onExpandedChange = { languageMenuExpanded = !languageMenuExpanded }
+                            onExpandedChange = { languageMenuExpanded = !languageMenuExpanded },
                         ) {
                             OutlinedTextField(
                                 value = languageLabel,
@@ -274,19 +303,23 @@ fun ProfileScreen(
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = languageMenuExpanded) },
                                 modifier = Modifier.fillMaxWidth().menuAnchor(MenuAnchorType.PrimaryNotEditable),
                                 shape = RoundedCornerShape(Dimens.radiusMd),
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = Primary,
-                                    unfocusedBorderColor = IconBgBlue
-                                )
+                                colors =
+                                    OutlinedTextFieldDefaults.colors(
+                                        focusedBorderColor = Primary,
+                                        unfocusedBorderColor = IconBgBlue,
+                                    ),
                             )
                             ExposedDropdownMenu(
                                 expanded = languageMenuExpanded,
-                                onDismissRequest = { languageMenuExpanded = false }
+                                onDismissRequest = { languageMenuExpanded = false },
                             ) {
                                 languageOptions.forEach { (code, label) ->
                                     DropdownMenuItem(
                                         text = { AppBodyText(text = label) },
-                                        onClick = { selectedLanguage = code; languageMenuExpanded = false }
+                                        onClick = {
+                                            selectedLanguage = code
+                                            languageMenuExpanded = false
+                                        },
                                     )
                                 }
                             }
@@ -300,21 +333,22 @@ fun ProfileScreen(
             AppCard(modifier = Modifier.fillMaxWidth()) {
                 Column {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
-                        verticalAlignment = Alignment.CenterVertically
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         AppIcon(
                             imageVector = Icons.Filled.Shield,
                             contentDescription = null, // a11y: decorative — labelled by adjacent Text
                             tint = Primary,
-                            size = Dimens.iconSizeCompact
+                            size = Dimens.iconSizeCompact,
                         )
                         HSpace(Dimens.paddingS)
                         AppLabelText(
                             text = stringResource(R.string.profile_section_security),
-                            color = Primary
+                            color = Primary,
                         )
                     }
                     HorizontalDivider(color = BorderColor)
@@ -324,7 +358,7 @@ fun ProfileScreen(
                         iconBg = IconBgBlue,
                         label = stringResource(R.string.profile_label_login_email),
                         value = user?.email ?: "—",
-                        onClick = { navController.navigate(NavDestination.ChangeEmail.route) }
+                        onClick = { navController.navigate(NavDestination.ChangeEmail.route) },
                     )
                     HorizontalDivider(color = BorderColor, modifier = Modifier.padding(horizontal = Dimens.paddingL))
                     SecurityRow(
@@ -333,7 +367,7 @@ fun ProfileScreen(
                         iconBg = IconBgBlue,
                         label = stringResource(R.string.profile_label_security),
                         value = stringResource(R.string.profile_label_change_password),
-                        onClick = { navController.navigate(NavDestination.ChangePassword.route) }
+                        onClick = { navController.navigate(NavDestination.ChangePassword.route) },
                     )
                 }
             }
@@ -341,24 +375,25 @@ fun ProfileScreen(
             VSpace(Dimens.paddingM)
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = DangerBg, shape = RoundedCornerShape(Dimens.radiusMd))
-                    .clickable { showLogoutDialog = true }
-                    .padding(Dimens.paddingL),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(color = DangerBg, shape = RoundedCornerShape(Dimens.radiusMd))
+                        .clickable { showLogoutDialog = true }
+                        .padding(Dimens.paddingL),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 AppIcon(
                     imageVector = Icons.AutoMirrored.Filled.ExitToApp,
                     contentDescription = null, // a11y: decorative — labelled by adjacent Text
                     tint = Danger,
-                    size = Dimens.iconSizeMd
+                    size = Dimens.iconSizeMd,
                 )
                 HSpace(Dimens.paddingS)
                 AppSubtitleText(
                     text = stringResource(R.string.action_logout),
-                    color = Danger
+                    color = Danger,
                 )
             }
 
@@ -373,25 +408,27 @@ private fun ProfileInfoRow(
     iconTint: Color,
     iconBg: Color = IconBgBlue,
     label: String,
-    value: String
+    value: String,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
-                .size(Dimens.paddingXXXL + Dimens.paddingS)
-                .background(iconBg, RoundedCornerShape(Dimens.radiusMd)),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(Dimens.paddingXXXL + Dimens.paddingS)
+                    .background(iconBg, RoundedCornerShape(Dimens.radiusMd)),
+            contentAlignment = Alignment.Center,
         ) {
             AppIcon(
                 imageVector = icon,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = iconTint,
-                size = Dimens.iconSizeSm
+                size = Dimens.iconSizeSm,
             )
         }
         HSpace(Dimens.paddingL)
@@ -403,7 +440,7 @@ private fun ProfileInfoRow(
             imageVector = Icons.Filled.ChevronRight,
             contentDescription = null, // a11y: decorative — labelled by adjacent Text
             tint = TextHint,
-            size = Dimens.iconSizeCompact
+            size = Dimens.iconSizeCompact,
         )
     }
 }
@@ -415,26 +452,28 @@ private fun SecurityRow(
     iconBg: Color,
     label: String,
     value: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
-                .size(Dimens.paddingXXXL + Dimens.paddingS)
-                .background(iconBg, RoundedCornerShape(Dimens.radiusMd)),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(Dimens.paddingXXXL + Dimens.paddingS)
+                    .background(iconBg, RoundedCornerShape(Dimens.radiusMd)),
+            contentAlignment = Alignment.Center,
         ) {
             AppIcon(
                 imageVector = icon,
                 contentDescription = null, // a11y: decorative — labelled by adjacent Text
                 tint = iconTint,
-                size = Dimens.iconSizeMd
+                size = Dimens.iconSizeMd,
             )
         }
         HSpace(Dimens.paddingL)
@@ -446,7 +485,7 @@ private fun SecurityRow(
             imageVector = Icons.Filled.ChevronRight,
             contentDescription = null, // a11y: decorative — labelled by adjacent Text
             tint = TextHint,
-            size = Dimens.iconSizeCompact
+            size = Dimens.iconSizeCompact,
         )
     }
 }

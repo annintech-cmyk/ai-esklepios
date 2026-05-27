@@ -18,33 +18,34 @@ import lu.esklepios.app.core.ui.theme.TextSecondary
 fun ErrorView(
     modifier: Modifier = Modifier,
     message: String,
-    onRetry: (() -> Unit)? = null
+    onRetry: (() -> Unit)? = null,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(Dimens.paddingXXXL),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(Dimens.paddingXXXL),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
             imageVector = Icons.Filled.Warning,
             contentDescription = null, // a11y: decorative — labelled by adjacent Text
             tint = Danger,
-            modifier = Modifier.size(Dimens.avatarSizeXl)
+            modifier = Modifier.size(Dimens.avatarSizeXl),
         )
         Spacer(modifier = Modifier.height(Dimens.paddingL))
         AppBodyText(
             text = message,
             color = TextSecondary,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         if (onRetry != null) {
             Spacer(modifier = Modifier.height(Dimens.paddingXXL))
             PrimaryButton(
                 text = stringResource(R.string.action_retry),
                 onClick = onRetry,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

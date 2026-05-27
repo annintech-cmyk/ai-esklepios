@@ -14,10 +14,10 @@ package lu.esklepios.app.util
 enum class DateFilter(val apiKey: String, val labelKey: String) {
     ALL("All", "home_filter_all"),
     TODAY("Today", "home_filter_today"),
-    WITHIN_3_DAYS("Within 3 Days", "home_filter_3days");
+    WITHIN_3_DAYS("Within 3 Days", "home_filter_3days"),
+    ;
 
     companion object {
-        fun fromApiKey(value: String): DateFilter =
-            entries.firstOrNull { it.apiKey.equals(value, ignoreCase = true) } ?: ALL
+        fun fromApiKey(value: String): DateFilter = entries.firstOrNull { it.apiKey.equals(value, ignoreCase = true) } ?: ALL
     }
 }

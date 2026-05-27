@@ -20,26 +20,28 @@ enum class AppointmentStatusColorScheme { SUCCESS, WARNING, DANGER, PRIMARY }
  */
 object AppointmentStatusOptions {
     /** Twine key for the localized status label. */
-    fun labelKey(status: AppointmentStatus): String = when (status) {
-        AppointmentStatus.CONFIRMED -> "status_confirmed"
-        AppointmentStatus.PENDING   -> "status_reserved"
-        AppointmentStatus.CANCELLED -> "status_cancelled"
-        AppointmentStatus.COMPLETED -> "status_completed"
-        AppointmentStatus.NO_SHOW   -> "status_no_show"
-    }
+    fun labelKey(status: AppointmentStatus): String =
+        when (status) {
+            AppointmentStatus.CONFIRMED -> "status_confirmed"
+            AppointmentStatus.PENDING -> "status_reserved"
+            AppointmentStatus.CANCELLED -> "status_cancelled"
+            AppointmentStatus.COMPLETED -> "status_completed"
+            AppointmentStatus.NO_SHOW -> "status_no_show"
+        }
 
     /** Semantic colour bucket — platform UI resolves to actual `Color`. */
-    fun colorScheme(status: AppointmentStatus): AppointmentStatusColorScheme = when (status) {
-        AppointmentStatus.CONFIRMED -> AppointmentStatusColorScheme.SUCCESS
-        AppointmentStatus.PENDING   -> AppointmentStatusColorScheme.WARNING
-        AppointmentStatus.CANCELLED -> AppointmentStatusColorScheme.DANGER
-        AppointmentStatus.COMPLETED -> AppointmentStatusColorScheme.PRIMARY
-        AppointmentStatus.NO_SHOW   -> AppointmentStatusColorScheme.DANGER
-    }
+    fun colorScheme(status: AppointmentStatus): AppointmentStatusColorScheme =
+        when (status) {
+            AppointmentStatus.CONFIRMED -> AppointmentStatusColorScheme.SUCCESS
+            AppointmentStatus.PENDING -> AppointmentStatusColorScheme.WARNING
+            AppointmentStatus.CANCELLED -> AppointmentStatusColorScheme.DANGER
+            AppointmentStatus.COMPLETED -> AppointmentStatusColorScheme.PRIMARY
+            AppointmentStatus.NO_SHOW -> AppointmentStatusColorScheme.DANGER
+        }
 }
 
 // ── Android-side ergonomic extensions ────────────────────────────────────────
 
 fun AppointmentStatus.labelKey(): String = AppointmentStatusOptions.labelKey(this)
-fun AppointmentStatus.colorScheme(): AppointmentStatusColorScheme =
-    AppointmentStatusOptions.colorScheme(this)
+
+fun AppointmentStatus.colorScheme(): AppointmentStatusColorScheme = AppointmentStatusOptions.colorScheme(this)

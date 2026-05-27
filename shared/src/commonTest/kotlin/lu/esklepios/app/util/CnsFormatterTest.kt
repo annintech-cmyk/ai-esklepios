@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CnsFormatterTest {
-
     @Test
     fun `mask short string returns unchanged`() {
         assertEquals("", CnsFormatter.mask(""))
