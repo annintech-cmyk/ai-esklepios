@@ -1,0 +1,43 @@
+package lu.esklepios.app.core.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+val Primary = Color(0xFF3B4FE8)
+val PrimaryDark = Color(0xFF1A2580)
+val PrimaryLight = Color(0xFFEEF0FD)
+val PrimaryMid = Color(0xFF6B7BED)
+val Background = Color(0xFFF4F6FB)
+val Surface = Color(0xFFFFFFFF)
+val TextPrimary = Color(0xFF1A1D2E)
+val TextSecondary = Color(0xFF6B7280)
+val TextHint = Color(0xFF9CA3AF)
+val BorderColor = Color(0x17000000)
+val BorderLight = Color(0x0F000000)
+val Success = Color(0xFF3B6D11)
+val SuccessBg = Color(0xFFEAF3DE)
+val Danger = Color(0xFFD83B3B)
+val DangerBg = Color(0xFFFFF3F3)
+val Warning = Color(0xFFF59E0B)
+val WarningBg = Color(0xFFFAEEDA)
+val GradientStart = Color(0xFF2C3AEF)
+val GradientEnd = Color(0xFF1A2580)
+val TealAccent = Color(0xFF4DD0E1)
+val FieldBackground = Color(0xFFFFFFFF)
+
+// Profile icon palette
+val IconBgBlue   = Color(0xFFEEF0FD)
+val IconBgPink   = Color(0xFFFFEBF0)
+val IconBgOrange = Color(0xFFFFF3E0)
+val IconBgTeal   = Color(0xFFE0F7FA)
+val IconBgGreen  = Color(0xFFE8F5E9)
+val IconTintPink   = Color(0xFFE91E63)
+val IconTintOrange = Color(0xFFFF9800)
+val IconTintTeal   = Color(0xFF00ACC1)
+val IconTintGreen  = Color(0xFF43A047)
+
+val StrengthGood       = Color(0xFF65A30D)
+val FavoriteRed        = Color(0xFFFF6B6B)
+val GoogleBlue         = Color(0xFF4285F4)
+val AvatarGradientEnd  = Color(0xFFDDE1FB)
+val OldApptAmber       = Color(0xFF854F0B)
+val OldApptAmberIcon   = Color(0xFFD97706)

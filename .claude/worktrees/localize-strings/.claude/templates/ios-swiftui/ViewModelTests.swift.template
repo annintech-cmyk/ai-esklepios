@@ -1,0 +1,41 @@
+import XCTest
+import SwiftUI
+@testable import eSklepios
+
+/// {{NAME}}ViewModelTests
+/// XCTest suite for {{NAME}}ViewModelWrapper behavior.
+final class {{NAME}}ViewModelTests: XCTestCase {
+
+    var wrapper: {{NAME}}ViewModelWrapper!
+
+    override func setUp() {
+        super.setUp()
+        wrapper = {{NAME}}ViewModelWrapper()
+    }
+
+    override func tearDown() {
+        wrapper = nil
+        super.tearDown()
+    }
+
+    // MARK: - Tests
+
+    func testViewModelIsNotNil() {
+        XCTAssertNotNil(wrapper.viewModel, "ViewModel should not be nil after initialization")
+    }
+
+    func testInitialUiStateIsNotNil() {
+        XCTAssertNotNil(wrapper.uiState, "UiState should be set after initialization")
+    }
+
+    func testInitialStateIsNotLoading() {
+        // Initial state should not show a loading indicator
+        let isLoading = wrapper.uiState.isLoading as? Bool ?? false
+        XCTAssertFalse(isLoading, "Initial state should not be loading")
+    }
+
+    func testInitialStateHasNoError() {
+        let error = wrapper.uiState.error as? String
+        XCTAssertNil(error, "Initial state should have no error")
+    }
+}

@@ -1,0 +1,127 @@
+/* App */
+"app_name" = "eSklepios";
+
+/* Splash */
+"splash_tagline" = "Your Health, Connected";
+
+/* Landing */
+"landing_connect" = "Connect";
+"landing_hero_prefix" = "Make an appointment\nwith a";
+"landing_hero_accent" = "health\nprofessional";
+"landing_search_research" = "Research";
+"landing_location_hint" = "City or postal code";
+"landing_search_button" = "Search";
+"landing_trust_verified" = "Graduated and Verified practitioners";
+"landing_trust_closest" = "Closest to you";
+"landing_trust_data_secured" = "Your personal data secured";
+
+/* Navigation */
+"nav_home" = "Home";
+"nav_appointments" = "Appointments";
+"nav_profile" = "Profile";
+
+/* Actions */
+"action_save" = "Save";
+"action_cancel" = "Cancel";
+"action_ok" = "OK";
+"action_done" = "Done";
+"action_edit" = "Edit";
+"action_retry" = "Retry";
+
+/* Errors */
+"error_title" = "Error";
+"error_generic" = "Something went wrong. Please try again.";
+
+/* Profile */
+"profile_personal_info_label" = "PERSONAL INFORMATION";
+"profile_full_name_label" = "FULL NAME";
+"profile_gender_label" = "GENDER";
+"profile_dob_label" = "DATE OF BIRTH";
+"profile_phone_label" = "PHONE NUMBER";
+"profile_cns_label" = "CNS NUMBER";
+"profile_preferences_label" = "PREFERENCES";
+"profile_notifications_label" = "NOTIFICATIONS";
+"profile_email_notifications" = "Email Notifications";
+"profile_language_label" = "LANGUAGE";
+"profile_login_security" = "LOGIN & SECURITY";
+"profile_login_email_label" = "LOGIN EMAIL ADDRESS";
+"profile_security_label" = "SECURITY";
+"profile_change_password" = "Change Password";
+"profile_sign_out" = "Sign Out";
+"profile_loading_name" = "Loading…";
+"profile_edit_button" = "Edit";
+"profile_logout_confirm" = "Are you sure you want to sign out?";
+
+/* Gender */
+"gender_male" = "Male";
+"gender_female" = "Female";
+"gender_other" = "Other";
+
+/* Edit Profile */
+"edit_personal_info_title" = "Edit Personal Information";
+"edit_first_name_label" = "First Name";
+"edit_last_name_label" = "Last Name";
+"edit_phone_label" = "Phone Number";
+"edit_gender_label" = "Gender";
+"edit_dob_label" = "Date of Birth";
+"edit_dob_placeholder" = "DD / MM / YYYY";
+"edit_cns_number" = "CNS Number";
+"edit_gender_man" = "Man";
+"edit_gender_woman" = "Woman";
+"edit_gender_other" = "Other";
+
+/* Change Email */
+"screen_change_email" = "Change Email";
+"change_email_verification_info" = "We’ll send a verification link to your new email. Your current email stays active until you confirm.";
+"change_email_current_label" = "Current Email";
+"change_email_not_available" = "Not available";
+"change_email_new_label" = "New Email";
+"change_email_new_placeholder" = "Enter new email address";
+"change_email_valid_format" = "Valid email format";
+"change_email_confirm_label" = "Confirm New Email";
+"change_email_confirm_placeholder" = "Confirm new email address";
+"change_email_match" = "Emails match";
+"change_email_no_match" = "Emails do not match";
+"change_email_success" = "Email updated successfully!";
+
+/* Change Password */
+"screen_change_password" = "Change Password";
+"change_password_security_title" = "Keep your account secure";
+"change_password_security_subtitle" = "Use a strong, unique password you don’t reuse elsewhere.";
+"change_password_current_label" = "Current Password";
+"change_password_current_placeholder" = "Enter current password";
+"change_password_new_label" = "New Password";
+"change_password_new_placeholder" = "Enter new password";
+"change_password_confirm_label" = "Confirm New Password";
+"change_password_confirm_placeholder" = "Re-enter new password";
+"change_password_strength_format" = "Strength: %@";
+"change_password_criteria_min_length" = "At least 12 characters";
+"change_password_criteria_mixed_case" = "One uppercase and lowercase";
+"change_password_criteria_number_symbol" = "One number and symbol";
+"change_password_match" = "Passwords match";
+"change_password_no_match" = "Passwords do not match";
+"change_password_success" = "Password updated successfully!";
+"change_password_strength_weak" = "Weak";
+"change_password_strength_fair" = "Fair";
+"change_password_strength_good" = "Good";
+"change_password_strength_strong" = "Strong";
+
+/* Drawer / Menu */
+"drawer_menu_title" = "Menu";
+"drawer_about_us" = "ABOUT US";
+"drawer_assistance" = "ASSISTANCE";
+"drawer_for_caregivers" = "FOR CAREGIVERS";
+"drawer_relevant_links" = "RELEVANT LINKS";
+"drawer_who_are_we" = "Who are we?";
+"drawer_terms" = "Terms and Conditions of Use";
+"drawer_privacy_policy" = "Privacy Policy";
+"drawer_contact_us" = "Contact us";
+"drawer_esklepios_pro" = "eSklepios Pro";
+"drawer_emergencies" = "Emergencies";
+"drawer_pharmacy_on_call" = "Pharmacy on call";
+"drawer_national_health_fund" = "National Health Fund";
+"drawer_ministry_of_health" = "Ministry of Health";
+"drawer_health_portal" = "Health Portal";
+"drawer_health_professionals" = "Health Professionals";
+"drawer_logout" = "Logout";
+"drawer_guest" = "Guest";

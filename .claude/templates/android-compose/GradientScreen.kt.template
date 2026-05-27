@@ -1,0 +1,106 @@
+package lu.esklepios.app.view.{{area}}.{{name_snake}}
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import lu.esklepios.app.R
+import lu.esklepios.app.core.navigation.NavDestination
+import lu.esklepios.app.core.ui.components.*
+import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.presentation.viewmodel.{{NAME}}ViewModel
+import org.koin.androidx.compose.koinViewModel
+
+/**
+ * {{NAME}}Screen — {{DESCRIPTION}}
+ *
+ * Archetype: GRADIENT HERO (dashboard, feed, profile, detail screens).
+ * Pattern: outer `Column { AppGradientHeader(...); <scrollable body> }`.
+ *
+ * `AppGradientHeader` supports several hero flavours via its parameters:
+ *   • Toolbar-only       — leading/center/trailing actions
+ *   • Search hero        — `search = HeaderSearch(...)`           (see HomeScreen.kt)
+ *   • Centered profile   — `profile = HeaderProfile.Centered(...)`  (see ProfileScreen.kt)
+ *   • Inline profile     — `profile = HeaderProfile.Inline(...)`    (see PractitionerDetailScreen.kt)
+ *   • Overline + title   — `textBlock = HeaderTextBlock(overline, title)`
+ *
+ * The body below the header is responsible for rendering loading / error /
+ * content states (the hero stays mounted regardless).
+ */
+@Composable
+fun {{NAME}}Screen(
+    navController: NavController,
+    viewModel: {{NAME}}ViewModel = koinViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.load()
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Background)
+    ) {
+        AppGradientHeader(
+            roundedBottom = true,
+            leadingAction = HeaderAction.IconButtonAction(
+                icon = Icons.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.cd_back),
+                onClick = { navController.popBackStack() }
+            ),
+            centerAction = HeaderAction.TitleAction(
+                text = stringResource(R.string.screen_{{name_snake}}),
+                style = MaterialTheme.typography.headlineMedium
+            )
+            // ── Optional hero flavours — pick ONE and uncomment ───────────────
+            // search = HeaderSearch(
+            //     searchQuery = uiState.query,
+            //     onSearchQueryChange = { viewModel.onQueryChange(it) },
+            //     locationQuery = uiState.locationQuery,
+            //     onLocationQueryChange = { viewModel.onLocationChange(it) },
+            //     onSearchClick = { viewModel.search() }
+            // ),
+            // textBlock = HeaderTextBlock(
+            //     overline = stringResource(R.string.{{name_snake}}_overline),
+            //     title = stringResource(R.string.{{name_snake}}_hero_title)
+            // ),
+            // profile = HeaderProfile.Centered(
+            //     initials = uiState.user?.initials ?: "?",
+            //     name = uiState.user?.fullName ?: "",
+            //     subtitle = uiState.user?.email,
+            //     avatarSize = Dimens.avatarSizeXl
+            // )
+        )
+
+        // ── Body states ──────────────────────────────────────────────────────
+        when {
+            uiState.isLoading -> LoadingIndicator(modifier = Modifier.fillMaxSize())
+            uiState.error != null -> ErrorView(
+                modifier = Modifier.fillMaxSize(),
+                message = uiState.error!!,
+                onRetry = { viewModel.load() }
+            )
+            else -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM)
+                ) {
+                    // TODO: render list/sections.
+                    // Reference: HomeScreen.kt (LazyColumn of PractitionerCards),
+                    //            MyAppointmentsScreen.kt (segmented filter + list),
+                    //            ProfileScreen.kt (multiple AppCard sections).
+                }
+            }
+        }
+    }
+}

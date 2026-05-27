@@ -1,0 +1,63 @@
+import SwiftUI
+
+/// {{NAME}}View — {{DESCRIPTION}}
+///
+/// Archetype: FORM (auth, editors, settings dialogs).
+/// Uses `AppScreen` which already provides:
+///   • Toolbar with back button + screen title
+///   • Error alert wiring (driven by `uiState.error` + `onErrorDismissed`)
+///   • Background, vertical scroll, screen padding
+///
+/// Body is a vertical stack of fields and actions. Reference views:
+///   • LoginView.swift           (auth + SSO footer)
+///   • RegisterView.swift        (long form)
+///   • EditProfileView.swift     (segmented control + multi-field)
+///   • ChangeEmailView.swift     (single field + validation)
+///   • ChangePasswordView.swift  (multi-password + strength meter)
+struct {{NAME}}View: View {
+    @StateObject private var viewModel = {{NAME}}ViewModelWrapper()
+    @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+        AppScreen(
+            title: NSLocalizedString("screen_{{name_snake}}", value: "{{NAME}}", comment: ""),
+            onBack: { dismiss() },
+            error: viewModel.uiState.error,
+            onErrorDismissed: { viewModel.clearError() }
+        ) {
+            // ── TODO: form fields ────────────────────────────────────────────
+            // VStack(alignment: .leading, spacing: Spacing.s) {
+            //     FormFieldLabel(label: NSLocalizedString("label_email_address", value: "Email address", comment: ""))
+            //     HStack {
+            //         Image(systemName: "envelope").foregroundColor(.appPrimaryMid)
+            //         TextField("your@email.com", text: Binding(
+            //             get: { viewModel.uiState.email },
+            //             set: { viewModel.updateEmail($0) }
+            //         ))
+            //         .keyboardType(.emailAddress)
+            //         .textInputAutocapitalization(.never)
+            //     }
+            //     .padding(Spacing.m)
+            //     .background(Color.appSurface)
+            //     .cornerRadius(Radius.md)
+            //     .overlay(
+            //         RoundedRectangle(cornerRadius: Radius.md)
+            //             .stroke(Color.appTextHint.opacity(0.4), lineWidth: Dimens.strokeThin)
+            //     )
+            // }
+
+            // ── Primary action ───────────────────────────────────────────────
+            PrimaryButton(
+                title: NSLocalizedString("action_{{name_snake}}", value: "{{NAME}}", comment: ""),
+                isLoading: viewModel.uiState.isLoading
+            ) {
+                viewModel.{{name_camel}}()
+            }
+            .frame(maxWidth: .infinity)
+        }
+        // Optional: dismiss on success
+        // .onChange(of: viewModel.uiState.isDone) { done in
+        //     if done { dismiss() }
+        // }
+    }
+}

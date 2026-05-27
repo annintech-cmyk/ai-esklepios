@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS userEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    gender TEXT NOT NULL,
+    dateOfBirth TEXT NOT NULL,
+    cnsNumber TEXT NOT NULL,
+    profileType TEXT NOT NULL,
+    language TEXT NOT NULL
+);
+
+selectCurrent:
+SELECT * FROM userEntity LIMIT 1;
+
+selectById:
+SELECT * FROM userEntity WHERE id = ?;
+
+insertOrReplace:
+INSERT OR REPLACE INTO userEntity VALUES (?,?,?,?,?,?,?,?,?,?);
+
+deleteAll:
+DELETE FROM userEntity;

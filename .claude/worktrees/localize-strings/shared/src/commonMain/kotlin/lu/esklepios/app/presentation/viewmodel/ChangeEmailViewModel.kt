@@ -1,0 +1,75 @@
+package lu.esklepios.app.presentation.viewmodel
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import lu.esklepios.app.domain.usecase.ChangeEmailUseCase
+
+data class ChangeEmailUiState(
+    val isLoading: Boolean = false,
+    val currentEmail: String = "",
+    val newEmail: String = "",
+    val password: String = "",
+    val isSuccess: Boolean = false,
+    val error: String? = null
+)
+
+class ChangeEmailViewModel(
+    private val changeEmailUseCase: ChangeEmailUseCase
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(ChangeEmailUiState())
+    val uiState: StateFlow<ChangeEmailUiState> = _uiState.asStateFlow()
+
+    fun changeEmail() {
+        val state = _uiState.value
+        if (state.newEmail.isBlank()) {
+            _uiState.update { it.copy(error = "New email is required") }
+            return
+        }
+        if (state.password.isBlank()) {
+            _uiState.update { it.copy(error = "Password is required") }
+            return
+        }
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            changeEmailUseCase(state.newEmail, state.password)
+                .onSuccess {
+                    _uiState.update { it.copy(isLoading = false, isSuccess = true) }
+                }
+                .onFailure { throwable ->
+                    _uiState.update { it.copy(isLoading = false, error = throwable.message ?: "Failed to change email") }
+                }
+        }
+    }
+
+    fun updateNewEmail(email: String) {
+        _uiState.update { it.copy(newEmail = email) }
+    }
+
+    fun updatePassword(password: String) {
+        _uiState.update { it.copy(password = password) }
+    }
+
+    fun setCurrentEmail(email: String) {
+        _uiState.update { it.copy(currentEmail = email) }
+    }
+
+    fun clearError() {
+        _uiState.update { it.copy(error = null) }
+    }
+
+    fun changeEmail(currentPassword: String, newEmail: String) {
+        updatePassword(currentPassword)
+        updateNewEmail(newEmail)
+        changeEmail()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+    }
+}

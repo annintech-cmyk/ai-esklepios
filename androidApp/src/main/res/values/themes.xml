@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ESklepios" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Match the gradient start colour so there is no white flash before Compose renders -->
+        <item name="android:windowBackground">#2C3AEF</item>
+    </style>
+</resources>

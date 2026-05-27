@@ -1,0 +1,45 @@
+import SwiftUI
+
+/// {{NAME}}View
+/// {{DESCRIPTION}}
+struct {{NAME}}View: View {
+
+    @StateObject private var viewModel = {{NAME}}ViewModelWrapper()
+
+    var body: some View {
+        Group {
+            if viewModel.uiState.isLoading as? Bool == true {
+                LoadingView()
+            } else if let error = viewModel.uiState.error as? String {
+                ErrorView(
+                    message: error,
+                    onRetry: { viewModel.viewModel.load() }
+                )
+            } else {
+                contentView
+            }
+        }
+        .task {
+            viewModel.viewModel.load()
+        }
+        .navigationTitle("{{TITLE}}")
+        .navigationBarTitleDisplayMode(.large)
+    }
+
+    // MARK: - Private
+
+    private var contentView: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: Dimens.paddingL) {
+                // TODO: Implement content
+            }
+            .padding(Dimens.paddingL)
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        {{NAME}}View()
+    }
+}

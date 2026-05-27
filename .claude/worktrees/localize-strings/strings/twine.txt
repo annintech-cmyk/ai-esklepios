@@ -1,0 +1,1537 @@
+[[General]]
+app.name
+    en = eSklepios
+    fr = eSklepios
+    de = eSklepios
+    lb = eSklepios
+
+ok
+    en = OK
+    fr = OK
+    de = OK
+    lb = OK
+
+cancel
+    en = Cancel
+    fr = Annuler
+    de = Abbrechen
+    lb = Annuléieren
+
+save
+    en = Save
+    fr = Enregistrer
+    de = Speichern
+    lb = Späicheren
+
+confirm
+    en = Confirm
+    fr = Confirmer
+    de = Bestätigen
+    lb = Bestätegen
+
+back
+    en = Back
+    fr = Retour
+    de = Zurück
+    lb = Zréck
+
+loading
+    en = Loading...
+    fr = Chargement...
+    de = Laden...
+    lb = Luede...
+
+error.generic
+    en = Something went wrong. Please try again.
+    fr = Une erreur s'est produite. Veuillez réessayer.
+    de = Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.
+    lb = E Feeler ass opgetrueden. Probéiert et nach eng Kéier.
+
+retry
+    en = Retry
+    fr = Réessayer
+    de = Erneut versuchen
+    lb = Nach eng Kéier probéieren
+
+[[Navigation]]
+nav.home
+    en = Home
+    fr = Accueil
+    de = Startseite
+    lb = Haaptsäit
+
+nav.appointments
+    en = Appointments
+    fr = Rendez-vous
+    de = Termine
+    lb = Rendez-vous
+
+nav.profile
+    en = Profile
+    fr = Profil
+    de = Profil
+    lb = Profil
+
+nav.search
+    en = Search
+    fr = Rechercher
+    de = Suchen
+    lb = Sichen
+
+nav.settings
+    en = Settings
+    fr = Paramètres
+    de = Einstellungen
+    lb = Astellungen
+
+nav.back
+    en = Back
+    fr = Retour
+    de = Zurück
+    lb = Zréck
+
+nav.close
+    en = Close
+    fr = Fermer
+    de = Schließen
+    lb = Zoumaachen
+
+nav.next
+    en = Next
+    fr = Suivant
+    de = Weiter
+    lb = Weider
+
+[[Splash]]
+splash.tagline
+    en = Your Health, Connected
+    fr = Votre santé, connectée
+    de = Ihre Gesundheit, vernetzt
+    lb = Är Gesondheet, verbonnen
+
+splash.loading
+    en = Loading...
+    fr = Chargement...
+    de = Laden...
+    lb = Luede...
+
+splash.welcome
+    en = Welcome to eSklepios
+    fr = Bienvenue sur eSklepios
+    de = Willkommen bei eSklepios
+    lb = Wëllkomm bei eSklepios
+
+splash.checking_auth
+    en = Checking your session...
+    fr = Vérification de votre session...
+    de = Ihre Sitzung wird überprüft...
+    lb = Är Sitzung gëtt iwwerpréift...
+
+splash.version
+    en = Version
+    fr = Version
+    de = Version
+    lb = Versioun
+
+splash.privacy
+    en = Privacy Policy
+    fr = Politique de confidentialité
+    de = Datenschutzrichtlinie
+    lb = Dateschutzrichtlinn
+
+splash.terms
+    en = Terms of Service
+    fr = Conditions d'utilisation
+    de = Nutzungsbedingungen
+    lb = Notzungsbedingungen
+
+splash.copyright
+    en = © 2025 eSklepios. All rights reserved.
+    fr = © 2025 eSklepios. Tous droits réservés.
+    de = © 2025 eSklepios. Alle Rechte vorbehalten.
+    lb = © 2025 eSklepios. All Rechter virbehalten.
+
+[[Landing]]
+landing.tagline
+    en = Your Health, Connected
+    fr = Votre santé, connectée
+    de = Ihre Gesundheit, vernetzt
+    lb = Är Gesondheet, verbonnen
+
+landing.subtitle
+    en = Find practitioners, book appointments, manage your healthcare
+    fr = Trouvez des praticiens, réservez des rendez-vous, gérez votre santé
+    de = Finden Sie Ärzte, buchen Sie Termine, verwalten Sie Ihre Gesundheit
+    lb = Fannt Dokteren, bucht Rendez-vous, verwaltt Är Gesondheet
+
+landing.search.specialty
+    en = Search specialty, doctor name…
+    fr = Rechercher spécialité, nom du médecin…
+    de = Fachgebiet, Arztname suchen…
+    lb = Spezialitéit, Dokternumm sichen…
+
+landing.search.location
+    en = City or postal code
+    fr = Ville ou code postal
+    de = Stadt oder Postleitzahl
+    lb = Stad oder Postleitzuel
+
+landing.find_practitioners
+    en = Find Practitioners
+    fr = Trouver des praticiens
+    de = Ärzte finden
+    lb = Dokteren fannen
+
+landing.trust.licensed
+    en = Licensed
+    fr = Agréés
+    de = Lizenziert
+    lb = Lizenzéiert
+
+landing.trust.secure
+    en = Secure
+    fr = Sécurisé
+    de = Sicher
+    lb = Sécher
+
+landing.trust.free
+    en = Free
+    fr = Gratuit
+    de = Kostenlos
+    lb = Gratis
+
+landing.connect
+    en = Connect
+    fr = Connecter
+    de = Anmelden
+    lb = Verbannen
+
+landing.hero_prefix
+    en = Make an appointment\nwith a
+    fr = Prenez rendez-vous\navec un
+    de = Termin vereinbaren\nmit einem
+    lb = Maacht en Rendez-vous\nmam
+
+landing.hero_accent
+    en = health\nprofessional
+    fr = professionnel\nde santé
+    de = Gesundheits-\nfachmann
+    lb = Gesondheets-\nfachmann
+
+landing.search.research
+    en = Research
+    fr = Recherche
+    de = Suche
+    lb = Sich
+
+landing.search.button
+    en = Search
+    fr = Rechercher
+    de = Suchen
+    lb = Sichen
+
+landing.trust.verified
+    en = Graduated and Verified practitioners
+    fr = Praticiens diplômés et vérifiés
+    de = Diplomierte und geprüfte Behandler
+    lb = Diploméiert a gepréift Dokteren
+
+landing.trust.closest
+    en = Closest to you
+    fr = Les plus proches de vous
+    de = Die nächsten bei Ihnen
+    lb = Déi nootst bei Iech
+
+landing.trust.data_secured
+    en = Your personal data secured
+    fr = Vos données personnelles sécurisées
+    de = Ihre persönlichen Daten geschützt
+    lb = Är perséinlech Donnéeën gesécherter
+
+landing.signin
+    en = Sign In
+    fr = Se connecter
+    de = Anmelden
+    lb = Aloggen
+
+landing.create_account
+    en = Create Account
+    fr = Créer un compte
+    de = Konto erstellen
+    lb = Kont erstellen
+
+[[Login]]
+login.title
+    en = Sign In
+    fr = Connexion
+    de = Anmelden
+    lb = Aloggen
+
+login.email
+    en = Email address
+    fr = Adresse e-mail
+    de = E-Mail-Adresse
+    lb = E-Mail Adress
+
+login.password
+    en = Password
+    fr = Mot de passe
+    de = Passwort
+    lb = Passwuert
+
+login.forgot_password
+    en = Forgot password?
+    fr = Mot de passe oublié ?
+    de = Passwort vergessen?
+    lb = Passwuert vergiess?
+
+login.sign_in
+    en = Sign In
+    fr = Se connecter
+    de = Anmelden
+    lb = Aloggen
+
+login.no_account
+    en = No account?
+    fr = Pas de compte ?
+    de = Kein Konto?
+    lb = Keen Kont?
+
+login.register
+    en = Register
+    fr = S'inscrire
+    de = Registrieren
+    lb = Registréieren
+
+login.or
+    en = or
+    fr = ou
+    de = oder
+    lb = oder
+
+login.google
+    en = Sign in with Google
+    fr = Se connecter avec Google
+    de = Mit Google anmelden
+    lb = Mat Google aloggen
+
+login.apple
+    en = Sign in with Apple
+    fr = Se connecter avec Apple
+    de = Mit Apple anmelden
+    lb = Mat Apple aloggen
+
+login.security_banner
+    en = This is the official eSklepios app. Never share your password.
+    fr = Ceci est l'application officielle eSklepios. Ne partagez jamais votre mot de passe.
+    de = Dies ist die offizielle eSklepios-App. Teilen Sie niemals Ihr Passwort.
+    lb = Dëst ass d'offiziell eSklepios App. Deelt ni Äert Passwuert.
+
+login.error.invalid
+    en = Invalid email or password. Please try again.
+    fr = Email ou mot de passe invalide. Veuillez réessayer.
+    de = Ungültige E-Mail oder ungültiges Passwort. Bitte versuchen Sie es erneut.
+    lb = Ongülteg E-Mail oder Passwuert. Probéiert et nach eng Kéier.
+
+[[Register]]
+register.title
+    en = Create Account
+    fr = Créer un compte
+    de = Konto erstellen
+    lb = Kont erstellen
+
+register.step1
+    en = Personal Information
+    fr = Informations personnelles
+    de = Persönliche Informationen
+    lb = Perséinlech Informatiounen
+
+register.step2
+    en = Contact Information
+    fr = Informations de contact
+    de = Kontaktinformationen
+    lb = Kontaktinformatiounen
+
+register.step3
+    en = Account Setup
+    fr = Configuration du compte
+    de = Kontoeinrichtung
+    lb = Kontoastellung
+
+register.first_name
+    en = First name
+    fr = Prénom
+    de = Vorname
+    lb = Virnumm
+
+register.last_name
+    en = Last name
+    fr = Nom
+    de = Nachname
+    lb = Familljennumm
+
+register.date_of_birth
+    en = Date of birth
+    fr = Date de naissance
+    de = Geburtsdatum
+    lb = Gebuertsdatum
+
+register.gender
+    en = Gender
+    fr = Genre
+    de = Geschlecht
+    lb = Geschlecht
+
+register.cns_number
+    en = CNS number
+    fr = Numéro CNS
+    de = CNS-Nummer
+    lb = CNS Nummer
+
+register.email
+    en = Email address
+    fr = Adresse e-mail
+    de = E-Mail-Adresse
+    lb = E-Mail Adress
+
+register.phone
+    en = Phone number
+    fr = Numéro de téléphone
+    de = Telefonnummer
+    lb = Telefonsnummer
+
+register.password
+    en = Password
+    fr = Mot de passe
+    de = Passwort
+    lb = Passwuert
+
+register.profile_type
+    en = Profile type
+    fr = Type de profil
+    de = Profiltyp
+    lb = Profiltyp
+
+register.step_of
+    en = Step %d of %d
+    fr = Étape %d sur %d
+    de = Schritt %d von %d
+    lb = Schrëtt %d vun %d
+
+register.have_account
+    en = Already have an account?
+    fr = Vous avez déjà un compte ?
+    de = Bereits ein Konto?
+    lb = Schon e Kont?
+
+register.success
+    en = Account created successfully!
+    fr = Compte créé avec succès !
+    de = Konto erfolgreich erstellt!
+    lb = Kont erfollegräich erstellt!
+
+[[ForgotPassword]]
+forgot.title
+    en = Forgot Password
+    fr = Mot de passe oublié
+    de = Passwort vergessen
+    lb = Passwuert vergiess
+
+forgot.description
+    en = Enter your email address and we'll send you a reset link.
+    fr = Entrez votre adresse e-mail et nous vous enverrons un lien de réinitialisation.
+    de = Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Reset-Link.
+    lb = Gitt Är E-Mail Adress an a mir schécken Iech en Reset-Link.
+
+forgot.email
+    en = Email address
+    fr = Adresse e-mail
+    de = E-Mail-Adresse
+    lb = E-Mail Adress
+
+forgot.send_link
+    en = Send Reset Link
+    fr = Envoyer le lien de réinitialisation
+    de = Reset-Link senden
+    lb = Reset-Link schécken
+
+forgot.sent_title
+    en = Check your email
+    fr = Vérifiez votre e-mail
+    de = Überprüfen Sie Ihre E-Mail
+    lb = Kuckt Är E-Mail
+
+forgot.sent_message
+    en = We've sent a reset link to your email address.
+    fr = Nous avons envoyé un lien de réinitialisation à votre adresse e-mail.
+    de = Wir haben einen Reset-Link an Ihre E-Mail-Adresse gesendet.
+    lb = Mir hunn en Reset-Link un Är E-Mail Adress geschéckt.
+
+forgot.back_to_signin
+    en = Back to Sign In
+    fr = Retour à la connexion
+    de = Zurück zur Anmeldung
+    lb = Zréck zum Aloggen
+
+forgot.reset_title
+    en = Reset your password
+    fr = Réinitialisez votre mot de passe
+    de = Setzen Sie Ihr Passwort zurück
+    lb = Récksetze vun Ärem Passwuert
+
+forgot.resend
+    en = Resend link
+    fr = Renvoyer le lien
+    de = Link erneut senden
+    lb = Link nach eng Kéier schécken
+
+[[Home]]
+home.greeting
+    en = Hello
+    fr = Bonjour
+    de = Hallo
+    lb = Moien
+
+home.find_practitioner
+    en = Find a practitioner
+    fr = Trouver un praticien
+    de = Arzt finden
+    lb = Dokter fannen
+
+home.filter.all
+    en = All
+    fr = Tous
+    de = Alle
+    lb = All
+
+home.filter.today
+    en = Today
+    fr = Aujourd'hui
+    de = Heute
+    lb = Haut
+
+home.filter.three_days
+    en = Within 3 days
+    fr = Dans 3 jours
+    de = In 3 Tagen
+    lb = An 3 Deeg
+
+home.filter.new_patients
+    en = Open to new patients
+    fr = Accepte de nouveaux patients
+    de = Nimmt neue Patienten an
+    lb = Hëlt nei Patienten un
+
+home.no_results.title
+    en = No practitioners found
+    fr = Aucun praticien trouvé
+    de = Keine Ärzte gefunden
+    lb = Keng Dokteren fonnt
+
+home.no_results.subtitle
+    en = Try adjusting your search or filters
+    fr = Essayez d'ajuster votre recherche ou vos filtres
+    de = Versuchen Sie, Ihre Suche oder Filter anzupassen
+    lb = Probéiert Är Sich oder Filter unzepassen
+
+home.practitioners_count
+    en = Practitioners (%d)
+    fr = Praticiens (%d)
+    de = Ärzte (%d)
+    lb = Dokteren (%d)
+
+home.see_profile
+    en = See Profile
+    fr = Voir le profil
+    de = Profil ansehen
+    lb = Profil gesinn
+
+home.book
+    en = Book
+    fr = Réserver
+    de = Buchen
+    lb = Buchen
+
+home.filter.cardiology
+    en = Cardiology
+    fr = Cardiologie
+    de = Kardiologie
+    lb = Kardiologie
+
+home.filter.general_medicine
+    en = General Medicine
+    fr = Médecine générale
+    de = Allgemeinmedizin
+    lb = Allgemengmedizin
+
+home.filter.dermatology
+    en = Dermatology
+    fr = Dermatologie
+    de = Dermatologie
+    lb = Dermatologie
+
+home.loading
+    en = Finding practitioners…
+    fr = Recherche de praticiens…
+    de = Suche nach Ärzten…
+    lb = Sichen no Dokteren…
+
+home.clear_filters
+    en = Clear Filters
+    fr = Effacer les filtres
+    de = Filter löschen
+    lb = Filter läschen
+
+home.search_placeholder
+    en = Search specialty, doctor…
+    fr = Rechercher spécialité, médecin…
+    de = Fachgebiet, Arzt suchen…
+    lb = Spezialitéit, Dokter sichen…
+
+[[PractitionerDetail]]
+detail.contact
+    en = Contact
+    fr = Contact
+    de = Kontakt
+    lb = Kontakt
+
+detail.call
+    en = Call
+    fr = Appeler
+    de = Anrufen
+    lb = Urufung
+
+detail.email_action
+    en = Email
+    fr = E-mail
+    de = E-Mail
+    lb = E-Mail
+
+detail.schedule
+    en = Schedule
+    fr = Horaires
+    de = Zeitplan
+    lb = Zäitplang
+
+detail.payment_methods
+    en = Payment Methods
+    fr = Modes de paiement
+    de = Zahlungsmethoden
+    lb = Bezuelsmethod
+
+detail.diplomas
+    en = Diplomas & Certifications
+    fr = Diplômes et certifications
+    de = Diplome und Zertifizierungen
+    lb = Diplomer a Zertifikater
+
+detail.emergency_banner
+    en = For emergencies, call 112 immediately
+    fr = En cas d'urgence, appelez le 112 immédiatement
+    de = Im Notfall sofort 112 anrufen
+    lb = Am Noufall, rufft 112 direkt un
+
+detail.book_appointment
+    en = Book an Appointment
+    fr = Prendre rendez-vous
+    de = Termin buchen
+    lb = Rendez-vous buchen
+
+detail.accepting_patients
+    en = Accepting new patients
+    fr = Accepte de nouveaux patients
+    de = Nimmt neue Patienten an
+    lb = Hëlt nei Patienten un
+
+detail.not_accepting
+    en = Not accepting new patients
+    fr = N'accepte pas de nouveaux patients
+    de = Nimmt keine neuen Patienten an
+    lb = Hëlt keng nei Patienten un
+
+detail.available_slots
+    en = Available Slots
+    fr = Créneaux disponibles
+    de = Verfügbare Termine
+    lb = Verfügbar Slotten
+
+detail.location
+    en = Location
+    fr = Localisation
+    de = Standort
+    lb = Standuert
+
+[[BookAppointment]]
+booking.title
+    en = Book Appointment
+    fr = Prendre rendez-vous
+    de = Termin buchen
+    lb = Rendez-vous buchen
+
+booking.summary
+    en = Appointment Summary
+    fr = Récapitulatif du rendez-vous
+    de = Terminübersicht
+    lb = Rendez-vous Zesummefassung
+
+booking.policy
+    en = Cancellations must be made at least 24 hours in advance.
+    fr = Les annulations doivent être effectuées au moins 24 heures à l'avance.
+    de = Stornierungen müssen mindestens 24 Stunden im Voraus vorgenommen werden.
+    lb = Ofbrëch musse mindestens 24 Stonnen am Viraus gemaach ginn.
+
+booking.reason
+    en = Reason for consultation
+    fr = Motif de la consultation
+    de = Konsultationsgrund
+    lb = Grond vun der Consultatioun
+
+booking.message
+    en = Message to doctor (optional)
+    fr = Message au médecin (optionnel)
+    de = Nachricht an den Arzt (optional)
+    lb = Message un den Dokter (optional)
+
+booking.confirm
+    en = Confirm Booking
+    fr = Confirmer le rendez-vous
+    de = Termin bestätigen
+    lb = Rendez-vous bestätegen
+
+booking.auth_required
+    en = Sign in required
+    fr = Connexion requise
+    de = Anmeldung erforderlich
+    lb = Umeldung erfuerderlech
+
+booking.auth_subtitle
+    en = You need an account to book appointments.
+    fr = Vous avez besoin d'un compte pour réserver des rendez-vous.
+    de = Sie benötigen ein Konto, um Termine zu buchen.
+    lb = Dir braucht e Kont fir Rendez-vous ze buchen.
+
+booking.signin_to_book
+    en = Sign In to Book
+    fr = Se connecter pour réserver
+    de = Anmelden zum Buchen
+    lb = Aloggen fir ze buchen
+
+[[MyAppointments]]
+appointments.title
+    en = My Appointments
+    fr = Mes rendez-vous
+    de = Meine Termine
+    lb = Meng Rendez-vous
+
+appointments.upcoming
+    en = Upcoming
+    fr = À venir
+    de = Bevorstehend
+    lb = Demnächst
+
+appointments.past
+    en = Past
+    fr = Passés
+    de = Vergangen
+    lb = Vergaang
+
+appointments.empty.upcoming.title
+    en = No upcoming appointments
+    fr = Aucun rendez-vous à venir
+    de = Keine bevorstehenden Termine
+    lb = Keng kommend Rendez-vous
+
+appointments.empty.upcoming.subtitle
+    en = Book your first appointment to get started
+    fr = Réservez votre premier rendez-vous pour commencer
+    de = Buchen Sie Ihren ersten Termin, um zu beginnen
+    lb = Bucht Äert éischt Rendez-vous fir unzefänken
+
+appointments.empty.past.title
+    en = No past appointments
+    fr = Aucun rendez-vous passé
+    de = Keine vergangenen Termine
+    lb = Keng vergaangend Rendez-vous
+
+appointments.empty.past.subtitle
+    en = Your appointment history will appear here
+    fr = Votre historique de rendez-vous apparaîtra ici
+    de = Ihr Terminverlauf wird hier angezeigt
+    lb = Är Rendez-vous Geschicht gëtt hei ugewisen
+
+appointments.cancel.confirm
+    en = Are you sure you want to cancel this appointment?
+    fr = Êtes-vous sûr de vouloir annuler ce rendez-vous ?
+    de = Sind Sie sicher, dass Sie diesen Termin absagen möchten?
+    lb = Sidd Dir sécher, datt Dir dëst Rendez-vous ofbrieche wëllt?
+
+appointments.modify
+    en = Modify
+    fr = Modifier
+    de = Ändern
+    lb = Änneren
+
+appointments.cancel
+    en = Cancel
+    fr = Annuler
+    de = Absagen
+    lb = Ofbriechen
+
+appointments.keep
+    en = Keep It
+    fr = Conserver
+    de = Behalten
+    lb = Behalen
+
+appointments.loading
+    en = Loading appointments…
+    fr = Chargement des rendez-vous…
+    de = Termine werden geladen…
+    lb = Rendez-vous ginn gelueden…
+
+appointments.cancel.title
+    en = Cancel Appointment
+    fr = Annuler le rendez-vous
+    de = Termin absagen
+    lb = Rendez-vous ofbriechen
+
+appointments.cancel.yes
+    en = Yes, Cancel
+    fr = Oui, annuler
+    de = Ja, absagen
+    lb = Jo, ofbriechen
+
+appointments.find_practitioners
+    en = Find Practitioners
+    fr = Trouver des praticiens
+    de = Ärzte finden
+    lb = Dokteren fannen
+
+[[Profile]]
+profile.title
+    en = Profile
+    fr = Profil
+    de = Profil
+    lb = Profil
+
+profile.personal_info
+    en = Personal Information
+    fr = Informations personnelles
+    de = Persönliche Informationen
+    lb = Perséinlech Informatiounen
+
+profile.security
+    en = Security
+    fr = Sécurité
+    de = Sicherheit
+    lb = Sécherheet
+
+profile.preferences
+    en = Preferences
+    fr = Préférences
+    de = Einstellungen
+    lb = Astellungen
+
+profile.legal
+    en = Legal
+    fr = Mentions légales
+    de = Rechtliches
+    lb = Rechtlecht
+
+profile.notifications
+    en = Notifications
+    fr = Notifications
+    de = Benachrichtigungen
+    lb = Notifikatiounen
+
+profile.about
+    en = About eSklepios
+    fr = À propos d'eSklepios
+    de = Über eSklepios
+    lb = Iwwer eSklepios
+
+profile.terms
+    en = Terms of Service
+    fr = Conditions d'utilisation
+    de = Nutzungsbedingungen
+    lb = Notzungsbedingungen
+
+profile.privacy
+    en = Privacy Policy
+    fr = Politique de confidentialité
+    de = Datenschutzrichtlinie
+    lb = Dateschutzrichtlinn
+
+profile.logout
+    en = Sign Out
+    fr = Se déconnecter
+    de = Abmelden
+    lb = Ausloggen
+
+profile.logout.confirm
+    en = Are you sure you want to sign out?
+    fr = Êtes-vous sûr de vouloir vous déconnecter ?
+    de = Sind Sie sicher, dass Sie sich abmelden möchten?
+    lb = Sidd Dir sécher, datt Dir Iech auslogge wëllt?
+
+profile.login_security
+    en = Login & Security
+    fr = Connexion & Sécurité
+    de = Anmeldung & Sicherheit
+    lb = Umeldung & Sécherheet
+
+profile.login_email_label
+    en = Login Email Address
+    fr = Adresse e-mail de connexion
+    de = Anmelde-E-Mail-Adresse
+    lb = Umeldungs-E-Mail Adress
+
+profile.change_password
+    en = Change Password
+    fr = Changer le mot de passe
+    de = Passwort ändern
+    lb = Passwuert änneren
+
+profile.sign_out
+    en = Sign Out
+    fr = Se déconnecter
+    de = Abmelden
+    lb = Ausloggen
+
+profile.email_notifications
+    en = Email Notifications
+    fr = Notifications par e-mail
+    de = E-Mail-Benachrichtigungen
+    lb = E-Mail Notifikatiounen
+
+profile.loading_name
+    en = Loading…
+    fr = Chargement…
+    de = Laden…
+    lb = Luede…
+
+profile.edit_button
+    en = Edit
+    fr = Modifier
+    de = Bearbeiten
+    lb = Änneren
+
+profile.full_name_label
+    en = Full Name
+    fr = Nom complet
+    de = Vollständiger Name
+    lb = Vollstännegen Numm
+
+profile.gender_label
+    en = Gender
+    fr = Genre
+    de = Geschlecht
+    lb = Geschlecht
+
+profile.dob_label
+    en = Date of Birth
+    fr = Date de naissance
+    de = Geburtsdatum
+    lb = Gebuertsdatum
+
+profile.phone_label
+    en = Phone Number
+    fr = Numéro de téléphone
+    de = Telefonnummer
+    lb = Telefonsnummer
+
+profile.cns_label
+    en = CNS Number
+    fr = Numéro CNS
+    de = CNS-Nummer
+    lb = CNS Nummer
+
+[[EditProfile]]
+edit.title
+    en = Edit Profile
+    fr = Modifier le profil
+    de = Profil bearbeiten
+    lb = Profil änneren
+
+edit.first_name
+    en = First name
+    fr = Prénom
+    de = Vorname
+    lb = Virnumm
+
+edit.last_name
+    en = Last name
+    fr = Nom
+    de = Nachname
+    lb = Familljennumm
+
+edit.phone
+    en = Phone number
+    fr = Numéro de téléphone
+    de = Telefonnummer
+    lb = Telefonsnummer
+
+edit.gender
+    en = Gender
+    fr = Genre
+    de = Geschlecht
+    lb = Geschlecht
+
+edit.date_of_birth
+    en = Date of birth
+    fr = Date de naissance
+    de = Geburtsdatum
+    lb = Gebuertsdatum
+
+edit.language
+    en = Preferred language
+    fr = Langue préférée
+    de = Bevorzugte Sprache
+    lb = Léifste Sprooch
+
+edit.save
+    en = Save Changes
+    fr = Enregistrer les modifications
+    de = Änderungen speichern
+    lb = Ännerungen späicheren
+
+edit.saved
+    en = Profile saved successfully!
+    fr = Profil enregistré avec succès !
+    de = Profil erfolgreich gespeichert!
+    lb = Profil erfollegräich gespäichert!
+
+edit.personal_info_title
+    en = Edit Personal Information
+    fr = Modifier les informations personnelles
+    de = Persönliche Informationen bearbeiten
+    lb = Perséinlech Informatiounen änneren
+
+edit.gender.man
+    en = Man
+    fr = Homme
+    de = Mann
+    lb = Mann
+
+edit.gender.woman
+    en = Woman
+    fr = Femme
+    de = Frau
+    lb = Fra
+
+edit.gender.other
+    en = Other
+    fr = Autre
+    de = Andere
+    lb = Aner
+
+edit.dob_placeholder
+    en = DD / MM / YYYY
+    fr = JJ / MM / AAAA
+    de = TT / MM / JJJJ
+    lb = DD / MM / JJJJ
+
+edit.saved_snackbar
+    en = Profile saved!
+    fr = Profil enregistré !
+    de = Profil gespeichert!
+    lb = Profil gespäichert!
+
+edit.cns_number
+    en = CNS Number
+    fr = Numéro CNS
+    de = CNS-Nummer
+    lb = CNS Nummer
+
+edit.first_name_label
+    en = First Name
+    fr = Prénom
+    de = Vorname
+    lb = Virnumm
+
+edit.last_name_label
+    en = Last Name
+    fr = Nom
+    de = Nachname
+    lb = Familljennumm
+
+edit.phone_label
+    en = Phone Number
+    fr = Numéro de téléphone
+    de = Telefonnummer
+    lb = Telefonsnummer
+
+[[ChangeEmail]]
+change.email.title
+    en = Change Email
+    fr = Changer d'e-mail
+    de = E-Mail ändern
+    lb = E-Mail änneren
+
+change.email.current
+    en = Current Email
+    fr = E-mail actuel
+    de = Aktuelle E-Mail
+    lb = Aktuell E-Mail
+
+change.email.new
+    en = New email address
+    fr = Nouvelle adresse e-mail
+    de = Neue E-Mail-Adresse
+    lb = Nei E-Mail Adress
+
+change.email.password_confirm
+    en = Confirm with password
+    fr = Confirmer avec le mot de passe
+    de = Mit Passwort bestätigen
+    lb = Mat Passwuert bestätegen
+
+change.email.update
+    en = Update Email
+    fr = Mettre à jour l'e-mail
+    de = E-Mail aktualisieren
+    lb = E-Mail aktualiséieren
+
+change.email.success
+    en = Email updated successfully!
+    fr = E-mail mis à jour avec succès !
+    de = E-Mail erfolgreich aktualisiert!
+    lb = E-Mail erfollegräich aktualiséiert!
+
+change.email.error.invalid
+    en = Please enter a valid email address
+    fr = Veuillez entrer une adresse e-mail valide
+    de = Bitte geben Sie eine gültige E-Mail-Adresse ein
+    lb = Gitt w.e.g. eng gülteg E-Mail Adress an
+
+change.email.error.password
+    en = Password is required to change email
+    fr = Le mot de passe est requis pour changer l'e-mail
+    de = Passwort ist erforderlich, um die E-Mail zu ändern
+    lb = Passwuert ass erfuerderlech fir d'E-Mail ze änneren
+
+change.email.verification_info
+    en = We\'ll send a verification link to your new email. Your current email stays active until you confirm.
+    fr = Nous enverrons un lien de vérification à votre nouvel e-mail. Votre e-mail actuel reste actif jusqu\'à confirmation.
+    de = Wir senden einen Verifizierungslink an Ihre neue E-Mail. Ihre aktuelle E-Mail bleibt aktiv, bis Sie bestätigen.
+    lb = Mir schécken Iech en Verifizéierungslink un Är nei E-Mail. Är aktuell E-Mail bleift aktiv bis zur Bestätegung.
+
+change.email.not_available
+    en = Not available
+    fr = Non disponible
+    de = Nicht verfügbar
+    lb = Net verfügbar
+
+change.email.new_label
+    en = New Email
+    fr = Nouvel e-mail
+    de = Neue E-Mail
+    lb = Nei E-Mail
+
+change.email.new_placeholder
+    en = Enter new email address
+    fr = Entrez la nouvelle adresse e-mail
+    de = Neue E-Mail-Adresse eingeben
+    lb = Nei E-Mail Adress aginn
+
+change.email.valid_format
+    en = Valid email format
+    fr = Format d\'e-mail valide
+    de = Gültiges E-Mail-Format
+    lb = Gülteg E-Mail Format
+
+change.email.confirm_label
+    en = Confirm New Email
+    fr = Confirmer le nouvel e-mail
+    de = Neue E-Mail bestätigen
+    lb = Nei E-Mail bestätegen
+
+change.email.confirm_placeholder
+    en = Confirm new email address
+    fr = Confirmez la nouvelle adresse e-mail
+    de = Neue E-Mail-Adresse bestätigen
+    lb = Nei E-Mail Adress bestätegen
+
+change.email.match
+    en = Emails match
+    fr = Les e-mails correspondent
+    de = E-Mails stimmen überein
+    lb = E-Mailen passen iwwerein
+
+change.email.no_match
+    en = Emails do not match
+    fr = Les e-mails ne correspondent pas
+    de = E-Mails stimmen nicht überein
+    lb = E-Mailen passen net iwwerein
+
+[[ChangePassword]]
+change.password.title
+    en = Change Password
+    fr = Changer le mot de passe
+    de = Passwort ändern
+    lb = Passwuert änneren
+
+change.password.current
+    en = Current password
+    fr = Mot de passe actuel
+    de = Aktuelles Passwort
+    lb = Aktuellt Passwuert
+
+change.password.new
+    en = New password
+    fr = Nouveau mot de passe
+    de = Neues Passwort
+    lb = Neie Passwuert
+
+change.password.confirm
+    en = Confirm new password
+    fr = Confirmer le nouveau mot de passe
+    de = Neues Passwort bestätigen
+    lb = Neie Passwuert bestätegen
+
+change.password.update
+    en = Update Password
+    fr = Mettre à jour le mot de passe
+    de = Passwort aktualisieren
+    lb = Passwuert aktualiséieren
+
+change.password.success
+    en = Password updated successfully!
+    fr = Mot de passe mis à jour avec succès !
+    de = Passwort erfolgreich aktualisiert!
+    lb = Passwuert erfollegräich aktualiséiert!
+
+change.password.strength.weak
+    en = Weak
+    fr = Faible
+    de = Schwach
+    lb = Schwaach
+
+change.password.strength.fair
+    en = Fair
+    fr = Moyen
+    de = Mittel
+    lb = Mëttel
+
+change.password.strength.good
+    en = Good
+    fr = Bien
+    de = Gut
+    lb = Gutt
+
+change.password.strength.strong
+    en = Strong
+    fr = Fort
+    de = Stark
+    lb = Staark
+
+change.password.error.mismatch
+    en = Passwords do not match
+    fr = Les mots de passe ne correspondent pas
+    de = Passwörter stimmen nicht überein
+    lb = Passwierder passen net iwwerein
+
+change.password.security_title
+    en = Keep your account secure
+    fr = Gardez votre compte sécurisé
+    de = Halten Sie Ihr Konto sicher
+    lb = Halt Äert Kont sécher
+
+change.password.security_subtitle
+    en = Use a strong, unique password you don\'t reuse elsewhere.
+    fr = Utilisez un mot de passe fort et unique que vous ne réutilisez pas ailleurs.
+    de = Verwenden Sie ein starkes, einzigartiges Passwort, das Sie nirgendwo sonst verwenden.
+    lb = Benotzt e staarkt, eenzegaartegt Passwuert dat Dir néierens anescht benotzt.
+
+change.password.current_placeholder
+    en = Enter current password
+    fr = Entrez le mot de passe actuel
+    de = Aktuelles Passwort eingeben
+    lb = Aktuellt Passwuert aginn
+
+change.password.new_placeholder
+    en = Enter new password
+    fr = Entrez le nouveau mot de passe
+    de = Neues Passwort eingeben
+    lb = Neie Passwuert aginn
+
+change.password.confirm_placeholder
+    en = Re-enter new password
+    fr = Ressaisissez le nouveau mot de passe
+    de = Neues Passwort erneut eingeben
+    lb = Neie Passwuert nach eng Kéier aginn
+
+change.password.strength_label
+    en = Strength: %s
+    fr = Force : %s
+    de = Stärke: %s
+    lb = Stäerkt: %s
+
+change.password.criteria.min_length
+    en = At least 12 characters
+    fr = Au moins 12 caractères
+    de = Mindestens 12 Zeichen
+    lb = Mindestens 12 Zeechen
+
+change.password.criteria.mixed_case
+    en = One uppercase and lowercase
+    fr = Une majuscule et une minuscule
+    de = Ein Groß- und Kleinbuchstabe
+    lb = Een Groussbuchstaf an Klengbuchstaf
+
+change.password.criteria.number_symbol
+    en = One number and symbol
+    fr = Un chiffre et un symbole
+    de = Eine Zahl und ein Symbol
+    lb = Eng Zuel an e Symbol
+
+change.password.match
+    en = Passwords match
+    fr = Les mots de passe correspondent
+    de = Passwörter stimmen überein
+    lb = Passwierder passen iwwerein
+
+change.password.hide
+    en = Hide
+    fr = Masquer
+    de = Ausblenden
+    lb = Verstoppen
+
+change.password.show
+    en = Show
+    fr = Afficher
+    de = Anzeigen
+    lb = Weisen
+
+[[Errors]]
+error.network
+    en = Network error. Check your connection.
+    fr = Erreur réseau. Vérifiez votre connexion.
+    de = Netzwerkfehler. Überprüfen Sie Ihre Verbindung.
+    lb = Netzwierkfeeler. Kuckt Är Verbindung.
+
+error.required_field
+    en = This field is required
+    fr = Ce champ est requis
+    de = Dieses Feld ist erforderlich
+    lb = Dëst Feld ass erfuerderlech
+
+error.invalid_email
+    en = Please enter a valid email address
+    fr = Veuillez entrer une adresse e-mail valide
+    de = Bitte geben Sie eine gültige E-Mail-Adresse ein
+    lb = Gitt w.e.g. eng gülteg E-Mail Adress an
+
+error.password_too_short
+    en = Password must be at least 8 characters
+    fr = Le mot de passe doit contenir au moins 8 caractères
+    de = Das Passwort muss mindestens 8 Zeichen lang sein
+    lb = D'Passwuert muss mindestens 8 Zeechen hunn
+
+error.password_mismatch
+    en = Passwords do not match
+    fr = Les mots de passe ne correspondent pas
+    de = Passwörter stimmen nicht überein
+    lb = Passwierder passen net iwwerein
+
+error.session_expired
+    en = Your session has expired. Please sign in again.
+    fr = Votre session a expiré. Veuillez vous reconnecter.
+    de = Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.
+    lb = Är Sitzung ass ofgelaf. Loggt Iech w.e.g. nach eng Kéier an.
+
+error.server
+    en = Server error. Please try again later.
+    fr = Erreur serveur. Veuillez réessayer plus tard.
+    de = Serverfehler. Bitte versuchen Sie es später erneut.
+    lb = Serverfeeler. Probéiert et méi spéit nach eng Kéier.
+
+error.unauthorized
+    en = You are not authorized to perform this action.
+    fr = Vous n'êtes pas autorisé à effectuer cette action.
+    de = Sie sind nicht berechtigt, diese Aktion durchzuführen.
+    lb = Dir sidd net berechtegt, dës Aktioun duerchzeféieren.
+
+[[Status]]
+status.confirmed
+    en = Confirmed
+    fr = Confirmé
+    de = Bestätigt
+    lb = Bestätegt
+
+status.reserved
+    en = Pending
+    fr = En attente
+    de = Ausstehend
+    lb = Ofwaardend
+
+status.cancelled
+    en = Cancelled
+    fr = Annulé
+    de = Storniert
+    lb = Annuléiert
+
+status.completed
+    en = Completed
+    fr = Terminé
+    de = Abgeschlossen
+    lb = Ofgeschloss
+
+status.no_show
+    en = No Show
+    fr = Non présenté
+    de = Nicht erschienen
+    lb = Net komm
+
+[[Auth]]
+auth.sign_in_google
+    en = Sign in with Google
+    fr = Se connecter avec Google
+    de = Mit Google anmelden
+    lb = Mat Google umellen
+
+auth.sign_in_apple
+    en = Sign in with Apple
+    fr = Se connecter avec Apple
+    de = Mit Apple anmelden
+    lb = Mat Apple umellen
+
+[[Gender]]
+gender.male
+    en = Male
+    fr = Masculin
+    de = Männlich
+    lb = Männlech
+
+gender.female
+    en = Female
+    fr = Féminin
+    de = Weiblich
+    lb = Weiblech
+
+gender.other
+    en = Other
+    fr = Autre
+    de = Andere
+    lb = Aner
+
+gender.man
+    en = Man
+    fr = Homme
+    de = Mann
+    lb = Mann
+
+gender.woman
+    en = Woman
+    fr = Femme
+    de = Frau
+    lb = Fra
+
+[[Drawer]]
+drawer.menu_title
+    en = Menu
+    fr = Menu
+    de = Menü
+    lb = Menu
+
+drawer.about_us
+    en = ABOUT US
+    fr = À PROPOS DE NOUS
+    de = ÜBER UNS
+    lb = IWWER UNS
+
+drawer.assistance
+    en = ASSISTANCE
+    fr = ASSISTANCE
+    de = UNTERSTÜTZUNG
+    lb = ASSISTENZ
+
+drawer.for_caregivers
+    en = FOR CAREGIVERS
+    fr = POUR LES SOIGNANTS
+    de = FÜR PFLEGEKRÄFTE
+    lb = FIR PFLEEGER
+
+drawer.relevant_links
+    en = RELEVANT LINKS
+    fr = LIENS UTILES
+    de = RELEVANTE LINKS
+    lb = RELEVANT LINKS
+
+drawer.who_are_we
+    en = Who are we?
+    fr = Qui sommes-nous ?
+    de = Wer sind wir?
+    lb = Wien si mir?
+
+drawer.terms
+    en = Terms and Conditions of Use
+    fr = Conditions générales d\'utilisation
+    de = Allgemeine Nutzungsbedingungen
+    lb = Allgemeng Notzungsbedingungen
+
+drawer.privacy_policy
+    en = Privacy Policy
+    fr = Politique de confidentialité
+    de = Datenschutzrichtlinie
+    lb = Dateschutzrichtlinn
+
+drawer.contact_us
+    en = Contact us
+    fr = Contactez-nous
+    de = Kontaktieren Sie uns
+    lb = Kontaktéiert eis
+
+drawer.esklepios_pro
+    en = eSklepios Pro
+    fr = eSklepios Pro
+    de = eSklepios Pro
+    lb = eSklepios Pro
+
+drawer.emergencies
+    en = Emergencies
+    fr = Urgences
+    de = Notfälle
+    lb = Noutsituatiounen
+
+drawer.pharmacy_on_call
+    en = Pharmacy on call
+    fr = Pharmacie de garde
+    de = Notdienstapotheke
+    lb = Apotheik vum Dienst
+
+drawer.national_health_fund
+    en = National Health Fund
+    fr = Caisse Nationale de Santé
+    de = Nationaler Gesundheitsfonds
+    lb = Nationale Gesondheetskeess
+
+drawer.ministry_of_health
+    en = Ministry of Health
+    fr = Ministère de la Santé
+    de = Gesundheitsministerium
+    lb = Gesondheeetsministère
+
+drawer.health_portal
+    en = Health Portal
+    fr = Portail Santé
+    de = Gesundheitsportal
+    lb = Gesondheetsportal
+
+drawer.health_professionals
+    en = Health Professionals
+    fr = Professionnels de santé
+    de = Gesundheitsfachleute
+    lb = Gesondheetsfachleit
+
+drawer.logout
+    en = Logout
+    fr = Se déconnecter
+    de = Abmelden
+    lb = Ausloggen
+
+drawer.guest
+    en = Guest
+    fr = Invité
+    de = Gast
+    lb = Gast

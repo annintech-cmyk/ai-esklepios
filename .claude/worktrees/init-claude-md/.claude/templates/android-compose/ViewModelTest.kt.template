@@ -1,0 +1,79 @@
+package lu.esklepios.app
+
+import app.cash.turbine.test
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import lu.esklepios.app.domain.repository.{{NAME}}Repository
+import lu.esklepios.app.presentation.viewmodel.{{NAME}}ViewModel
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class {{NAME}}ViewModelTest {
+
+    private val testDispatcher = UnconfinedTestDispatcher()
+    private lateinit var mockRepository: {{NAME}}Repository
+    private lateinit var viewModel: {{NAME}}ViewModel
+
+    @BeforeTest
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+        mockRepository = mockk()
+        viewModel = {{NAME}}ViewModel(mockRepository)
+    }
+
+    @AfterTest
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
+    @Test
+    fun `initial state has isLoading false and no error`() = runTest {
+        viewModel.uiState.test {
+            val state = awaitItem()
+            assertFalse(state.isLoading)
+            assertNull(state.error)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `load success clears loading and error`() = runTest {
+        coEvery { mockRepository.getData() } returns Result.success(listOf())
+        viewModel.uiState.test {
+            skipItems(1) // initial
+            viewModel.load()
+            val loading = awaitItem()
+            assertTrue(loading.isLoading)
+            val loaded = awaitItem()
+            assertFalse(loaded.isLoading)
+            assertNull(loaded.error)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `load failure sets error message`() = runTest {
+        coEvery { mockRepository.getData() } returns Result.failure(Exception("Network error"))
+        viewModel.uiState.test {
+            skipItems(1)
+            viewModel.load()
+            skipItems(1) // loading state
+            val errorState = awaitItem()
+            assertFalse(errorState.isLoading)
+            assertNotNull(errorState.error)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+}

@@ -1,0 +1,76 @@
+package lu.esklepios.app.view.{{area}}.{{name_snake}}
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import lu.esklepios.app.R
+import lu.esklepios.app.core.ui.components.*
+import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.presentation.viewmodel.{{NAME}}ViewModel
+import org.koin.androidx.compose.koinViewModel
+
+/**
+ * {{NAME}}Screen — {{DESCRIPTION}}
+ *
+ * Archetype: FORM (auth, editors, settings dialogs).
+ * Uses `AppFormScreen` which already provides:
+ *   • Toolbar with back button + screen title
+ *   • Error snackbar wiring (driven by `uiState.error` + `onErrorDismissed`)
+ *   • Background, vertical scroll, screen padding
+ *
+ * The body is a vertical stack of fields and actions. Replace the placeholder
+ * fields with project components (`FormField`, `AppTextLink`, `PrimaryButton`,
+ * `DividerWithLabel`, `GoogleSignInButton`, etc.). Reference screens:
+ *   • LoginScreen.kt           (auth + SSO footer)
+ *   • RegisterScreen.kt        (long form)
+ *   • EditProfileScreen.kt     (segmented control + multi-field)
+ *   • ChangeEmailScreen.kt     (single field + validation)
+ *   • ChangePasswordScreen.kt  (multi-password + strength meter)
+ */
+@Composable
+fun {{NAME}}Screen(
+    navController: NavController,
+    viewModel: {{NAME}}ViewModel = koinViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    // Optional: navigate on a success flag exposed by the ViewModel.
+    // LaunchedEffect(uiState.isDone) {
+    //     if (uiState.isDone) navController.popBackStack()
+    // }
+
+    AppFormScreen(
+        title = stringResource(R.string.screen_{{name_snake}}),
+        onNavigateBack = { navController.popBackStack() },
+        error = uiState.error,
+        onErrorDismissed = { viewModel.clearError() }
+    ) {
+        Spacer(Modifier.height(Dimens.paddingXXL))
+
+        // ── TODO: form fields ────────────────────────────────────────────────
+        // FormField(
+        //     label = stringResource(R.string.label_email_address),
+        //     value = uiState.email,
+        //     onValueChange = { viewModel.updateEmail(it) },
+        //     placeholder = "your@email.com",
+        //     leadingIcon = Icons.Filled.Email,
+        //     keyboardType = KeyboardType.Email,
+        //     isRequired = true
+        // )
+        //
+        // Spacer(Modifier.height(Dimens.paddingL))
+
+        // ── Primary action ───────────────────────────────────────────────────
+        PrimaryButton(
+            text = stringResource(R.string.action_{{name_snake}}),
+            onClick = { viewModel.{{name_camel}}() },
+            isLoading = uiState.isLoading,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(Modifier.height(Dimens.paddingXXL))
+    }
+}

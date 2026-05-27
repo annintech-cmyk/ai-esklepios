@@ -1,0 +1,32 @@
+package lu.esklepios.app.ui.components
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import lu.esklepios.app.ui.theme.Dimens
+import lu.esklepios.app.ui.theme.eSklepiosTheme
+
+/**
+ * {{NAME}}
+ * {{DESCRIPTION}}
+ *
+ * @param modifier Optional layout modifier.
+ */
+@Composable
+fun {{NAME}}(
+    // Add parameters here
+    modifier: Modifier = Modifier
+) {
+    // Implementation
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun {{NAME}}Preview() {
+    eSklepiosTheme {
+        {{NAME}}(
+            modifier = Modifier.padding(Dimens.paddingM)
+        )
+    }
+}

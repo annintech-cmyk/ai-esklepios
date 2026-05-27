@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shared-tests:
+    name: Shared KMM Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v3
+      - name: Run shared common tests
+        run: ./gradlew :shared:testDebugUnitTest
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: shared-test-results
+          path: shared/build/reports/tests/
+
+  android-build:
+    name: Android Build + Lint + Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v3
+      - name: Run Android unit tests
+        run: ./gradlew :androidApp:testDebugUnitTest
+      - name: Android lint
+        run: ./gradlew :androidApp:lintDebug
+      - name: Build debug APK
+        run: ./gradlew :androidApp:assembleDebug
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: android-test-results
+          path: androidApp/build/reports/
+
+  ios-build:
+    name: iOS Build + Tests
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v3
+      - name: Build XCFramework
+        run: ./gradlew :shared:assembleXCFramework
+      - name: Run iOS tests
+        run: |
+          xcodebuild test \
+            -project iosApp/eSklepios.xcodeproj \
+            -scheme eSklepios \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -resultBundlePath build/ios-test-results.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: ios-test-results
+          path: build/ios-test-results.xcresult

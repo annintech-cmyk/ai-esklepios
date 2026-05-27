@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">eSklepios</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_back">Back</string>
+    <string name="cd_hide_password">Hide password</string>
+    <string name="cd_show_password">Show password</string>
+
+    <!-- Actions -->
+    <string name="action_retry">Retry</string>
+    <string name="action_book">Book</string>
+    <string name="action_see_profile">See Profile</string>
+    <string name="action_open_maps">Open in Maps</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_next">Next</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="action_register">Create Account</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_done">Done</string>
+    <string name="action_send">Send</string>
+    <string name="action_search">Search</string>
+
+    <!-- Auth -->
+    <string name="auth_sign_in_google">Sign in with Google</string>
+    <string name="auth_sign_in_apple">Sign in with Apple</string>
+    <string name="auth_security_banner">This is the official eSklepios app. Never share your password.</string>
+    <string name="auth_already_account">Already have an account?</string>
+    <string name="auth_no_account">No account?</string>
+
+    <!-- Labels -->
+    <string name="label_accepting_patients">Accepting patients</string>
+    <string name="label_email_address">Email address</string>
+    <string name="label_phone_number">Phone number</string>
+    <string name="label_practitioner">Practitioner</string>
+    <string name="label_date_time">Date &amp; Time</string>
+    <string name="label_clinic">Clinic</string>
+    <string name="label_current_email">Current Email</string>
+    <string name="label_new_email_field">New Email</string>
+    <string name="label_confirm_email">Confirm New Email</string>
+    <string name="label_current_password_field">Current Password</string>
+    <string name="label_new_password_field">New Password</string>
+    <string name="label_confirm_password_field">Confirm New Password</string>
+    <string name="label_available_slots">Available slots</string>
+    <string name="label_location">Location</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_first_name">First name</string>
+    <string name="label_last_name">Last name</string>
+    <string name="label_phone">Phone</string>
+    <string name="label_gender">Gender</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_other">Other</string>
+    <string name="label_date_of_birth">Date of birth</string>
+    <string name="label_cns_number">CNS number</string>
+    <string name="label_language">Language</string>
+    <string name="label_specialty">Specialty</string>
+    <string name="label_consultation_reason">Reason for consultation</string>
+    <string name="label_message_to_doctor">Message to doctor (optional)</string>
+    <string name="label_new_email">New email address</string>
+    <string name="label_current_password">Current password</string>
+    <string name="label_new_password">New password</string>
+    <string name="label_confirm_password">Confirm new password</string>
+
+    <!-- Status -->
+    <string name="status_confirmed">Confirmed</string>
+    <string name="status_reserved">Pending</string>
+    <string name="status_cancelled">Cancelled</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_no_show">No Show</string>
+
+    <!-- Screens -->
+    <string name="screen_home">Home</string>
+    <string name="appointments_title">My Appointments</string>
+    <string name="screen_profile">Profile</string>
+    <string name="screen_login">Sign In</string>
+    <string name="screen_register">Create Account</string>
+    <string name="screen_forgot_password">Forgot Password</string>
+    <string name="screen_practitioner_detail">Practitioner</string>
+    <string name="booking_title">Book Appointment</string>
+    <string name="screen_edit_profile">Edit Profile</string>
+    <string name="screen_change_email">Change Email</string>
+    <string name="screen_change_password">Change Password</string>
+
+    <!-- Landing -->
+    <string name="landing_tagline">Your Health, Connected</string>
+    <string name="landing_subtitle">Find practitioners, book appointments, manage your healthcare</string>
+    <string name="landing_search_hint">Search specialty, doctor name…</string>
+    <string name="landing_location_hint">City or postal code</string>
+    <string name="landing_find_practitioners">Find Practitioners</string>
+    <string name="landing_hero_prefix">Make an appointment\nwith a </string>
+    <string name="landing_hero_accent">health\nprofessional</string>
+    <string name="landing_trust_licensed">Graduated and Verified practitioners</string>
+    <string name="landing_trust_secure">Your personal data secured</string>
+    <string name="landing_trust_free">Closest to you</string>
+
+    <!-- Auth -->
+    <string name="login_no_account">No account?</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_or">or</string>
+    <string name="register_have_account">Already have an account?</string>
+    <string name="register_step_of">Step %1$d of %2$d</string>
+    <string name="register_step_personal">Personal Information</string>
+    <string name="register_step_contact">Contact Information</string>
+    <string name="register_step_account">Account Setup</string>
+    <string name="forgot_password_title">Reset your password</string>
+    <string name="forgot_password_sent_title">Check your email</string>
+    <string name="forgot_password_sent_subtitle">We\'ve sent a password reset link to %1$s</string>
+    <string name="forgot_password_back">Back to Sign In</string>
+    <string name="forgot_password_description">Enter your email address and we\'ll send you a reset link.</string>
+    <string name="forgot_password_sent">Reset link sent! Check your inbox.</string>
+    <string name="forgot_password_send_link">Send Reset Link</string>
+
+    <!-- Home -->
+    <string name="home_greeting">Hello</string>
+    <string name="home_find_practitioner">Find a practitioner</string>
+    <string name="home_search_hint">Search specialty, doctor…</string>
+    <string name="home_filter_all">All</string>
+    <string name="home_filter_today">Today</string>
+    <string name="home_filter_3days">Within 3 days</string>
+    <string name="home_filter_new_patients">Open to new patients</string>
+    <string name="home_practitioners_count">Nearby Practitioners / %1$d results</string>
+    <string name="home_no_results_title">No practitioners found</string>
+    <string name="home_no_results_subtitle">Try adjusting your search or filters</string>
+    <string name="home_clear_filters">Clear Filters</string>
+    <string name="home_see_all">See all practitioners →</string>
+    <string name="home_see_all_short">See all →</string>
+    <string name="home_results_count">%1$d results</string>
+    <string name="home_nearby_label">Nearby Practitioners</string>
+    <string name="screen_practitioner_list">All Practitioners</string>
+    <string name="home_schedule_nav_prev">Previous week</string>
+    <string name="home_schedule_nav_next">Next week</string>
+    <string name="home_schedule_no_slots">–</string>
+    <string name="cd_open_menu">Open menu</string>
+
+    <!-- Practitioner detail -->
+    <string name="detail_call">Call</string>
+    <string name="detail_email_button">Email</string>
+    <string name="detail_schedule">Schedule</string>
+    <string name="detail_payment_methods">Payment Methods</string>
+    <string name="detail_diplomas">Diplomas &amp; Certifications</string>
+    <string name="detail_emergency_banner">For emergencies, call 112 immediately</string>
+    <string name="detail_book_appointment">Book an Appointment</string>
+    <string name="detail_not_accepting">Not accepting new patients</string>
+    <string name="detail_not_found">Practitioner not found</string>
+    <string name="detail_contact_details">Contact details</string>
+    <string name="detail_address">Address</string>
+    <string name="detail_schedules_header">SCHEDULES</string>
+    <string name="detail_no_schedule">No schedule available</string>
+    <string name="detail_emergency_prefix">In case of a medical emergency, call</string>
+    <string name="detail_emergency_number">112</string>
+    <string name="detail_emergency_subtitle">Toll-free number 24/7 for all vital emergency aid</string>
+    <string name="detail_emergency_short">Emergency?</string>
+    <string name="detail_payments">Payments</string>
+    <string name="detail_means_of_payment">Means of payment</string>
+    <string name="detail_no_payment_info">No payment information available</string>
+    <string name="detail_presentation">Presentation</string>
+    <string name="detail_no_presentation">No presentation available</string>
+    <string name="detail_diplomas_label">Diplomas</string>
+    <string name="detail_loading">Loading practitioner…</string>
+    <string name="cd_map_placeholder">Map placeholder</string>
+    <string name="cd_favorite_toggle">Toggle favourite</string>
+
+    <!-- Booking -->
+    <string name="booking_summary">Appointment Summary</string>
+    <string name="booking_policy">Cancellations must be made at least 24 hours in advance.</string>
+    <string name="booking_confirm">Confirm Booking</string>
+    <string name="booking_login_required">Sign in to book an appointment</string>
+    <string name="booking_login_required_subtitle">You need an account to book appointments.</string>
+
+    <!-- Success -->
+    <string name="success_title">Appointment Confirmed!</string>
+    <string name="success_subtitle">Your appointment has been successfully booked.</string>
+    <string name="success_view_appointments">View My Appointments</string>
+    <string name="success_back_home">Back to Home</string>
+
+    <!-- Appointments -->
+    <string name="appointments_upcoming">Upcoming</string>
+    <string name="appointments_past">Past</string>
+    <string name="appointments_empty_upcoming_title">No upcoming appointments</string>
+    <string name="appointments_empty_upcoming_subtitle">Book your first appointment to get started</string>
+    <string name="appointments_empty_past_title">No past appointments</string>
+    <string name="appointments_empty_past_subtitle">Your appointment history will appear here</string>
+    <string name="appointments_cancel_title">Cancel Appointment</string>
+    <string name="appointments_cancel_confirm">Are you sure you want to cancel this appointment?</string>
+    <string name="appointments_cancel_yes">Yes, Cancel</string>
+    <string name="appointments_keep">Keep It</string>
+    <string name="appointments_loading">Loading appointments…</string>
+    <string name="appointments_modify">Modify</string>
+    <string name="appointments_find_practitioners">Find Practitioners</string>
+
+    <!-- Profile -->
+    <string name="profile_personal_info">Personal Information</string>
+    <string name="profile_security">Security</string>
+    <string name="profile_preferences">Preferences</string>
+    <string name="profile_legal">Legal</string>
+    <string name="profile_notifications">Notifications</string>
+    <string name="profile_about">About eSklepios</string>
+    <string name="profile_terms">Terms of Service</string>
+    <string name="profile_privacy">Privacy Policy</string>
+    <string name="profile_logout_confirm">Are you sure you want to sign out?</string>
+    <string name="profile_section_personal">PERSONAL INFORMATION</string>
+    <string name="profile_section_preferences">PREFERENCES</string>
+    <string name="profile_section_security">LOGIN &amp; SECURITY</string>
+    <string name="profile_label_full_name">FULL NAME</string>
+    <string name="profile_label_gender">GENDER</string>
+    <string name="profile_label_dob">DATE OF BIRTH</string>
+    <string name="profile_label_phone">PHONE NUMBER</string>
+    <string name="profile_label_cns">CNS NUMBER</string>
+    <string name="profile_label_notifications">NOTIFICATIONS</string>
+    <string name="profile_label_notifications_email">Email Notifications</string>
+    <string name="profile_label_language">LANGUAGE</string>
+    <string name="profile_label_login_email">LOGIN EMAIL ADDRESS</string>
+    <string name="profile_label_security">SECURITY</string>
+    <string name="profile_label_change_password">Change Password</string>
+    <string name="cd_menu">Menu</string>
+    <string name="cd_sign_out">Sign out</string>
+    <string name="cd_change_photo">Change photo</string>
+    <string name="cd_close">Close</string>
+    <string name="profile_loading_name">Loading…</string>
+    <string name="profile_logout_alert_title">Sign Out</string>
+    <string name="profile_menu_title">Menu</string>
+    <string name="profile_menu_who_we_are">Who are we?</string>
+    <string name="profile_menu_terms">Terms and Conditions</string>
+    <string name="profile_menu_privacy">Privacy Policy</string>
+    <string name="profile_menu_contact">Contact us</string>
+    <string name="profile_menu_emergencies">Emergencies</string>
+    <string name="profile_menu_pharmacy">Pharmacy on call</string>
+    <string name="profile_menu_health_fund">National Health Fund</string>
+    <string name="profile_menu_ministry">Ministry of Health</string>
+    <string name="language_fr">French</string>
+    <string name="language_en">English</string>
+    <string name="language_de">German</string>
+    <string name="language_lb">Luxembourgish</string>
+
+    <!-- Change Email -->
+    <string name="change_email_banner">We\'ll send a verification link to your new email. Your current email stays active until you confirm.</string>
+    <string name="change_email_valid">Valid email format</string>
+    <string name="change_email_match">Emails match</string>
+    <string name="change_email_no_match">Emails do not match</string>
+    <string name="change_email_not_available">Not available</string>
+    <string name="change_email_success">Email updated successfully!</string>
+
+    <!-- Change Password -->
+    <string name="change_password_banner_title">Keep your account secure</string>
+    <string name="change_password_banner_body">Use a strong, unique password you don\'t reuse elsewhere.</string>
+    <string name="change_password_strength_strong">Strong</string>
+    <string name="change_password_strength_good">Good</string>
+    <string name="change_password_strength_fair">Fair</string>
+    <string name="change_password_strength_weak">Weak</string>
+    <string name="change_password_criteria_length">At least 12 characters</string>
+    <string name="change_password_criteria_case">One uppercase and lowercase</string>
+    <string name="change_password_criteria_symbol">One number and symbol</string>
+    <string name="change_password_match">Passwords match</string>
+    <string name="change_password_success">Password updated successfully!</string>
+    <string name="edit_profile_saved">Profile saved!</string>
+    <string name="edit_placeholder_dob">DD / MM / YYYY</string>
+    <string name="edit_placeholder_first_name">Sophie</string>
+    <string name="edit_placeholder_last_name">Müller</string>
+    <string name="edit_placeholder_phone">621 123 456</string>
+    <string name="edit_placeholder_cns">1992 0314 5678 9012</string>
+
+    <!-- Practitioner Detail -->
+    <string name="detail_contact">Contact</string>
+    <string name="detail_closed">Closed</string>
+    <string name="detail_available_slots">Available Slots</string>
+    <string name="cd_favorite">Favorite</string>
+
+    <!-- Booking -->
+    <string name="booking_loading">Loading appointment details…</string>
+    <string name="booking_sign_in_to_book">Sign In to Book</string>
+    <string name="booking_sign_in_required">Sign in required</string>
+    <string name="booking_sign_in_required_sub">You need an account to book appointments.</string>
+    <string name="booking_reason_placeholder">Briefly describe the reason for your visit</string>
+    <string name="booking_message_placeholder">Any additional information for the doctor…</string>
+
+    <!-- Success -->
+    <string name="success_confirmed_badge">CONFIRMED</string>
+
+    <!-- Errors -->
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_network">Network error. Check your connection.</string>
+    <string name="error_required_field">This field is required</string>
+    <string name="error_invalid_email">Please enter a valid email address</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="error_password_too_short">Password must be at least 8 characters</string>
+    <string name="error_title">Error</string>
+    <string name="action_ok">OK</string>
+
+    <!-- Login -->
+    <string name="login_security_banner">This is the official eSklepios app. Never share your password.</string>
+    <string name="login_google">Sign in with Google</string>
+    <string name="login_apple">Sign in with Apple</string>
+
+    <!-- Register -->
+    <string name="label_patient">Patient</string>
+
+    <!-- Home -->
+    <string name="home_loading">Finding practitioners…</string>
+    <string name="home_not_searched_title">Find practitioners</string>
+    <string name="home_not_searched_subtitle">Use the search above to find doctors near you</string>
+
+    <!-- Profile (legacy keys not used by current screens) -->
+    <string name="profile_sign_out">Sign Out</string>
+    <string name="profile_logout_title">Sign Out</string>
+    <!-- profile_menu_* canonical keys live above near cd_menu (added by ProfileView refactor) -->
+    <string name="profile_menu_who">Who are we?</string>
+    <string name="profile_menu_emergency">Emergencies</string>
+
+    <!-- PractitionerCard schedule strip -->
+    <string name="card_show_more_schedules">Show more schedules</string>
+    <string name="card_show_fewer_schedules">Show fewer schedules</string>
+    <string name="card_schedule_prev">Previous period</string>
+    <string name="card_schedule_next">Next period</string>
+    <string name="card_next_appointment_on">Next Appointment on</string>
+    <string name="card_slots_unavailable">Slots not available</string>
+
+    <!-- BookingScreen -->
+    <string name="booking_appointment_details">Appointment Details</string>
+    <string name="booking_your_details">Your Details</string>
+    <string name="booking_in_person">In-person consultation</string>
+    <string name="booking_notes_label">Notes for the doctor (optional)</string>
+    <string name="booking_notes_placeholder">Any details you\'d like the doctor to know…</string>
+    <string name="booking_confirmed_snackbar">Appointment booked!</string>
+
+    <!-- Change Password -->
+    <string name="change_password_no_match">Passwords do not match</string>
+    <string name="change_password_strength">Strength:</string>
+
+    <!-- Booking screen — Android-specific strings -->
+    <string name="booking_signin_to_book">Sign In to Book</string>
+    <string name="booking_reason">Reason for consultation</string>
+    <string name="booking_auth_required">Sign in required</string>
+    <string name="booking_auth_subtitle">You need an account to book appointments.</string>
+    <string name="booking_title_change">Change appointment</string>
+    <string name="booking_button_validate">Validate the appointment</string>
+    <string name="booking_button_validate_change">Validate the new appointment</string>
+    <string name="booking_header_selected">APPOINTMENT SELECTED</string>
+    <string name="booking_header_old_selected">OLD APPOINTMENT SELECTED</string>
+    <string name="booking_header_confirmation">CONFIRMATION</string>
+    <string name="booking_confirmation_hint">Please come at least 5 minutes before the appointment time.\n\nAny appointment not honored or canceled less than 48 hours in advance will be charged.</string>
+    <string name="booking_message_label">Message to the doctor</string>
+    <string name="booking_message_commentary">Commentary</string>
+    <string name="booking_row_reason">Reason</string>
+    <string name="booking_row_datetime">Date &amp; time</string>
+    <string name="booking_row_institute">Institute</string>
+
+    <!-- Drawer -->
+    <string name="drawer_section_about_us">ABOUT US</string>
+    <string name="drawer_section_assistance">ASSISTANCE</string>
+    <string name="drawer_section_caregivers">FOR CAREGIVERS</string>
+    <string name="drawer_section_links">RELEVANT LINKS</string>
+    <string name="drawer_who_are_we">Who are we?</string>
+    <string name="drawer_contact_us">Contact us</string>
+    <string name="drawer_esklepios_pro">eSklepios Pro</string>
+    <string name="drawer_health_portal">Health Portal</string>
+    <string name="drawer_health_professionals">Health Professionals</string>
+    <string name="drawer_guest">Guest</string>
+</resources>

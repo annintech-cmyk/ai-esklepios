@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs ls)",
+      "Bash(mkdir -p /Users/anna.felix/projects/esklepios/.claude/commands /Users/anna.felix/projects/esklepios/.claude/agents /Users/anna.felix/projects/esklepios/.claude/rules /Users/anna.felix/projects/esklepios/.claude/skills /Users/anna.felix/projects/esklepios/.claude/hooks /Users/anna.felix/projects/esklepios/.claude/templates/android-compose /Users/anna.felix/projects/esklepios/.claude/templates/ios-swiftui /Users/anna.felix/projects/esklepios/.claude/templates/shared-kmm && echo \"Directories created\")",
+      "Bash(xargs cat)",
+      "Bash(gradle --version)",
+      "Bash(gradle wrapper *)",
+      "Bash(mkdir -p /tmp/gradle-wrapper-gen)",
+      "Read(//tmp/**)",
+      "Bash(cp /tmp/gradle-wrapper-gen/gradlew /Users/anna.felix/projects/esklepios/gradlew)",
+      "Bash(cp /tmp/gradle-wrapper-gen/gradlew.bat /Users/anna.felix/projects/esklepios/gradlew.bat)",
+      "Bash(cp /tmp/gradle-wrapper-gen/gradle/wrapper/gradle-wrapper.jar /Users/anna.felix/projects/esklepios/gradle/wrapper/gradle-wrapper.jar)",
+      "Bash(cp /tmp/gradle-wrapper-gen/gradle/wrapper/gradle-wrapper.properties /Users/anna.felix/projects/esklepios/gradle/wrapper/gradle-wrapper.properties)",
+      "Bash(chmod +x /Users/anna.felix/projects/esklepios/gradlew)",
+      "Bash(adb devices *)",
+      "Bash(emulator -list-avds)",
+      "Read(//Users/anna.felix/Library/Android/sdk/platform-tools/**)",
+      "Read(//usr/local/bin/**)",
+      "Bash(~/Library/Android/sdk/platform-tools/adb devices *)",
+      "Bash(~/Library/Android/sdk/emulator/emulator -list-avds)",
+      "Bash(./gradlew :shared:generateBuildKonfig)",
+      "Bash(./gradlew :androidApp:assembleDebug)",
+      "Bash(./gradlew :androidApp:assembleDebug --stacktrace)",
+      "Bash(./gradlew :shared:generateSqlDelightInterface)",
+      "Bash(ls ~/Library/Android/sdk/platform-tools/adb 2>/dev/null || find /usr/local /opt /Users/anna.felix/Library/Android -name \"adb\" -maxdepth 8 2>/dev/null | head -5)",
+      "Bash(~/Library/Android/sdk/platform-tools/adb -s emulator-5554 install -r /Users/anna.felix/projects/esklepios/androidApp/build/outputs/apk/debug/androidApp-debug.apk)",
+      "Bash(~/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell am start -n lu.esklepios.app/.MainActivity)",
+      "Bash(~/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell pm list packages)",
+      "Bash(./gradlew :androidApp:compileDebugKotlin)",
+      "Bash(~/Library/Android/sdk/platform-tools/adb -s emulator-5554 shell am start -n lu.esklepios.app.debug/lu.esklepios.app.MainActivity)",
+      "Bash(adb -s emulator-5554 install -r androidApp/build/outputs/apk/debug/androidApp-debug.apk)",
+      "Bash(adb -s emulator-5554 shell am start -n lu.esklepios.app/.MainActivity)",
+      "Bash(~/Library/Android/sdk/platform-tools/adb -s emulator-5554 install -r androidApp/build/outputs/apk/debug/androidApp-debug.apk)"
+    ]
+  }
+}

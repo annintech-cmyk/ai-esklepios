@@ -1,0 +1,78 @@
+import SwiftUI
+
+/// {{NAME}}View — {{DESCRIPTION}}
+///
+/// Archetype: GRADIENT HERO (dashboard, feed, profile, detail).
+/// Pattern: outer `ScrollView { VStack { AppGradientHeaderView(...); body } }`
+/// inside a `NavigationStack`, with the gradient extending into the safe area.
+///
+/// `AppGradientHeaderView` supports several hero flavours via its parameters:
+///   • Toolbar-only     — leading/center/trailing actions
+///   • Search hero      — `search: HeaderSearchConfig(...)`        (see HomeView.swift)
+///   • Centered profile — `profile: .centered(...)`                (see ProfileView.swift)
+///   • Inline profile   — `profile: .inline(...)`                  (see PractitionerDetailView.swift)
+///   • Overline + title — `textBlock: HeaderTextBlock(...)`
+struct {{NAME}}View: View {
+    @StateObject private var viewModel = {{NAME}}ViewModelWrapper()
+    @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: Spacing.none) {
+                    AppGradientHeaderView(
+                        roundedBottom: true,
+                        leading: .iconButton(
+                            systemName: "chevron.left",
+                            accessibilityLabel: NSLocalizedString("cd_back", value: "Back", comment: ""),
+                            action: { dismiss() }
+                        ),
+                        center: .title(text: NSLocalizedString("screen_{{name_snake}}", value: "{{NAME}}", comment: ""))
+                        // ── Optional hero flavours — pick ONE and uncomment ───
+                        // search: HeaderSearchConfig(
+                        //     searchQuery: viewModel.uiState.query,
+                        //     locationQuery: viewModel.uiState.locationQuery,
+                        //     onSearchQueryChange: { viewModel.onQueryChange($0) },
+                        //     onLocationQueryChange: { viewModel.onLocationChange($0) },
+                        //     onSearchTap: { viewModel.search() }
+                        // ),
+                        // textBlock: HeaderTextBlock(
+                        //     overline: NSLocalizedString("{{name_snake}}_overline", value: "", comment: ""),
+                        //     title: NSLocalizedString("{{name_snake}}_hero_title", value: "", comment: "")
+                        // ),
+                        // profile: .centered(
+                        //     initials: viewModel.uiState.user?.initials ?? "?",
+                        //     avatarSize: Sizing.avatarXl,
+                        //     name: viewModel.uiState.user?.fullName ?? "",
+                        //     email: viewModel.uiState.user?.email
+                        // )
+                    )
+
+                    // ── Body states ──────────────────────────────────────────
+                    if viewModel.uiState.isLoading {
+                        LoadingView(message: NSLocalizedString("loading", value: "Loading…", comment: ""))
+                    } else if let error = viewModel.uiState.error {
+                        ErrorView(message: error) { viewModel.load() }
+                    } else {
+                        contentSections
+                    }
+                }
+            }
+            .background(Color.appBackground)
+            .ignoresSafeArea(edges: .top)
+            .navigationBarHidden(true)
+        }
+        .task { viewModel.load() }
+    }
+
+    private var contentSections: some View {
+        VStack(spacing: Spacing.m) {
+            // TODO: render list/sections.
+            // Reference: HomeView.swift (PractitionerCard list),
+            //            MyAppointmentsView.swift (segmented filter + list),
+            //            ProfileView.swift (multiple AppCard sections).
+        }
+        .padding(.horizontal, Spacing.l)
+        .padding(.vertical, Spacing.m)
+    }
+}

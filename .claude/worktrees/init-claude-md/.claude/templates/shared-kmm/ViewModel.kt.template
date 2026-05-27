@@ -1,0 +1,58 @@
+package lu.esklepios.app.presentation.viewmodel
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import lu.esklepios.app.domain.repository.{{REPOSITORY}}Repository
+
+/**
+ * UiState for [{{NAME}}ViewModel].
+ * All UI-relevant state is held here as immutable data.
+ */
+data class {{NAME}}UiState(
+    val isLoading: Boolean = false,
+    val error: String? = null
+    // Add domain data fields here, e.g.:
+    // val items: List<Item> = emptyList()
+)
+
+/**
+ * {{NAME}}ViewModel
+ * {{DESCRIPTION}}
+ *
+ * Registered in SharedModule.kt as: factoryOf(::{{NAME}}ViewModel)
+ */
+class {{NAME}}ViewModel(
+    private val repository: {{REPOSITORY}}Repository
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow({{NAME}}UiState())
+    val uiState: StateFlow<{{NAME}}UiState> = _uiState.asStateFlow()
+
+    init {
+        load()
+    }
+
+    fun load() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            repository.getData()
+                .onSuccess { data ->
+                    _uiState.update { it.copy(isLoading = false) }
+                }
+                .onFailure { e ->
+                    _uiState.update {
+                        it.copy(isLoading = false, error = e.message ?: "An unexpected error occurred")
+                    }
+                }
+        }
+    }
+
+    fun clearError() {
+        _uiState.update { it.copy(error = null) }
+    }
+}
