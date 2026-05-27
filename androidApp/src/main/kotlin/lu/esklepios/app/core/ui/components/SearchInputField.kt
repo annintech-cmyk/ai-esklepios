@@ -3,12 +3,18 @@ package lu.esklepios.app.core.ui.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.core.ui.theme.BorderColor
+import lu.esklepios.app.core.ui.theme.Dimens
+import lu.esklepios.app.core.ui.theme.FieldBackground
+import lu.esklepios.app.core.ui.theme.TextHint
+import lu.esklepios.app.core.ui.theme.TextPrimary
 
 @Composable
 fun SearchInputField(

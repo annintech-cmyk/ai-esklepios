@@ -1,7 +1,12 @@
 package lu.esklepios.app.core.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -10,7 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.core.ui.theme.BorderLight
+import lu.esklepios.app.core.ui.theme.Dimens
+import lu.esklepios.app.core.ui.theme.Primary
+import lu.esklepios.app.core.ui.theme.TextHint
 
 /**
  * A labeled value row with a colored check-circle badge on the leading edge.

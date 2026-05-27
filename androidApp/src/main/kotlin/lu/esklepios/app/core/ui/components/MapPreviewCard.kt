@@ -2,7 +2,16 @@ package lu.esklepios.app.core.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -15,7 +24,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import lu.esklepios.app.R
-import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.core.ui.theme.Danger
+import lu.esklepios.app.core.ui.theme.Dimens
+import lu.esklepios.app.core.ui.theme.Gradients
+import lu.esklepios.app.core.ui.theme.Primary
+import lu.esklepios.app.core.ui.theme.PrimaryLight
+import lu.esklepios.app.core.ui.theme.TextPrimary
+import lu.esklepios.app.core.ui.theme.TextSecondary
 
 @Composable
 fun MapPreviewCard(

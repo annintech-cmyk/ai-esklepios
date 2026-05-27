@@ -1,13 +1,22 @@
 package lu.esklepios.app.core.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.core.ui.theme.Danger
+import lu.esklepios.app.core.ui.theme.DangerBg
+import lu.esklepios.app.core.ui.theme.Dimens
+import lu.esklepios.app.core.ui.theme.Primary
+import lu.esklepios.app.core.ui.theme.PrimaryLight
+import lu.esklepios.app.core.ui.theme.Success
+import lu.esklepios.app.core.ui.theme.SuccessBg
+import lu.esklepios.app.core.ui.theme.Warning
+import lu.esklepios.app.core.ui.theme.WarningBg
 import lu.esklepios.app.domain.model.AppointmentStatus
 import lu.esklepios.app.util.AppointmentStatusColorScheme
 import lu.esklepios.app.util.colorScheme

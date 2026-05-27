@@ -46,7 +46,9 @@
       "Bash(bash scripts/pre-push.sh)",
       "Bash(./gradlew :androidApp:testDebugUnitTest)",
       "Bash(./gradlew :androidApp:testDebugUnitTest --info)",
-      "Bash(./gradlew :androidApp:testDebugUnitTest --quiet)"
+      "Bash(./gradlew :androidApp:testDebugUnitTest --quiet)",
+      "Bash(./gradlew ktlintFormat --quiet)",
+      "Bash(cp /tmp/AvatarCircle.kt.bak /Users/anna.felix/projects/esklepios/androidApp/src/main/kotlin/lu/esklepios/app/core/ui/components/AvatarCircle.kt)"
     ]
   }
 }
