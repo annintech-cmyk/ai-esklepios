@@ -44,7 +44,7 @@ import lu.esklepios.app.core.ui.components.GradientHeader
 import lu.esklepios.app.core.ui.sharedElementModifier
 import lu.esklepios.app.core.ui.theme.*
 import lu.esklepios.app.debug.DummyPractitioners
-import lu.esklepios.app.utils.AppUrls
+import lu.esklepios.app.util.AppUrls
 
 @Composable
 fun PractitionerDetailScreen(

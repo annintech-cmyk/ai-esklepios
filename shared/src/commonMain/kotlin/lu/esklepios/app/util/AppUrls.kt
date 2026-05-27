@@ -1,4 +1,4 @@
-package lu.esklepios.app.utils
+package lu.esklepios.app.util
 
 object AppUrls {
     // Company

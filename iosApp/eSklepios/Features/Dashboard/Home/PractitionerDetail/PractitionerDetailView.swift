@@ -143,7 +143,7 @@ struct PractitionerDetailView: View {
                             .fontWeight(.bold)
                             .foregroundColor(Color.appDanger))
                         .font(.callout)
-                        Button(action: { openURL(URL(string: AppUrls.emergencyHotline)!) }) {
+                        Button(action: { openURL(URL(string: AppUrls.shared.EMERGENCY_HOTLINE)!) }) {
                             Text("112.lu")
                                 .font(.callout)
                                 .foregroundColor(.appPrimary)

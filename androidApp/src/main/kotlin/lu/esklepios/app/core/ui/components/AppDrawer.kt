@@ -22,7 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import lu.esklepios.app.R
 import lu.esklepios.app.presentation.viewmodel.ProfileViewModel
 import lu.esklepios.app.core.ui.theme.*
-import lu.esklepios.app.utils.AppUrls
+import lu.esklepios.app.util.AppUrls
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -79,7 +79,6 @@ fun AppDrawerContent(
                 .verticalScroll(rememberScrollState())
         ) {
             DrawerSection(title = stringResource(R.string.drawer_section_about_us)) {
-                DrawerItem(Icons.Outlined.Info,         stringResource(R.string.drawer_who_are_we),       { onOpenUrl(AppUrls.WEBSITE); onCloseDrawer() })
                 DrawerItem(Icons.Outlined.Description,  stringResource(R.string.profile_menu_terms),      { onOpenUrl(AppUrls.TERMS_AND_CONDITIONS); onCloseDrawer() })
                 DrawerItem(Icons.Outlined.Shield,       stringResource(R.string.profile_privacy),         { onOpenUrl(AppUrls.PRIVACY_POLICY); onCloseDrawer() })
                 DrawerItem(Icons.Outlined.MailOutline,  stringResource(R.string.drawer_contact_us),       { onOpenEmail(); onCloseDrawer() })

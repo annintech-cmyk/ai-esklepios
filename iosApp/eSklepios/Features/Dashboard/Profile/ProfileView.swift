@@ -386,52 +386,46 @@ struct ProfileView: View {
             .padding()
             Divider()
             Group {
-                menuItem(icon: "info.circle",
-                         labelKey: "profile_menu_who",  fallback: "Who are we?") {
-                    if let url = URL(string: AppUrls.website) {
-                        openURL(url)
-                    }
-                }
                 menuItem(icon: "doc.text",
                          labelKey: "profile_menu_terms",       fallback: "Terms and Conditions") {
-                    if let url = URL(string: AppUrls.termsAndConditions) {
+                    if let url = URL(string: AppUrls.shared.TERMS_AND_CONDITIONS) {
                         openURL(url)
                     }
                 }
                 menuItem(icon: "hand.raised",
                          labelKey: "profile_menu_privacy",     fallback: "Privacy Policy") {
-                    if let url = URL(string: AppUrls.privacyPolicy) {
+                    if let url = URL(string: AppUrls.shared.PRIVACY_POLICY) {
                         openURL(url)
                     }
                 }
                 menuItem(icon: "envelope",
                          labelKey: "profile_menu_contact",     fallback: "Contact us") {
-                    if let url = URL(string: AppUrls.contactEmail) {
+                    if let url = URL(string: AppUrls.shared.CONTACT_EMAIL) {
                         openURL(url)
                     }
                 }
                 Divider().padding(.horizontal)
                 menuItem(icon: "cross.case",
                          labelKey: "profile_menu_emergencies", fallback: "Emergencies") {
-                    if let url = URL(string: AppUrls.emergencyServices) {
+                    if let url = URL(string: AppUrls.shared.EMERGENCY_SERVICES) {
                         openURL(url)
                     }
                 }
                 menuItem(icon: "pills",
                          labelKey: "profile_menu_pharmacy",    fallback: "Pharmacy on call") {
-                    if let url = URL(string: AppUrls.pharmacyServices) {
+                    if let url = URL(string: AppUrls.shared.PHARMACY_SERVICES) {
                         openURL(url)
                     }
                 }
                 menuItem(icon: "building.columns",
                          labelKey: "profile_menu_health_fund", fallback: "National Health Fund") {
-                    if let url = URL(string: AppUrls.healthFund) {
+                    if let url = URL(string: AppUrls.shared.HEALTH_FUND) {
                         openURL(url)
                     }
                 }
                 menuItem(icon: "building.2",
                          labelKey: "profile_menu_ministry",    fallback: "Ministry of Health") {
-                    if let url = URL(string: AppUrls.ministry) {
+                    if let url = URL(string: AppUrls.shared.MINISTRY) {
                         openURL(url)
                     }
                 }

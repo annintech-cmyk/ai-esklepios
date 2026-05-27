@@ -31,7 +31,7 @@ import lu.esklepios.app.core.ui.components.AppDrawerContent
 import lu.esklepios.app.core.ui.theme.GradientStart
 import lu.esklepios.app.core.ui.theme.Primary
 import lu.esklepios.app.core.ui.theme.Surface
-import lu.esklepios.app.utils.AppUrls
+import lu.esklepios.app.util.AppUrls
 import lu.esklepios.app.presentation.viewmodel.HomeViewModel
 import lu.esklepios.app.view.dashboard.appointments.booking.BookingScreen
 import org.koin.androidx.compose.koinViewModel
