@@ -251,7 +251,6 @@ private fun InlineProfile(profile: HeaderProfile.Inline) {
         AvatarCircle(
             initials = profile.initials,
             size = profile.avatarSize,
-            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
         )
         Spacer(Modifier.width(Dimens.paddingL))
         Column {
@@ -287,7 +286,6 @@ private fun CenteredProfile(profile: HeaderProfile.Centered) {
                 AvatarCircle(
                     initials = profile.initials,
                     size = profile.avatarSize,
-                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                 )
             }
             Box(

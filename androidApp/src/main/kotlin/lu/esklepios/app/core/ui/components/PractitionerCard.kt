@@ -112,7 +112,6 @@ fun PractitionerCard(
                 AvatarCircle(
                     initials = practitioner.initials,
                     size = Dimens.avatarSizeLg,
-                    fontSize = MaterialTheme.typography.headlineSmall.fontSize,
                     modifier = sharedElementModifier("practitioner-avatar-${practitioner.id}"),
                 )
                 HSpace(Dimens.paddingM)

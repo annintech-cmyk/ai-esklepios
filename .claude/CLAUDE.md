@@ -568,6 +568,29 @@ docs(strings): add Luxembourgish translations for all screen keys
 
 **`SessionManager` is deleted.** Do not re-introduce any plain-SharedPreferences or UserDefaults login flag.
 
+### 12. AvatarCircle fontSize parameter
+**Problem:** `AvatarCircle(initials, size, fontSize=...)` takes an explicit font size parameter, but font size should scale proportionally with avatar size.
+**Solution:** Remove the `fontSize` parameter from all AvatarCircle calls. The component now auto-calculates proportional text size: `fontSize = avatarSize * 0.33`. This keeps avatar typography consistent across all use cases. Always use named `size` parameter (e.g., `Dimens.avatarSizeLg`) to determine both dimensions.
+
+### 13. Test import organization
+**Problem:** Star imports (`import io.mockk.*`, `import kotlinx.coroutines.test.*`) hide dependencies and make code review harder; reviewers can't see which specific test utilities are used.
+**Solution:** Use explicit imports in test files. Replace star imports with specific names:
+- ❌ `import io.mockk.*` → ✅ `import io.mockk.coEvery`, `import io.mockk.mockk`, etc.
+- ❌ `import kotlinx.coroutines.test.*` → ✅ `import kotlinx.coroutines.test.UnconfinedTestDispatcher`, etc.
+
+Explicit imports make dependencies visible and help catch copy-paste errors across platforms.
+This is especially important for Android test files which are reviewed frequently and may be ported to commonTest.
+
+### 14. Pre-push script optimization
+**Problem:** The pre-push script was running `assembleXCFramework` on every push, which added 60+ seconds to the push ceremony and provided little value (the iOS app build itself validates framework compatibility).
+**Solution:** Remove redundant build steps from `scripts/pre-push.sh`. The script should verify:
+- Detekt (shared linting) ✅
+- Android lint ✅
+- Android debug build ✅
+- Kotlin compilation ✅
+
+But skip steps that duplicate what the CI pipeline will do anyway. Use `./gradlew --quiet` for faster output. Goal: developer feedback within 10 seconds, not 2+ minutes.
+
 ---
 
 ## Project Domain Models Quick Reference

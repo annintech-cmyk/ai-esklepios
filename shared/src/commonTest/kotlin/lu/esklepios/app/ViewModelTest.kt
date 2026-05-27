@@ -17,7 +17,6 @@ import lu.esklepios.app.domain.usecase.ChangeEmailUseCase
 import lu.esklepios.app.domain.usecase.ChangePasswordUseCase
 import lu.esklepios.app.domain.usecase.GetPractitionerDetailUseCase
 import lu.esklepios.app.domain.usecase.GetProfileUseCase
-import lu.esklepios.app.domain.usecase.ToggleFavoriteUseCase
 import lu.esklepios.app.domain.usecase.UpdateProfileUseCase
 import lu.esklepios.app.presentation.viewmodel.AppointmentSuccessViewModel
 import lu.esklepios.app.presentation.viewmodel.ChangeEmailViewModel
@@ -90,7 +89,6 @@ class PractitionerDetailViewModelTest {
         viewModel =
             PractitionerDetailViewModel(
                 GetPractitionerDetailUseCase(practRepo),
-                ToggleFavoriteUseCase(practRepo),
             )
     }
 
@@ -130,15 +128,15 @@ class PractitionerDetailViewModelTest {
     }
 
     @Test
-    fun `toggleFavorite flips isFavorite on success`() =
+    fun `clearError clears the error state`() =
         runTest {
+            practRepo.getByIdResult = Result.failure(Exception("test error"))
             viewModel.loadPractitioner("p1")
             dispatcher.scheduler.advanceUntilIdle()
-            val initial = viewModel.uiState.value.isFavorite
+            assertNotNull(viewModel.uiState.value.error)
 
-            viewModel.toggleFavorite()
-            dispatcher.scheduler.advanceUntilIdle()
-            assertEquals(!initial, viewModel.uiState.value.isFavorite)
+            viewModel.clearError()
+            assertNull(viewModel.uiState.value.error)
         }
 
     @Test

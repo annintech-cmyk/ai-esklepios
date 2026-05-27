@@ -20,4 +20,5 @@ subprojects {
         buildUponDefaultConfig = true
         allRules = false
     }
+
 }

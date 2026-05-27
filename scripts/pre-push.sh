@@ -139,13 +139,6 @@ section "iOS — Build"
 
 if [[ "$(uname)" == "Darwin" ]]; then
     if command -v xcodebuild &>/dev/null; then
-        info "Building KMM XCFramework …"
-        if ./gradlew :shared:assembleXCFramework --quiet 2>&1; then
-            ok "XCFramework built"
-        else
-            fail "XCFramework build failed"
-        fi
-
         info "Building iOS app (simulator) …"
         if xcodebuild build \
             -project iosApp/eSklepios.xcodeproj \

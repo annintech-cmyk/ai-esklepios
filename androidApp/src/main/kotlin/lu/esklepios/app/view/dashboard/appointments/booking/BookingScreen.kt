@@ -117,7 +117,6 @@ fun BookingScreen(
                 AvatarCircle(
                     initials = practitioner?.initials ?: "--",
                     size = Dimens.avatarSizeMd,
-                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 )
                 HSpace(Dimens.paddingM)
                 Column {
