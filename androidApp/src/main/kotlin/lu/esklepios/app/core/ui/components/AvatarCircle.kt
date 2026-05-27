@@ -21,7 +21,6 @@ import lu.esklepios.app.core.ui.theme.PrimaryLight
 fun AvatarCircle(
     initials: String,
     size: Dp = Dimens.avatarSizeMd,
-    fontSize: TextUnit = Dimens.fontSizeBase,
     modifier: Modifier = Modifier,
 ) {
     Box(

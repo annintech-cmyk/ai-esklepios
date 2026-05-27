@@ -10,8 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import lu.esklepios.app.core.ui.theme.*
 
-enum class SearchInputVariant { Light, Dark }
-
 @Composable
 fun SearchInputField(
     value: String,

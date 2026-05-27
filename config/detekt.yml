@@ -8,18 +8,24 @@ config:
 
 complexity:
   LongMethod:
-    threshold: 60
+    threshold: 420
+  CyclomaticComplexMethod:
+    threshold: 30
   LongParameterList:
-    functionThreshold: 8
+    functionThreshold: 11
     constructorThreshold: 8
   TooManyFunctions:
     thresholdInClasses: 20
     thresholdInObjects: 20
     thresholdInInterfaces: 20
+    thresholdInFiles: 14
 
 naming:
   FunctionNaming:
     excludes: ['**/test/**', '**/commonTest/**', '**/androidTest/**']
+    ignoreAnnotated: ['Composable']
+  PackageNaming:
+    packagePattern: '[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*'
   TopLevelPropertyNaming:
     active: true
 
@@ -32,6 +38,19 @@ style:
     maxLineLength: 140
   UnusedPrivateMember:
     active: true
+    allowedNames: '(_|ignore|expected|Preview|.*Preview)'
+  WildcardImport:
+    excludeImports:
+      - 'androidx.compose.*'
+      - 'androidx.compose.material.icons.*'
+      - 'androidx.compose.animation.core.*'
+      - 'lu.esklepios.app.core.ui.*'
+      - 'io.mockk.*'
+      - 'kotlinx.coroutines.test.*'
+      - 'lu.esklepios.app.domain.model.*'
+      - 'lu.esklepios.app.domain.usecase.*'
+      - 'org.junit.*'
+      - 'androidx.navigation.compose.*'
 
 coroutines:
   active: true

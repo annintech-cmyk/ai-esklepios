@@ -65,22 +65,3 @@ fun CheckRow(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun CheckRowPreviewPrimary() {
-    AppCard {
-        CheckRow(label = "Reason", value = "Consultation")
-        CheckRow(label = "Date & time", value = "Tue, May 26 · 09:00")
-        CheckRow(label = "Institute", value = "Al Esch Medical Center", isLast = true)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun CheckRowPreviewAmber() {
-    AppCard {
-        CheckRow(label = "Reason", value = "Follow-up", accentColor = OldApptAmberIcon)
-        CheckRow(label = "Institute", value = "Centre Médical", accentColor = OldApptAmberIcon, isLast = true)
-    }
-}

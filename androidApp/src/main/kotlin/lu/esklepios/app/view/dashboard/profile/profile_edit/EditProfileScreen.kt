@@ -96,7 +96,10 @@ fun EditProfileScreen(
                     onClick = {
                         datePickerState.selectedDateMillis?.let { millis ->
                             val date = Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
-                            dobValue = "${date.year}-${date.monthValue.toString().padStart(2, '0')}-${date.dayOfMonth.toString().padStart(2, '0')}"
+                            val year = date.year
+                            val month = date.monthValue.toString().padStart(2, '0')
+                            val day = date.dayOfMonth.toString().padStart(2, '0')
+                            dobValue = "$year-$month-$day"
                         }
                         showDatePicker = false
                     },
