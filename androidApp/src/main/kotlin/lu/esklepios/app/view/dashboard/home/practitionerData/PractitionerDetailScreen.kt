@@ -146,7 +146,8 @@ fun PractitionerDetailScreen(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 AppIcon(
                                     imageVector = Icons.Filled.MedicalServices,
-                                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                                    // a11y: decorative — labelled by adjacent Text
+                                    contentDescription = null,
                                     tint = PrimaryMid,
                                     size = Dimens.iconSizeMicro,
                                 )
@@ -162,7 +163,8 @@ fun PractitionerDetailScreen(
                             Row(verticalAlignment = Alignment.Top) {
                                 AppIcon(
                                     imageVector = Icons.Filled.LocationOn,
-                                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                                    // a11y: decorative — labelled by adjacent Text
+                                    contentDescription = null,
                                     tint = PrimaryMid,
                                     size = Dimens.iconSizeMicro,
                                     modifier = Modifier.padding(top = Dimens.paddingXXS),
@@ -190,7 +192,8 @@ fun PractitionerDetailScreen(
                             ) {
                                 AppIcon(
                                     imageVector = Icons.Filled.Phone,
-                                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                                    // a11y: decorative — labelled by adjacent Text
+                                    contentDescription = null,
                                     tint = PrimaryMid,
                                     size = Dimens.iconSizeMicro,
                                 )
@@ -211,7 +214,8 @@ fun PractitionerDetailScreen(
                             ) {
                                 AppIcon(
                                     imageVector = Icons.Filled.Email,
-                                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                                    // a11y: decorative — labelled by adjacent Text
+                                    contentDescription = null,
                                     tint = PrimaryMid,
                                     size = Dimens.iconSizeMicro,
                                 )
@@ -304,7 +308,8 @@ fun PractitionerDetailScreen(
                             Row(verticalAlignment = Alignment.Top) {
                                 AppIcon(
                                     imageVector = Icons.Filled.Phone,
-                                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                                    // a11y: decorative — labelled by adjacent Text
+                                    contentDescription = null,
                                     tint = TextPrimary,
                                     size = Dimens.iconSizeMicro,
                                     modifier = Modifier.padding(top = Dimens.paddingXXS),

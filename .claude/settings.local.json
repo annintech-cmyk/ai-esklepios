@@ -40,7 +40,8 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(./gradlew :androidApp:ktlintFormat --quiet)",
-      "Bash(./gradlew :androidApp:ktlintCheck --no-daemon)"
+      "Bash(./gradlew :androidApp:ktlintCheck --no-daemon)",
+      "Bash(git commit *)"
     ]
   }
 }
