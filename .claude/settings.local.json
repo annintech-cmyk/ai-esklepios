@@ -43,7 +43,8 @@
       "Bash(./gradlew :androidApp:ktlintCheck --no-daemon)",
       "Bash(git commit *)",
       "Bash(./gradlew :androidApp:ktlintCheck)",
-      "Bash(bash scripts/pre-push.sh)"
+      "Bash(bash scripts/pre-push.sh)",
+      "Bash(./gradlew :androidApp:testDebugUnitTest)"
     ]
   }
 }

@@ -1,7 +1,9 @@
 package lu.esklepios.app
 
 import app.cash.turbine.test
+import io.mockk.any
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,11 +13,13 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import lu.esklepios.app.domain.model.Appointment
 import lu.esklepios.app.domain.model.AppointmentSlot
+import lu.esklepios.app.domain.model.AppointmentStatus
 import lu.esklepios.app.domain.model.Practitioner
 import lu.esklepios.app.domain.model.ProfileType
 import lu.esklepios.app.domain.model.User
 import lu.esklepios.app.domain.repository.AuthRepository
 import lu.esklepios.app.domain.usecase.CreateAppointmentUseCase
+import lu.esklepios.app.domain.usecase.GetPractitionerDetailUseCase
 import lu.esklepios.app.presentation.viewmodel.BookAppointmentViewModel
 import org.junit.After
 import org.junit.Before
@@ -60,7 +64,7 @@ class BookAppointmentViewModelTest {
             latitude = 49.6,
             longitude = 6.1,
             acceptingNewPatients = true,
-            availableSlots = listOf(AppointmentSlot("slot1", "2025-06-01T10:00", true)),
+            availableSlots = listOf(AppointmentSlot("slot1", "prac1", "2025-06-01T10:00", true)),
             schedule = emptyList(),
             paymentMethods = listOf("Cash", "Card"),
             diplomas = emptyList(),
