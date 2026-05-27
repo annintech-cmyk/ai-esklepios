@@ -20,8 +20,7 @@ fun EmptyStateView(
     actionLabel: String? = null,
     onAction: (() -> Unit)? = null
 ) {
-    Column(
-        modifier = modifier
+    Column(modifier = modifier
             .fillMaxWidth()
             .padding(Dimens.paddingXXXL),
         verticalArrangement = Arrangement.Center,
