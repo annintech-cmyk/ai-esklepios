@@ -190,6 +190,52 @@ gem install twine
 
 ---
 
+## Git Hooks — Automated Code Quality Gates
+
+### Setup (One-Time)
+After cloning, install Git hooks to enforce coding standards automatically:
+```bash
+bash scripts/install-hooks.sh
+```
+
+This installs two hooks:
+- **Pre-Commit** (`scripts/pre-commit-review.sh`) — validates code quality before `git commit`
+- **Pre-Push** (`scripts/pre-push.sh`) — runs full build + tests before `git push`
+
+### What Gets Checked
+
+**Pre-Commit (Warnings allow commit; Errors block it):**
+- Sensitive data: no `dev.properties`, API keys, private keys
+- Kotlin standards: no debug `println()`, `CancellationException` rethrows, no MockK in `commonTest`, no `java.time` in shared, layer separation, no `GlobalScope`, no hardcoded dimensions/colors
+- Swift standards: no debug `print()`, no `DispatchQueue.main.async` in ViewModelWrapper, `FlowWatcher` required, no force unwraps, no inline `DateFormatter`, no hardcoded dimensions
+- Localization: all 4 languages required in `twine.txt`
+- Platform parity: Android/iOS screen pairs must exist
+
+**Pre-Push (All checks must pass):**
+1. Detekt (Kotlin static analysis)
+2. KtLint (Kotlin formatting)
+3. Android Lint
+4. Shared KMM unit tests
+5. Android unit tests
+6. Android debug build
+7. SwiftLint (iOS)
+8. iOS simulator build
+
+### To Skip Hooks (Emergency Only)
+```bash
+git commit --no-verify    # skip pre-commit
+git push --no-verify      # skip pre-push
+```
+
+### Full Hook Documentation
+See `.claude/rules/git-hooks-rules.md` for:
+- Detailed check reference for both hooks
+- How hooks enforce project rules
+- Common failures and fixes
+- Troubleshooting guide
+
+---
+
 ## Coding Standards
 
 ### Kotlin (Shared + Android)
@@ -581,15 +627,19 @@ docs(strings): add Luxembourgish translations for all screen keys
 Explicit imports make dependencies visible and help catch copy-paste errors across platforms.
 This is especially important for Android test files which are reviewed frequently and may be ported to commonTest.
 
-### 14. Pre-push script optimization
-**Problem:** The pre-push script was running `assembleXCFramework` on every push, which added 60+ seconds to the push ceremony and provided little value (the iOS app build itself validates framework compatibility).
-**Solution:** Remove redundant build steps from `scripts/pre-push.sh`. The script should verify:
-- Detekt (shared linting) ✅
-- Android lint ✅
-- Android debug build ✅
-- Kotlin compilation ✅
+### 14. Git Hooks Enforce Coding Standards
+**What:** Two automated Git hooks enforce project rules on every commit and push.
+- **Pre-commit** (`scripts/pre-commit-review.sh`) — validates code quality, security, and architecture on staged changes. Warnings allow commit; errors block it.
+- **Pre-push** (`scripts/pre-push.sh`) — runs full build + tests before push (detekt, ktlint, Android lint, unit tests, debug build, SwiftLint, iOS build).
 
-But skip steps that duplicate what the CI pipeline will do anyway. Use `./gradlew --quiet` for faster output. Goal: developer feedback within 10 seconds, not 2+ minutes.
+**Setup:** One-time installation after cloning:
+```bash
+bash scripts/install-hooks.sh
+```
+
+**Reference:** See `.claude/rules/git-hooks-rules.md` for the full check reference, rules enforcement map, common failures & fixes, and troubleshooting guide.
+
+**To skip (emergency only):** `git commit --no-verify` or `git push --no-verify`
 
 ---
 
