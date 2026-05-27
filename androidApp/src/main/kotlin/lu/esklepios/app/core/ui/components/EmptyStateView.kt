@@ -13,9 +13,9 @@ import lu.esklepios.app.core.ui.theme.TextSecondary
 
 @Composable
 fun EmptyStateView(
-    modifier: Modifier = Moifier,
+    modifier: Modifier = Modifier,
     icon: ImageVector,
-    title: String
+    title: String,
     subtitle: String,
     actionLabel: String? = null,
     onAction: (() -> Unit)? = null
