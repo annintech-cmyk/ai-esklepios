@@ -641,6 +641,35 @@ bash scripts/install-hooks.sh
 
 **To skip (emergency only):** `git commit --no-verify` or `git push --no-verify`
 
+### 15. KtLint Comment Placement in Function Arguments
+**Problem:** KtLint flags comments placed inline within function argument lists as `discouraged-comment-location`. These violations **cannot be auto-corrected** by `./gradlew ktlintFormat`.
+
+**Wrong:**
+```kotlin
+Icon(
+    imageVector = leadingIcon,
+    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+    tint = Primary,
+)
+```
+
+**Correct:**
+```kotlin
+Icon(
+    imageVector = leadingIcon,
+    // a11y: decorative — labelled by adjacent Text
+    contentDescription = null,
+    tint = Primary,
+)
+```
+
+**Wildcard Imports (Avoid):**
+Wildcard imports (`import androidx.compose.foundation.*`) are flagged by KtLint as `standard:no-wildcard-imports`. These also **cannot be auto-corrected**. Always use explicit imports:
+- ❌ `import androidx.compose.foundation.*`
+- ✅ `import androidx.compose.foundation.background`, `import androidx.compose.foundation.clickable`, etc.
+
+Both of these violations require manual fixes and should be avoided when writing new code.
+
 ---
 
 ## Project Domain Models Quick Reference
