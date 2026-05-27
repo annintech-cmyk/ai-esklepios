@@ -16,8 +16,8 @@ fun EmptyStateView(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     title: String,
-    subtitle: String
-    actionLabel: String? = null
+    subtitle: String,
+    actionLabel: String? = null,
     onAction: (() -> Unit)? = null
 ) {
     Column(
