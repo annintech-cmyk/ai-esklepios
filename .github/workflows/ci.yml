@@ -10,69 +10,249 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# ─── Shared env ───────────────────────────────────────────────────────────────
+env:
+  JAVA_VERSION: "17"
+  JAVA_DISTRO: "temurin"
+  XCODE_DESTINATION: "platform=iOS Simulator,name=iPhone 16"
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Stage 1 — Branch & version validation
+# ═════════════════════════════════════════════════════════════════════════════
 jobs:
-  shared-tests:
-    name: Shared KMM Tests
+  validate:
+    name: Validate Branch & Config
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Block direct push to main (require PRs)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "::error::Direct pushes to main are not allowed. Open a pull request."
+          exit 1
+
+      - name: Check branch naming convention
+        if: github.event_name == 'pull_request'
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          PATTERN='^(feat|fix|hotfix|refactor|chore|docs|test|perf|ci)/'
+          if ! echo "$BRANCH" | grep -qE "$PATTERN"; then
+            echo "::warning::Branch '$BRANCH' doesn't follow feat/fix/refactor/... convention"
+          fi
+
+      - name: Validate twine strings are up-to-date
+        run: |
+          if [ -f strings/twine.txt ]; then
+            # Check all four languages are present for every key
+            if awk -F'=' '/^\[(.*)\]/ { key=$0; count=0 } /^\s*(en|fr|de|lb)\s*=/ { count++ } /^\[/ && count>0 && count<4 { print "Missing language for: " key; exit 1 }' strings/twine.txt; then
+              echo "Localization check passed"
+            fi
+          fi
+
+      - name: Check for committed dev.properties
+        run: |
+          if git ls-files | grep -q 'dev\.properties'; then
+            echo "::error::dev.properties is committed — must not be in version control (Rule SEC-2)"
+            exit 1
+          fi
+          echo "Security check passed"
+
+      - name: Check for build artifacts in tree
+        run: |
+          ARTIFACTS=$(git ls-files | grep -E '\.(class|jar|apk|ipa|xcarchive)$' || true)
+          if [ -n "$ARTIFACTS" ]; then
+            echo "::error::Build artifacts committed: $ARTIFACTS"
+            exit 1
+          fi
+          echo "No build artifacts in tree"
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Stage 2 — Kotlin static analysis (fast, no build needed)
+# ═════════════════════════════════════════════════════════════════════════════
+  kotlin-lint:
+    name: Kotlin Lint (Detekt + KtLint)
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
+
       - uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+      - name: Run Detekt
+        run: ./gradlew :shared:detekt :androidApp:detekt
+
+      - name: Run KtLint
+        run: ./gradlew :shared:ktlintCheck :androidApp:ktlintCheck
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: kotlin-lint-reports
+          path: |
+            shared/build/reports/detekt/
+            androidApp/build/reports/detekt/
+            shared/build/reports/ktlint/
+            androidApp/build/reports/ktlint/
+          retention-days: 7
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Stage 3 — Shared KMM tests
+# ═════════════════════════════════════════════════════════════════════════════
+  shared-tests:
+    name: Shared KMM Tests
+    runs-on: ubuntu-latest
+    needs: kotlin-lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
       - name: Run shared common tests
         run: ./gradlew :shared:testDebugUnitTest
+
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: shared-test-results
           path: shared/build/reports/tests/
+          retention-days: 7
 
+# ═════════════════════════════════════════════════════════════════════════════
+# Stage 4 — Android build + lint + tests
+# ═════════════════════════════════════════════════════════════════════════════
   android-build:
-    name: Android Build + Lint + Tests
+    name: Android Lint + Tests + Build
     runs-on: ubuntu-latest
+    needs: shared-tests
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
+
       - uses: gradle/actions/setup-gradle@v3
-      - name: Run Android unit tests
-        run: ./gradlew :androidApp:testDebugUnitTest
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
       - name: Android lint
         run: ./gradlew :androidApp:lintDebug
+
+      - name: Android unit tests
+        run: ./gradlew :androidApp:testDebugUnitTest
+
       - name: Build debug APK
         run: ./gradlew :androidApp:assembleDebug
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: android-test-results
-          path: androidApp/build/reports/
 
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-reports
+          path: |
+            androidApp/build/reports/
+            androidApp/build/outputs/apk/debug/
+          retention-days: 7
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Stage 5 — iOS lint + build + tests  (macOS runner required)
+# ═════════════════════════════════════════════════════════════════════════════
   ios-build:
-    name: iOS Build + Tests
+    name: iOS SwiftLint + Build + Tests
     runs-on: macos-14
+    needs: validate
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
+
       - uses: gradle/actions/setup-gradle@v3
-      - name: Build XCFramework
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+      # Gradle build outputs are already cached via setup-gradle.
+      # XCFramework outputs change only when shared KMM code changes.
+      - name: Cache XCFramework build outputs
+        uses: actions/cache@v4
+        with:
+          path: shared/build/XCFrameworks
+          key: xcframework-${{ hashFiles('shared/src/**', 'shared/build.gradle.kts') }}
+          restore-keys: xcframework-
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: SwiftLint
+        run: swiftlint lint --config .swiftlint.yml --reporter github-actions-logging
+
+      - name: Build KMM XCFramework
         run: ./gradlew :shared:assembleXCFramework
-      - name: Run iOS tests
+
+      - name: iOS unit tests
         run: |
           xcodebuild test \
             -project iosApp/eSklepios.xcodeproj \
             -scheme eSklepios \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination '${{ env.XCODE_DESTINATION }}' \
             -resultBundlePath build/ios-test-results.xcresult \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify || true
+          # Re-run for exit code (xcbeautify pipes swallow it)
+          xcodebuild test \
+            -project iosApp/eSklepios.xcodeproj \
+            -scheme eSklepios \
+            -destination '${{ env.XCODE_DESTINATION }}' \
+            CODE_SIGNING_ALLOWED=NO \
+            -quiet
+
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: ios-test-results
           path: build/ios-test-results.xcresult
+          retention-days: 7
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Stage 6 — Release build gate (main branch only)
+# ═════════════════════════════════════════════════════════════════════════════
+  release-build:
+    name: Release Build Gate
+    runs-on: ubuntu-latest
+    needs: [android-build, ios-build, shared-tests]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: ${{ env.JAVA_DISTRO }}
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - uses: gradle/actions/setup-gradle@v3
+
+      - name: Build Android release APK
+        run: ./gradlew :androidApp:assembleRelease
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-release-apk
+          path: androidApp/build/outputs/apk/release/
+          retention-days: 30
