@@ -41,7 +41,9 @@
       "Bash(git commit -m ' *)",
       "Bash(./gradlew :androidApp:ktlintFormat --quiet)",
       "Bash(./gradlew :androidApp:ktlintCheck --no-daemon)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(./gradlew :androidApp:ktlintCheck)",
+      "Bash(bash scripts/pre-push.sh)"
     ]
   }
 }
