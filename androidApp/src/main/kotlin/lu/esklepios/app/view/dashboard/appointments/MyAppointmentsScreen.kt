@@ -90,7 +90,7 @@ fun MyAppointmentsScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = Background,
-    ) { _ ->
+    ) { innerPadding ->
         Column(
             modifier =
                 Modifier
@@ -156,7 +156,7 @@ fun MyAppointmentsScreen(
                         }
                     } else {
                         LazyColumn(
-                            contentPadding = PaddingValues(horizontal = Dimens.paddingL, vertical = Dimens.paddingM),
+                            contentPadding = PaddingValues(horizontal = innerPadding.calculateTopPadding(), vertical = Dimens.paddingM),
                             verticalArrangement = Arrangement.spacedBy(Dimens.paddingM),
                         ) {
                             items(appointments, key = { it.id }) { appointment ->
