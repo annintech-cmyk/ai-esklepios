@@ -20,6 +20,7 @@ import lu.esklepios.app.presentation.viewmodel.AuthField
 import lu.esklepios.app.presentation.viewmodel.AuthViewModel
 import org.junit.After
 import org.junit.Before
+import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull

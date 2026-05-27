@@ -17,6 +17,7 @@ import lu.esklepios.app.domain.usecase.LogoutUseCase
 import lu.esklepios.app.presentation.viewmodel.ProfileViewModel
 import org.junit.After
 import org.junit.Before
+import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull

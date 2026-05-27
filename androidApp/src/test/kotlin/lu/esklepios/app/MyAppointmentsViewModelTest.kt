@@ -19,6 +19,7 @@ import lu.esklepios.app.domain.usecase.ModifyAppointmentUseCase
 import lu.esklepios.app.presentation.viewmodel.MyAppointmentsViewModel
 import org.junit.After
 import org.junit.Before
+import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
