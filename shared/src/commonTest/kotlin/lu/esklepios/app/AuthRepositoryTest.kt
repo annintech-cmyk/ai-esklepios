@@ -7,7 +7,9 @@ import lu.esklepios.app.domain.repository.AuthRepository
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 /**
  * Tests for AuthRepository contract using a fake implementation.

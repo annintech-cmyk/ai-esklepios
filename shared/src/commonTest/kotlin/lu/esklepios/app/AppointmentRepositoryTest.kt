@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import lu.esklepios.app.domain.model.Appointment
+import lu.esklepios.app.domain.model.AppointmentStatus
 import lu.esklepios.app.domain.repository.AppointmentRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals

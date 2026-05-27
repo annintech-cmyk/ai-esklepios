@@ -342,8 +342,8 @@ class ChangePasswordViewModelTest {
     fun `changePassword success sets isSuccess`() =
         runTest {
             viewModel.updateOldPassword("oldPass")
-            viewModel.updateNewPassword("newPass123!")
-            viewModel.updateConfirmPassword("newPass123!")
+            viewModel.updateNewPassword("newPass123!!")
+            viewModel.updateConfirmPassword("newPass123!!")
             viewModel.changePassword()
             dispatcher.scheduler.advanceUntilIdle()
             assertTrue(viewModel.uiState.value.isSuccess)
@@ -355,8 +355,8 @@ class ChangePasswordViewModelTest {
         runTest {
             userRepo.changePasswordResult = Result.failure(Exception("wrong old password"))
             viewModel.updateOldPassword("wrong")
-            viewModel.updateNewPassword("newPass123!")
-            viewModel.updateConfirmPassword("newPass123!")
+            viewModel.updateNewPassword("newPass123!!")
+            viewModel.updateConfirmPassword("newPass123!!")
             viewModel.changePassword()
             dispatcher.scheduler.advanceUntilIdle()
             assertFalse(viewModel.uiState.value.isSuccess)

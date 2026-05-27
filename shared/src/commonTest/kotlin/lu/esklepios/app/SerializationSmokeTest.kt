@@ -2,8 +2,24 @@ package lu.esklepios.app
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import lu.esklepios.app.data.network.AppointmentDto
 import lu.esklepios.app.data.network.AppointmentSlotDto
+import lu.esklepios.app.data.network.ChangeEmailRequest
+import lu.esklepios.app.data.network.ChangePasswordRequest
+import lu.esklepios.app.data.network.CreateAppointmentRequest
+import lu.esklepios.app.data.network.ForgotPasswordRequest
+import lu.esklepios.app.data.network.ForgotPasswordResponse
+import lu.esklepios.app.data.network.LoginRequest
+import lu.esklepios.app.data.network.LoginResponse
+import lu.esklepios.app.data.network.ModifyAppointmentRequest
 import lu.esklepios.app.data.network.PractitionerDto
+import lu.esklepios.app.data.network.RefreshTokenRequest
+import lu.esklepios.app.data.network.RefreshTokenResponse
+import lu.esklepios.app.data.network.RegisterRequest
+import lu.esklepios.app.data.network.RegisterResponse
+import lu.esklepios.app.data.network.ScheduleDayDto
+import lu.esklepios.app.data.network.UpdateProfileRequest
+import lu.esklepios.app.data.network.UserDto
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
