@@ -22,12 +22,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import lu.esklepios.app.R
 import lu.esklepios.app.presentation.viewmodel.ProfileViewModel
 import lu.esklepios.app.core.ui.theme.*
+import lu.esklepios.app.utils.AppUrls
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppDrawerContent(
     onLogout: () -> Unit,
     onCloseDrawer: () -> Unit = {},
+    onOpenUrl: (String) -> Unit = {},
+    onOpenEmail: () -> Unit = {},
     viewModel: ProfileViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -76,27 +79,28 @@ fun AppDrawerContent(
                 .verticalScroll(rememberScrollState())
         ) {
             DrawerSection(title = stringResource(R.string.drawer_section_about_us)) {
-                DrawerItem(Icons.Outlined.Info,         stringResource(R.string.drawer_who_are_we),       onCloseDrawer)
-                DrawerItem(Icons.Outlined.Description,  stringResource(R.string.profile_menu_terms),      onCloseDrawer)
-                DrawerItem(Icons.Outlined.Shield,       stringResource(R.string.profile_privacy),         onCloseDrawer)
-                DrawerItem(Icons.Outlined.MailOutline,  stringResource(R.string.drawer_contact_us),       onCloseDrawer)
+                DrawerItem(Icons.Outlined.Info,         stringResource(R.string.drawer_who_are_we),       { onOpenUrl(AppUrls.WEBSITE); onCloseDrawer() })
+                DrawerItem(Icons.Outlined.Description,  stringResource(R.string.profile_menu_terms),      { onOpenUrl(AppUrls.TERMS_AND_CONDITIONS); onCloseDrawer() })
+                DrawerItem(Icons.Outlined.Shield,       stringResource(R.string.profile_privacy),         { onOpenUrl(AppUrls.PRIVACY_POLICY); onCloseDrawer() })
+                DrawerItem(Icons.Outlined.MailOutline,  stringResource(R.string.drawer_contact_us),       { onOpenEmail(); onCloseDrawer() })
             }
 
             DrawerSection(title = stringResource(R.string.drawer_section_assistance)) {
-                DrawerItem(Icons.Outlined.HelpOutline,  stringResource(R.string.drawer_contact_us),       onCloseDrawer)
+                DrawerItem(Icons.Outlined.HelpOutline,  stringResource(R.string.drawer_contact_us),       { onOpenEmail(); onCloseDrawer() })
             }
 
             DrawerSection(title = stringResource(R.string.drawer_section_caregivers)) {
-                DrawerItem(Icons.Outlined.MedicalServices, stringResource(R.string.drawer_esklepios_pro), onCloseDrawer)
+                DrawerItem(Icons.Outlined.MedicalServices, stringResource(R.string.drawer_esklepios_pro),
+                    { onOpenUrl(AppUrls.WEBSITE); onCloseDrawer() })
             }
 
             DrawerSection(title = stringResource(R.string.drawer_section_links)) {
-                DrawerItem(Icons.Outlined.LocalHospital,  stringResource(R.string.profile_menu_emergencies),  onCloseDrawer)
-                DrawerItem(Icons.Outlined.LocalPharmacy,  stringResource(R.string.profile_menu_pharmacy),     onCloseDrawer)
-                DrawerItem(Icons.Outlined.AccountBalance, stringResource(R.string.profile_menu_health_fund),  onCloseDrawer)
-                DrawerItem(Icons.Outlined.Apartment,      stringResource(R.string.profile_menu_ministry),     onCloseDrawer)
-                DrawerItem(Icons.Outlined.FavoriteBorder, stringResource(R.string.drawer_health_portal),      onCloseDrawer)
-                DrawerItem(Icons.Outlined.Groups,         stringResource(R.string.drawer_health_professionals), onCloseDrawer)
+                DrawerItem(Icons.Outlined.LocalHospital,  stringResource(R.string.profile_menu_emergencies),  { onOpenUrl(AppUrls.EMERGENCY_SERVICES); onCloseDrawer() })
+                DrawerItem(Icons.Outlined.LocalPharmacy,  stringResource(R.string.profile_menu_pharmacy),     { onOpenUrl(AppUrls.PHARMACY_SERVICES); onCloseDrawer() })
+                DrawerItem(Icons.Outlined.AccountBalance, stringResource(R.string.profile_menu_health_fund),  { onOpenUrl(AppUrls.HEALTH_FUND); onCloseDrawer() })
+                DrawerItem(Icons.Outlined.Apartment,      stringResource(R.string.profile_menu_ministry),     { onOpenUrl(AppUrls.MINISTRY); onCloseDrawer() })
+                DrawerItem(Icons.Outlined.FavoriteBorder, stringResource(R.string.drawer_health_portal),      { onOpenUrl(AppUrls.HEALTH_PORTAL); onCloseDrawer() })
+                DrawerItem(Icons.Outlined.Groups,         stringResource(R.string.drawer_health_professionals), { onOpenUrl(AppUrls.MEDICAL_PROFESSIONALS); onCloseDrawer() })
             }
         }
 

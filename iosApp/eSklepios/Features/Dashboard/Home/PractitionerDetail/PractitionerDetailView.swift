@@ -1,5 +1,6 @@
 import SwiftUI
 import shared
+import Foundation
 
 struct PractitionerDetailView: View {
     let practitionerId: String
@@ -142,7 +143,7 @@ struct PractitionerDetailView: View {
                             .fontWeight(.bold)
                             .foregroundColor(Color.appDanger))
                         .font(.callout)
-                        Button(action: { openURL(URL(string: "https://112.lu")!) }) {
+                        Button(action: { openURL(URL(string: AppUrls.emergencyHotline)!) }) {
                             Text("112.lu")
                                 .font(.callout)
                                 .foregroundColor(.appPrimary)

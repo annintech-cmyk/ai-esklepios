@@ -44,6 +44,7 @@ import lu.esklepios.app.core.ui.components.GradientHeader
 import lu.esklepios.app.core.ui.sharedElementModifier
 import lu.esklepios.app.core.ui.theme.*
 import lu.esklepios.app.debug.DummyPractitioners
+import lu.esklepios.app.utils.AppUrls
 
 @Composable
 fun PractitionerDetailScreen(
@@ -327,7 +328,7 @@ fun PractitionerDetailScreen(
                                     context.startActivity(
                                         Intent(
                                             Intent.ACTION_VIEW,
-                                            Uri.parse("https://santesecu.public.lu/fr.html")
+                                            Uri.parse(AppUrls.HEALTH_PORTAL)
                                         )
                                     )
                                 },

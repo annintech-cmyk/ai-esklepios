@@ -1,6 +1,8 @@
 package lu.esklepios.app.core.navigation
 
 import androidx.activity.ComponentActivity
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -12,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
@@ -28,6 +31,7 @@ import lu.esklepios.app.core.ui.components.AppDrawerContent
 import lu.esklepios.app.core.ui.theme.GradientStart
 import lu.esklepios.app.core.ui.theme.Primary
 import lu.esklepios.app.core.ui.theme.Surface
+import lu.esklepios.app.utils.AppUrls
 import lu.esklepios.app.presentation.viewmodel.HomeViewModel
 import lu.esklepios.app.view.dashboard.appointments.booking.BookingScreen
 import org.koin.androidx.compose.koinViewModel
@@ -95,13 +99,28 @@ fun AppNavGraph() {
                     drawerContainerColor = Surface,
                     windowInsets = WindowInsets(0)
                 ) {
+                    val context = LocalContext.current
                     AppDrawerContent(
                         onLogout = {
                             navController.navigate(NavDestination.Landing.route) {
                                 popUpTo(0) { inclusive = true }
                             }
                         },
-                        onCloseDrawer = { scope.launch { drawerState.close() } }
+                        onCloseDrawer = { scope.launch { drawerState.close() } },
+                        onOpenUrl = { url ->
+                            runCatching {
+                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                            }
+                        },
+                        onOpenEmail = {
+                            runCatching {
+                                context.startActivity(
+                                    Intent(Intent.ACTION_SENDTO).apply {
+                                        data = Uri.parse(AppUrls.CONTACT_EMAIL)
+                                    }
+                                )
+                            }
+                        }
                     )
                 }
             }

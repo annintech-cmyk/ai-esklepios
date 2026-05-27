@@ -7,6 +7,7 @@ struct ProfileView: View {
     @State private var selectedLanguage = "fr"
     @State private var showLogoutAlert = false
     @State private var showMenuSheet = false
+    @Environment(\.openURL) private var openURL
 
     /// Display tuples for the language picker — assembled from the shared
     /// `supportedLanguages` source of truth (Rule A-13). Flag emoji comes from
@@ -386,31 +387,64 @@ struct ProfileView: View {
             Divider()
             Group {
                 menuItem(icon: "info.circle",
-                         labelKey: "profile_menu_who_we_are",  fallback: "Who are we?")
+                         labelKey: "profile_menu_who",  fallback: "Who are we?") {
+                    if let url = URL(string: AppUrls.website) {
+                        openURL(url)
+                    }
+                }
                 menuItem(icon: "doc.text",
-                         labelKey: "profile_menu_terms",       fallback: "Terms and Conditions")
+                         labelKey: "profile_menu_terms",       fallback: "Terms and Conditions") {
+                    if let url = URL(string: AppUrls.termsAndConditions) {
+                        openURL(url)
+                    }
+                }
                 menuItem(icon: "hand.raised",
-                         labelKey: "profile_menu_privacy",     fallback: "Privacy Policy")
+                         labelKey: "profile_menu_privacy",     fallback: "Privacy Policy") {
+                    if let url = URL(string: AppUrls.privacyPolicy) {
+                        openURL(url)
+                    }
+                }
                 menuItem(icon: "envelope",
-                         labelKey: "profile_menu_contact",     fallback: "Contact us")
+                         labelKey: "profile_menu_contact",     fallback: "Contact us") {
+                    if let url = URL(string: AppUrls.contactEmail) {
+                        openURL(url)
+                    }
+                }
                 Divider().padding(.horizontal)
                 menuItem(icon: "cross.case",
-                         labelKey: "profile_menu_emergencies", fallback: "Emergencies")
+                         labelKey: "profile_menu_emergencies", fallback: "Emergencies") {
+                    if let url = URL(string: AppUrls.emergencyServices) {
+                        openURL(url)
+                    }
+                }
                 menuItem(icon: "pills",
-                         labelKey: "profile_menu_pharmacy",    fallback: "Pharmacy on call")
+                         labelKey: "profile_menu_pharmacy",    fallback: "Pharmacy on call") {
+                    if let url = URL(string: AppUrls.pharmacyServices) {
+                        openURL(url)
+                    }
+                }
                 menuItem(icon: "building.columns",
-                         labelKey: "profile_menu_health_fund", fallback: "National Health Fund")
+                         labelKey: "profile_menu_health_fund", fallback: "National Health Fund") {
+                    if let url = URL(string: AppUrls.healthFund) {
+                        openURL(url)
+                    }
+                }
                 menuItem(icon: "building.2",
-                         labelKey: "profile_menu_ministry",    fallback: "Ministry of Health")
+                         labelKey: "profile_menu_ministry",    fallback: "Ministry of Health") {
+                    if let url = URL(string: AppUrls.ministry) {
+                        openURL(url)
+                    }
+                }
             }
             Spacer()
         }
         .background(Color.appSurface)
     }
 
-    private func menuItem(icon: String, labelKey: String, fallback: String) -> some View {
+    private func menuItem(icon: String, labelKey: String, fallback: String, action: @escaping () -> Void = {}) -> some View {
         Button {
             showMenuSheet = false
+            action()
         } label: {
             HStack(spacing: Spacing.plus) {
                 AppIcon(systemName: icon, tint: .appPrimary, size: Dimens.iconCompact)

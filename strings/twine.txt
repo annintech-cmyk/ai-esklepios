@@ -994,6 +994,12 @@ profile.privacy
     de = Datenschutzrichtlinie
     lb = Dateschutzrichtlinn
 
+profile.menu_privacy
+    en = Privacy Policy
+    fr = Politique de confidentialité
+    de = Datenschutzrichtlinie
+    lb = Dateschutzrichtlinn
+
 profile.logout
     en = Sign Out
     fr = Se déconnecter
@@ -1451,7 +1457,7 @@ profile.menu_contact
     de = Kontakt
     lb = Kontakt
 
-profile.menu_emergency
+profile.menu_emergencies
     en = Emergencies
     fr = Urgences
     de = Notfälle
@@ -1807,3 +1813,88 @@ drawer.guest
     fr = Invité
     de = Gast
     lb = Gast
+
+[[who_are_we]]
+who_are_we.about_section_title
+    en = About eSklepios
+    fr = À propos d'eSklepios
+    de = Über eSklepios
+    lb = Iwwer eSklepios
+
+who_are_we.about_body
+    en = Designed by two Luxembourg doctors, eSklepios is a comprehensive healthcare platform that connects patients with healthcare professionals. Our system streamlines appointment scheduling, medical records, and communication in a unified, secure platform.
+    fr = Conçu par deux médecins luxembourgeois, eSklepios est une plateforme de santé complète qui connecte les patients avec les professionnels de santé. Notre système simplifie la prise de rendez-vous, les dossiers médicaux et la communication dans une plateforme unifiée et sécurisée.
+    de = Von zwei luxemburgischen Ärzten entwickelt, ist eSklepios eine umfassende Gesundheitsplattform, die Patienten mit Fachleuten verbindet und die Terminplanung, medizinische Unterlagen und Kommunikation vereinfacht.
+    lb = Vun zwee lëtzebuerger Dokteren entwéckelt, ass eSklepios eng ëmfaassend Gesondheetsplattform, déi Patienten mat Gesondheetsberufler verbënnt.
+
+who_are_we.founders_section_title
+    en = Our Founders
+    fr = Nos fondateurs
+    de = Unsere Gründer
+    lb = Eis Grënner
+
+who_are_we.founder_cipriani_name
+    en = Dr Fabien Cipriani
+    fr = Dr Fabien Cipriani
+    de = Dr Fabien Cipriani
+    lb = Dr Fabien Cipriani
+
+who_are_we.founder_cipriani_title
+    en = Co-founder & CEO
+    fr = Co-fondateur & CEO
+    de = Mitgründer & CEO
+    lb = Co-Grënner & CEO
+
+who_are_we.founder_cipriani_bio
+    en = General practitioner at Centre Médical Al Esch, Luxembourg.
+    fr = Médecin généraliste exerçant au Centre Médical Al Esch.
+    de = Allgemeinmediziner am Centre Médical Al Esch, Luxemburg.
+    lb = Allgemengdokter am Centre Médical Al Esch, Lëtzebuerg.
+
+who_are_we.founder_michel_name
+    en = Dr Jean-François Michel
+    fr = Dr Jean-François Michel
+    de = Dr Jean-François Michel
+    lb = Dr Jean-François Michel
+
+who_are_we.founder_michel_title
+    en = Co-founder & CEO
+    fr = Co-fondateur & CEO
+    de = Mitgründer & CEO
+    lb = Co-Grënner & CEO
+
+who_are_we.founder_michel_bio
+    en = General practitioner in Luxembourg, practicing in Steinsel.
+    fr = Médecin généraliste au Luxembourg, exerçant à Steinsel.
+    de = Allgemeinmediziner in Luxemburg, praktiziert in Steinsel.
+    lb = Allgemengdokter zu Lëtzebuerg, praktizéiert zu Steinsel.
+
+who_are_we.partners_section_title
+    en = Our Partners
+    fr = Nos partenaires
+    de = Unsere Partner
+    lb = Eis Partner
+
+who_are_we.partner_intech_description
+    en = Development partner. Expert in digital solutions in Luxembourg, InTech supports eSklepios in the design and evolution of our platform.
+    fr = Partenaire Développement. Expert en développement de solutions digitales à Luxembourg, InTech accompagne eSklepios dans la conception et l'évolution de notre plateforme.
+    de = Entwicklungspartner. Als Experte für digitale Lösungen in Luxemburg unterstützt InTech eSklepios bei der Gestaltung und Weiterentwicklung unserer Plattform.
+    lb = Entwécklungspartner. Expert a digitale Léisungen zu Lëtzebuerg, ënnerstëtzt InTech eSklepios bei der Konzeptioun an Entwécklung vun eiser Plattform.
+
+who_are_we.partner_deep_description
+    en = Cloud partner. Luxembourg-certified cloud infrastructure provider for healthcare data hosting, ensuring security and regulatory compliance.
+    fr = Partenaire Cloud. Fournisseur d'infrastructure cloud luxembourgeois certifié pour l'hébergement de données de santé, garantissant sécurité et conformité réglementaire.
+    de = Cloud-Partner. Luxemburgischer Cloud-Infrastrukturanbieter, zertifiziert für die Speicherung von Gesundheitsdaten.
+    lb = Cloud-Partner. Lëtzebuerger Cloud-Infrastruktur-Ubidder, zertifizéiert fir d'Hosting vu Gesondheetsdonnéeën.
+
+who_are_we.contact_section_title
+    en = Contact
+    fr = Contact
+    de = Kontakt
+    lb = Kontakt
+
+who_are_we.contact_address
+    en = 8 rue du Commerce, L-4067 Esch-sur-Alzette, Luxembourg
+    fr = 8 rue du Commerce, L-4067 Esch-sur-Alzette, Luxembourg
+    de = 8 rue du Commerce, L-4067 Esch-sur-Alzette, Luxemburg
+    lb = 8 rue du Commerce, L-4067 Esch-sur-Alzette, Lëtzebuerg

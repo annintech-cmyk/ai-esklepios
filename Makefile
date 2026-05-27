@@ -1,5 +1,4 @@
+.PHONY: strings
+
 strings:
-	twine generate-all strings/twine.txt \
-		--output-path . \
-		--format android \
-		--output-dir androidApp/src/main/res
+	twine generate-all-localization-files strings/twine.txt androidApp/src/main/res --format android

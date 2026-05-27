@@ -360,4 +360,20 @@
     <string name="drawer_health_portal">Health Portal</string>
     <string name="drawer_health_professionals">Health Professionals</string>
     <string name="drawer_guest">Guest</string>
+
+    <!-- Who Are We -->
+    <string name="who_are_we_about_section_title">About eSklepios</string>
+    <string name="who_are_we_about_body">Designed by two Luxembourg doctors, eSklepios is a comprehensive healthcare platform that connects patients with healthcare professionals. Our system streamlines appointment scheduling, medical records, and communication in a unified, secure platform.</string>
+    <string name="who_are_we_founders_section_title">Our Founders</string>
+    <string name="who_are_we_founder_cipriani_name">Dr Fabien Cipriani</string>
+    <string name="who_are_we_founder_cipriani_title">Co-founder &amp; CEO</string>
+    <string name="who_are_we_founder_cipriani_bio">General practitioner at Centre Médical Al Esch, Luxembourg.</string>
+    <string name="who_are_we_founder_michel_name">Dr Jean-François Michel</string>
+    <string name="who_are_we_founder_michel_title">Co-founder &amp; CEO</string>
+    <string name="who_are_we_founder_michel_bio">General practitioner in Luxembourg, practicing in Steinsel.</string>
+    <string name="who_are_we_partners_section_title">Our Partners</string>
+    <string name="who_are_we_partner_intech_description">Development partner. Expert in digital solutions in Luxembourg, InTech supports eSklepios in the design and evolution of our platform.</string>
+    <string name="who_are_we_partner_deep_description">Cloud partner. Luxembourg-certified cloud infrastructure provider for healthcare data hosting, ensuring security and regulatory compliance.</string>
+    <string name="who_are_we_contact_section_title">Contact</string>
+    <string name="who_are_we_contact_address">8 rue du Commerce, L-4067 Esch-sur-Alzette, Luxembourg</string>
 </resources>
