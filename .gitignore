@@ -1,7 +1,61 @@
-# Secrets & environment (dev.properties is dev-only, prod.properties is tracked)
+# ============================================
+# SECRETS & ENVIRONMENT (CRITICAL!)
+# ============================================
+# Development properties (local, never commit)
 dev.properties
+dev.*.properties
 local.properties
 androidApp/local.properties
+
+# Gradle properties
+gradle.properties
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Credentials & tokens
+*.key
+*.pem
+*.pub
+~/.ssh/*
+credentials.json
+secrets.json
+
+# API keys in various formats
+apikeys.properties
+config/secrets/
+.secrets/
+
+# IDE secrets
+.idea/shelf/
+.idea/workspace.xml
+.idea/misc.xml
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
 
 # Gradle
 .gradle/
@@ -49,3 +103,241 @@ reports/
 
 # Docs (generated/local only)
 docs/
+
+# ============================================
+# DEVELOPMENT ARTIFACTS
+# ============================================
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Editor temporary files
+*~
+*.swp
+*.swo
+*#
+.#*
+*.sublime-workspace
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.code-workspace
+
+# Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+captures/
+.navigation
+
+# Xcode
+**/xcuserdata/
+**/xcworkspace/xcuserdata/
+*.xcarchive
+*.dSYM/
+DerivedData/
+*.ipa
+
+# ============================================
+# BUILD & DEPENDENCY ARTIFACTS
+# ============================================
+# Gradle
+.gradle/
+build/
+*/build/
+dist/
+
+# Maven
+target/
+.m2/
+pom.xml.tag
+pom.xml.releaseBackup
+release.properties
+
+# Kotlin
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ============================================
+# TEST ARTIFACTS
+# ============================================
+# Test coverage
+coverage/
+*.coverage
+*.gcov
+jacoco/
+instrumented/
+cobertura/
+
+# Test reports (but keep docs/test-results if committed)
+test-results/
+test-output/
+*.testlog
+
+# ============================================
+# CI/CD ARTIFACTS
+# ============================================
+# GitHub Actions
+.github/workflows/*.log
+
+# CI logs
+ci-logs/
+ci-artifacts/
+
+# ============================================
+# SECURITY SCANNING
+# ============================================
+# Dependency check artifacts
+dependency-check-report.*
+scanning-results/
+security-reports/
+
+# ============================================
+# TEMPORARY & CACHE
+# ============================================
+# Node (if any)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python (if any)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+ENV/
+env/
+
+# Local development
+tmp/
+temp/
+.tmp/
+*.swp
+.DS_Store
+
+# ============================================
+# PLATFORM-SPECIFIC
+# ============================================
+# macOS
+.AppleDouble
+.LSOverride
+.TemporaryItems
+.VolumeIcon.icns
+
+# Windows
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+
+# ============================================
+# IDE PLUGINS & CACHES
+# ============================================
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# Android Studio
+.gradle
+.idea
+*.iml
+local.properties
+captured_images/
+
+# Xcode
+*.pbxuser
+*.perspective
+*.perspectivev3
+**/*.playground
+
+# VSCode
+.vscode/
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# APPLICATION-SPECIFIC
+# ============================================
+# Kotlin
+.kotlin/
+
+# Android build
+androidApp/build/
+*.apk
+*.aab
+*.ap_
+
+# iOS build
+DerivedData/
+*.app
+*.dSYM
+
+# Gradle wrapper (optional - can be committed)
+# !gradle/wrapper/gradle-wrapper.jar
+# !gradle/wrapper/gradle-wrapper.properties
+
+# ============================================
+# DOCUMENTATION GENERATED FILES
+# ============================================
+# Dokka (Kotlin docs)
+dokka/
+
+# Sphinx (Python docs)
+_build/
+
+# ============================================
+# BACKUP & LOCK FILES (Selective)
+# ============================================
+*.bak
+*.backup
+*.tmp
+*.old
+
+# Lock files (if versioning strategy allows)
+# Gradle lock files - commit these for reproducibility
+# !gradle.lockfile
+
+# ============================================
+# MISC
+# ============================================
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# Crash reports
+crash/
+*.crash
+
+# Performance profiling
+*.trace
+*.prof
+*.hprof
+
+# Coverage reports
+coverage.xml
+.coverage
+htmlcov/
