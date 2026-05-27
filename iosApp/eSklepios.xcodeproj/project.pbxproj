@@ -79,8 +79,6 @@
 		AA000001000000000000051 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100001000000000000051 /* ThemeManager.swift */; };
 		/* Storage */
 		AA000001000000000000052 /* KeychainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100001000000000000052 /* KeychainStorage.swift */; };
-		/* Info */
-		AA000001000000000000053 /* WhoAreWeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100001000000000000053 /* WhoAreWeView.swift */; };
 		/* Resources */
 		AA000001000000000000060 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA100001000000000000060 /* Assets.xcassets */; };
 		AA000001000000000000061 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA100001000000000000061 /* Info.plist */; };
@@ -159,7 +157,6 @@
 		AA100001000000000000050 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
 		AA100001000000000000051 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		AA100001000000000000052 /* KeychainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStorage.swift; sourceTree = "<group>"; };
-		AA100001000000000000053 /* WhoAreWeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoAreWeView.swift; sourceTree = "<group>"; };
 		AA100001000000000000060 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA100001000000000000061 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA100001000000000000070 /* AuthViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModelTests.swift; sourceTree = "<group>"; };
@@ -267,7 +264,6 @@
 		AAGRP0000000000000021F /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				AA100001000000000000053 /* WhoAreWeView.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -682,7 +678,6 @@
 				AA000001000000000000050 /* AppFonts.swift in Sources */,
 				AA000001000000000000051 /* ThemeManager.swift in Sources */,
 				AA000001000000000000052 /* KeychainStorage.swift in Sources */,
-				AA000001000000000000053 /* WhoAreWeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
