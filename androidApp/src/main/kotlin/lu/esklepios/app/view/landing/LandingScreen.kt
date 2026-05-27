@@ -49,7 +49,7 @@ fun LandingScreen(
         modifier =
             Modifier
                 .fillMaxSize()
-                .background(PrimaryLight)
+                .background(PrimaryMid)
                 .verticalScroll(rememberScrollState()),
     ) {
         LandingHeroSection(
