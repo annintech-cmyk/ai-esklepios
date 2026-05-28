@@ -21,4 +21,11 @@ subprojects {
         allRules = false
     }
 
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        filter {
+            exclude("**/generated/**")
+            exclude("**/build/**")
+        }
+    }
+
 }

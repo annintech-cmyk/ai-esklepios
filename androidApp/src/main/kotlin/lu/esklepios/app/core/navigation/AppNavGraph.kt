@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -54,12 +53,12 @@ import lu.esklepios.app.view.dashboard.appointments.MyAppointmentsScreen
 import lu.esklepios.app.view.dashboard.appointments.booking.AppointmentSuccessScreen
 import lu.esklepios.app.view.dashboard.appointments.booking.BookingScreen
 import lu.esklepios.app.view.dashboard.home.HomeScreen
-import lu.esklepios.app.view.dashboard.home.practitioner_data.PractitionerDetailScreen
+import lu.esklepios.app.view.dashboard.home.practitioners.PractitionerDetailScreen
 import lu.esklepios.app.view.dashboard.home.practitioners.PractitionerListScreen
 import lu.esklepios.app.view.dashboard.profile.ProfileScreen
-import lu.esklepios.app.view.dashboard.profile.profile_edit.ChangeEmailScreen
-import lu.esklepios.app.view.dashboard.profile.profile_edit.ChangePasswordScreen
-import lu.esklepios.app.view.dashboard.profile.profile_edit.EditProfileScreen
+import lu.esklepios.app.view.dashboard.profile.edit.ChangeEmailScreen
+import lu.esklepios.app.view.dashboard.profile.edit.ChangePasswordScreen
+import lu.esklepios.app.view.dashboard.profile.edit.EditProfileScreen
 import lu.esklepios.app.view.landing.LandingScreen
 import lu.esklepios.app.view.splash.SplashScreen
 import org.koin.androidx.compose.koinViewModel

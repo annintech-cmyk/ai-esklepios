@@ -1,4 +1,4 @@
-package lu.esklepios.app.view.dashboard.profile.profile_edit
+package lu.esklepios.app.view.dashboard.profile.edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

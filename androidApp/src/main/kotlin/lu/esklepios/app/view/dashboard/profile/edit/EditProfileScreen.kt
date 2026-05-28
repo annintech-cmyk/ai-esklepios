@@ -1,4 +1,4 @@
-package lu.esklepios.app.view.dashboard.profile.profile_edit
+package lu.esklepios.app.view.dashboard.profile.edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
