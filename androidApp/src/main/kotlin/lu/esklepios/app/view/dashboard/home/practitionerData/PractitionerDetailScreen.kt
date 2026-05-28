@@ -50,7 +50,6 @@ import lu.esklepios.app.core.ui.components.AppIconButton
 import lu.esklepios.app.core.ui.components.AppSubtitleText
 import lu.esklepios.app.core.ui.components.AvatarCircle
 import lu.esklepios.app.core.ui.components.GradientHeader
-import lu.esklepios.app.core.ui.sharedElementModifier
 import lu.esklepios.app.core.ui.theme.Background
 import lu.esklepios.app.core.ui.theme.BorderColor
 import lu.esklepios.app.core.ui.theme.Dimens
@@ -113,14 +112,12 @@ fun PractitionerDetailScreen(
                 AvatarCircle(
                     initials = doctor.initials,
                     size = Dimens.detailAvatarSize,
-                    modifier = sharedElementModifier("practitioner-avatar-$practitionerId"),
                 )
                 Spacer(Modifier.width(Dimens.paddingPlus))
                 Column {
                     AppSubtitleText(
                         text = doctor.fullName,
                         color = Color.White,
-                        modifier = sharedElementModifier("practitioner-name-$practitionerId"),
                     )
                     AppCaptionText(
                         text = doctor.specialty,

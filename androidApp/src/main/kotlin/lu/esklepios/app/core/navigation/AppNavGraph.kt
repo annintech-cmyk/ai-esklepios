@@ -3,8 +3,6 @@ package lu.esklepios.app.core.navigation
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -43,8 +41,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
-import lu.esklepios.app.core.ui.LocalNavAnimatedVisibilityScope
-import lu.esklepios.app.core.ui.LocalSharedTransitionScope
 import lu.esklepios.app.core.ui.components.AppCaptionText
 import lu.esklepios.app.core.ui.components.AppDrawerContent
 import lu.esklepios.app.core.ui.theme.GradientStart
@@ -69,7 +65,6 @@ import lu.esklepios.app.view.landing.LandingScreen
 import lu.esklepios.app.view.splash.SplashScreen
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun AppNavGraph() {
     val navController = rememberNavController()
@@ -159,91 +154,81 @@ fun AppNavGraph() {
                     }
                 },
             ) { innerPadding ->
-                SharedTransitionLayout {
-                    CompositionLocalProvider(LocalSharedTransitionScope provides this) {
-                        NavHost(
-                            navController = navController,
-                            startDestination = NavDestination.Splash.route,
-                            modifier = Modifier.padding(innerPadding),
-                        ) {
-                            composable(NavDestination.Splash.route) { SplashScreen(navController) }
-                            composable(NavDestination.Landing.route) { LandingScreen(navController, homeViewModel) }
-                            composable(NavDestination.Login.route) { LoginScreen(navController) }
-                            composable(NavDestination.Register.route) { RegisterScreen(navController) }
-                            composable(NavDestination.ForgotPassword.route) { ForgotPasswordScreen(navController) }
-                            composable(NavDestination.Home.route) {
-                                CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this) {
-                                    HomeScreen(navController, onMenuClick, homeViewModel)
-                                }
-                            }
-                            composable(NavDestination.PractitionerList.route) {
-                                CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this) {
-                                    PractitionerListScreen(navController, homeViewModel)
-                                }
-                            }
-                            composable(
-                                route = NavDestination.PractitionerDetail.route,
-                                arguments = listOf(navArgument("practitionerId") { type = NavType.StringType }),
-                            ) { backStackEntry ->
-                                val practitionerId =
-                                    backStackEntry.arguments?.getString("practitionerId") ?: ""
-                                CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this) {
-                                    PractitionerDetailScreen(navController, practitionerId)
-                                }
-                            }
-                            composable(
-                                route = NavDestination.BookAppointment.route,
-                                arguments =
-                                    listOf(
-                                        navArgument("practitionerId") { type = NavType.StringType },
-                                        navArgument("slotId") { type = NavType.StringType },
-                                    ),
-                            ) { backStackEntry ->
-                                val practitionerId =
-                                    backStackEntry.arguments?.getString("practitionerId") ?: ""
-                                val slotId = backStackEntry.arguments?.getString("slotId") ?: ""
-                                BookingScreen(navController, practitionerId, slotId, isChange = false)
-                            }
-                            composable(
-                                route = NavDestination.AppointmentSuccess.route,
-                                arguments =
-                                    listOf(
-                                        navArgument("appointmentId") { type = NavType.StringType },
-                                    ),
-                            ) { backStackEntry ->
-                                val appointmentId =
-                                    backStackEntry.arguments?.getString("appointmentId") ?: ""
-                                AppointmentSuccessScreen(navController, appointmentId)
-                            }
-                            composable(NavDestination.MyAppointments.route) {
-                                MyAppointmentsScreen(navController, onMenuClick)
-                            }
-                            composable(NavDestination.Profile.route) {
-                                ProfileScreen(navController, onMenuClick)
-                            }
-                            composable(NavDestination.EditProfile.route) { EditProfileScreen(navController) }
-                            composable(NavDestination.ChangeEmail.route) { ChangeEmailScreen(navController) }
-                            composable(NavDestination.ChangePassword.route) {
-                                ChangePasswordScreen(navController)
-                            }
-                            composable(
-                                route = NavDestination.Booking.route,
-                                arguments =
-                                    listOf(
-                                        navArgument("doctorId") { type = NavType.StringType },
-                                        navArgument("slotId") { type = NavType.StringType },
-                                        navArgument("isChange") {
-                                            type = NavType.StringType
-                                            defaultValue = "false"
-                                        },
-                                    ),
-                            ) { backStackEntry ->
-                                val doctorId = backStackEntry.arguments?.getString("doctorId") ?: ""
-                                val slotId = backStackEntry.arguments?.getString("slotId") ?: ""
-                                val isChange = backStackEntry.arguments?.getString("isChange")?.toBoolean() ?: false
-                                BookingScreen(navController, doctorId, slotId, isChange)
-                            }
-                        }
+                NavHost(
+                    navController = navController,
+                    startDestination = NavDestination.Splash.route,
+                    modifier = Modifier.padding(innerPadding),
+                ) {
+                    composable(NavDestination.Splash.route) { SplashScreen(navController) }
+                    composable(NavDestination.Landing.route) { LandingScreen(navController, homeViewModel) }
+                    composable(NavDestination.Login.route) { LoginScreen(navController) }
+                    composable(NavDestination.Register.route) { RegisterScreen(navController) }
+                    composable(NavDestination.ForgotPassword.route) { ForgotPasswordScreen(navController) }
+                    composable(NavDestination.Home.route) {
+                        HomeScreen(navController, onMenuClick, homeViewModel)
+                    }
+                    composable(NavDestination.PractitionerList.route) {
+                        PractitionerListScreen(navController, homeViewModel)
+                    }
+                    composable(
+                        route = NavDestination.PractitionerDetail.route,
+                        arguments = listOf(navArgument("practitionerId") { type = NavType.StringType }),
+                    ) { backStackEntry ->
+                        val practitionerId =
+                            backStackEntry.arguments?.getString("practitionerId") ?: ""
+                        PractitionerDetailScreen(navController, practitionerId)
+                    }
+                    composable(
+                        route = NavDestination.BookAppointment.route,
+                        arguments =
+                            listOf(
+                                navArgument("practitionerId") { type = NavType.StringType },
+                                navArgument("slotId") { type = NavType.StringType },
+                            ),
+                    ) { backStackEntry ->
+                        val practitionerId =
+                            backStackEntry.arguments?.getString("practitionerId") ?: ""
+                        val slotId = backStackEntry.arguments?.getString("slotId") ?: ""
+                        BookingScreen(navController, practitionerId, slotId, isChange = false)
+                    }
+                    composable(
+                        route = NavDestination.AppointmentSuccess.route,
+                        arguments =
+                            listOf(
+                                navArgument("appointmentId") { type = NavType.StringType },
+                            ),
+                    ) { backStackEntry ->
+                        val appointmentId =
+                            backStackEntry.arguments?.getString("appointmentId") ?: ""
+                        AppointmentSuccessScreen(navController, appointmentId)
+                    }
+                    composable(NavDestination.MyAppointments.route) {
+                        MyAppointmentsScreen(navController, onMenuClick)
+                    }
+                    composable(NavDestination.Profile.route) {
+                        ProfileScreen(navController, onMenuClick)
+                    }
+                    composable(NavDestination.EditProfile.route) { EditProfileScreen(navController) }
+                    composable(NavDestination.ChangeEmail.route) { ChangeEmailScreen(navController) }
+                    composable(NavDestination.ChangePassword.route) {
+                        ChangePasswordScreen(navController)
+                    }
+                    composable(
+                        route = NavDestination.Booking.route,
+                        arguments =
+                            listOf(
+                                navArgument("doctorId") { type = NavType.StringType },
+                                navArgument("slotId") { type = NavType.StringType },
+                                navArgument("isChange") {
+                                    type = NavType.StringType
+                                    defaultValue = "false"
+                                },
+                            ),
+                    ) { backStackEntry ->
+                        val doctorId = backStackEntry.arguments?.getString("doctorId") ?: ""
+                        val slotId = backStackEntry.arguments?.getString("slotId") ?: ""
+                        val isChange = backStackEntry.arguments?.getString("isChange")?.toBoolean() ?: false
+                        BookingScreen(navController, doctorId, slotId, isChange)
                     }
                 }
             }

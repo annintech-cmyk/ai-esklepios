@@ -39,7 +39,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import lu.esklepios.app.R
-import lu.esklepios.app.core.ui.sharedElementModifier
 import lu.esklepios.app.core.ui.theme.BorderColor
 import lu.esklepios.app.core.ui.theme.BorderLight
 import lu.esklepios.app.core.ui.theme.Dimens
@@ -140,14 +139,12 @@ fun PractitionerCard(
                 AvatarCircle(
                     initials = practitioner.initials,
                     size = Dimens.avatarSizeLg,
-                    modifier = sharedElementModifier("practitioner-avatar-${practitioner.id}"),
                 )
                 HSpace(Dimens.paddingM)
                 Column(Modifier.weight(1f)) {
                     AppSubtitleText(
                         text = practitioner.fullName,
                         color = TextPrimary,
-                        modifier = sharedElementModifier("practitioner-name-${practitioner.id}"),
                     )
                     AppCaptionText(
                         text = practitioner.specialty,

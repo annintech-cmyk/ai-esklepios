@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.21"
-androidGradlePlugin = "8.5.2"
+androidGradlePlugin = "8.6.0"
 compose-bom = "2024.12.01"
 ktor = "3.0.3"
 koin = "4.0.0"

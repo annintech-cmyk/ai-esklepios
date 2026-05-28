@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Visibility
@@ -151,7 +153,7 @@ fun ChangePasswordScreen(
             onToggleShow = { showNewPw = !showNewPw },
             // a11y: decorative — labelled by adjacent Text
             leadingIcon = {
-                Icon(Icons.Filled.LockPerson, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
+                Icon(Icons.Filled.Lock, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
             },
         )
 
@@ -198,7 +200,7 @@ fun ChangePasswordScreen(
             isError = uiState.confirmPassword.isNotBlank() && !passwordsMatch,
             // a11y: decorative — labelled by adjacent Text
             leadingIcon = {
-                Icon(Icons.Filled.LockReset, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
+                Icon(Icons.Filled.Shield, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
             },
         )
         if (passwordsMatch) {
@@ -220,7 +222,7 @@ fun ChangePasswordScreen(
             Spacer(Modifier.height(Dimens.paddingS))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    Icons.Filled.Cancel,
+                    Icons.Filled.Clear,
                     contentDescription = null,
                     tint = Danger,
                     modifier = Modifier.size(Dimens.iconSizeSm),
@@ -309,7 +311,7 @@ private fun PasswordCriterionRow(
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
-            if (met) Icons.Filled.CheckCircle else Icons.Filled.RadioButtonUnchecked,
+            if (met) Icons.Filled.CheckCircle else Icons.Filled.Circle,
             // a11y: decorative — labelled by adjacent Text
             contentDescription = null,
             tint = if (met) Success else TextHint,

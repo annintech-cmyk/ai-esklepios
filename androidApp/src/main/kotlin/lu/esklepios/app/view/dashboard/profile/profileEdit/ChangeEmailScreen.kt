@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -87,7 +88,7 @@ fun ChangeEmailScreen(
             horizontalArrangement = Arrangement.spacedBy(Dimens.paddingM),
         ) {
             AppIcon(
-                Icons.Filled.ForwardToInbox,
+                Icons.Filled.Email,
                 // a11y: decorative — labelled by adjacent Text
                 contentDescription = null,
                 tint = Primary,
@@ -187,7 +188,7 @@ fun ChangeEmailScreen(
             shape = RoundedCornerShape(Dimens.radiusMd),
             leadingIcon = {
                 Icon(
-                    Icons.Filled.MarkEmailUnread,
+                    Icons.Filled.Email,
                     contentDescription = null,
                     tint = TextSecondary,
                     modifier = Modifier.size(Dimens.iconSizeMd),
@@ -226,7 +227,7 @@ fun ChangeEmailScreen(
             Spacer(Modifier.height(Dimens.paddingS))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AppIcon(
-                    Icons.Filled.Cancel,
+                    Icons.Filled.Clear,
                     contentDescription = null,
                     tint = Danger,
                     size = Dimens.iconSizeSm,

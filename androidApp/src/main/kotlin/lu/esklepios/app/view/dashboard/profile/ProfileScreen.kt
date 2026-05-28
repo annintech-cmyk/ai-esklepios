@@ -2,6 +2,7 @@ package lu.esklepios.app.view.dashboard.profile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.Badge
 import androidx.compose.material.icons.filled.Cake
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Button
@@ -55,6 +56,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
@@ -282,7 +284,7 @@ fun ProfileScreen(
                         user?.phone?.ifBlank { "—" } ?: "—",
                     )
                     HorizontalDivider(color = BorderColor, modifier = Modifier.padding(horizontal = Dimens.paddingL))
-                    ProfileInfoRow(Icons.Filled.Badge, Primary, IconBgBlue, stringResource(R.string.profile_label_cns), maskedCns)
+                    ProfileInfoRow(Icons.Filled.VpnKey, Primary, IconBgBlue, stringResource(R.string.profile_label_cns), maskedCns)
                 }
             }
 
@@ -354,37 +356,18 @@ fun ProfileScreen(
                     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.paddingL, vertical = Dimens.paddingM)) {
                         AppCaptionText(text = stringResource(R.string.profile_label_language))
                         VSpace(Dimens.paddingS)
-                        ExposedDropdownMenuBox(
-                            expanded = languageMenuExpanded,
-                            onExpandedChange = { languageMenuExpanded = !languageMenuExpanded },
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(56.dp)
+                                    .border(1.dp, IconBgBlue, RoundedCornerShape(Dimens.radiusMd))
+                                    .background(Color.White, RoundedCornerShape(Dimens.radiusMd))
+                                    .clickable { languageMenuExpanded = !languageMenuExpanded }
+                                    .padding(horizontal = Dimens.paddingL),
+                            contentAlignment = Alignment.CenterStart,
                         ) {
-                            OutlinedTextField(
-                                value = languageLabel,
-                                onValueChange = {},
-                                readOnly = true,
-                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = languageMenuExpanded) },
-                                modifier = Modifier.fillMaxWidth().menuAnchor(MenuAnchorType.PrimaryNotEditable),
-                                shape = RoundedCornerShape(Dimens.radiusMd),
-                                colors =
-                                    OutlinedTextFieldDefaults.colors(
-                                        focusedBorderColor = Primary,
-                                        unfocusedBorderColor = IconBgBlue,
-                                    ),
-                            )
-                            ExposedDropdownMenu(
-                                expanded = languageMenuExpanded,
-                                onDismissRequest = { languageMenuExpanded = false },
-                            ) {
-                                languageOptions.forEach { (code, label) ->
-                                    DropdownMenuItem(
-                                        text = { AppBodyText(text = label) },
-                                        onClick = {
-                                            selectedLanguage = code
-                                            languageMenuExpanded = false
-                                        },
-                                    )
-                                }
-                            }
+                            AppBodyText(text = languageLabel)
                         }
                     }
                 }
@@ -416,7 +399,7 @@ fun ProfileScreen(
                     }
                     HorizontalDivider(color = BorderColor)
                     SecurityRow(
-                        icon = Icons.Filled.AlternateEmail,
+                        icon = Icons.Filled.Email,
                         iconTint = Primary,
                         iconBg = IconBgBlue,
                         label = stringResource(R.string.profile_label_login_email),
@@ -425,7 +408,7 @@ fun ProfileScreen(
                     )
                     HorizontalDivider(color = BorderColor, modifier = Modifier.padding(horizontal = Dimens.paddingL))
                     SecurityRow(
-                        icon = Icons.Filled.Key,
+                        icon = Icons.Filled.VpnKey,
                         iconTint = Primary,
                         iconBg = IconBgBlue,
                         label = stringResource(R.string.profile_label_security),

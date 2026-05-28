@@ -15,16 +15,16 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material3.Badge
+import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -267,31 +267,17 @@ fun EditProfileScreen(
         FormFieldLabel(text = stringResource(R.string.label_phone_number), required = true)
         VSpace(Dimens.paddingS)
         Row(horizontalArrangement = Arrangement.spacedBy(Dimens.paddingS)) {
-            ExposedDropdownMenuBox(
-                expanded = prefixExpanded,
-                onExpandedChange = { prefixExpanded = !prefixExpanded },
-                modifier = Modifier.width(Dimens.countryCodeWidth),
+            Box(
+                modifier =
+                    Modifier
+                        .width(Dimens.countryCodeWidth)
+                        .height(56.dp)
+                        .border(1.dp, BorderColor, RoundedCornerShape(Dimens.radiusMd))
+                        .background(Color.White, RoundedCornerShape(Dimens.radiusMd))
+                        .clickable { prefixExpanded = !prefixExpanded },
+                contentAlignment = Alignment.Center,
             ) {
-                OutlinedTextField(
-                    value = "${selectedDialCode.flagEmoji} ${selectedDialCode.code}",
-                    onValueChange = {},
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = prefixExpanded) },
-                    modifier = Modifier.menuAnchor(),
-                    shape = RoundedCornerShape(Dimens.radiusMd),
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Primary, unfocusedBorderColor = BorderColor),
-                )
-                ExposedDropdownMenu(expanded = prefixExpanded, onDismissRequest = { prefixExpanded = false }) {
-                    supportedDialCodes.forEach { dial ->
-                        DropdownMenuItem(
-                            text = { AppBodyText(text = "${dial.flagEmoji} ${dial.code}") },
-                            onClick = {
-                                selectedDialCode = dial
-                                prefixExpanded = false
-                            },
-                        )
-                    }
-                }
+                AppCaptionText(text = "${selectedDialCode.flagEmoji} ${selectedDialCode.code}")
             }
             OutlinedTextField(
                 value = phoneNumber,
@@ -315,7 +301,7 @@ fun EditProfileScreen(
             shape = RoundedCornerShape(Dimens.radiusMd),
             leadingIcon = {
                 Icon(
-                    Icons.Filled.Badge,
+                    Icons.Filled.VpnKey,
                     contentDescription = null,
                     tint = TextSecondary,
                     modifier = Modifier.size(Dimens.iconSizeMd),
