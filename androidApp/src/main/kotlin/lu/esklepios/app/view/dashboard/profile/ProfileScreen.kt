@@ -360,8 +360,8 @@ fun ProfileScreen(
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
-                                    .height(56.dp)
-                                    .border(1.dp, IconBgBlue, RoundedCornerShape(Dimens.radiusMd))
+                                    .height(Dimens.appBarHeight)
+                                    .border(Dimens.borderThin, IconBgBlue, RoundedCornerShape(Dimens.radiusMd))
                                     .background(Color.White, RoundedCornerShape(Dimens.radiusMd))
                                     .clickable { languageMenuExpanded = !languageMenuExpanded }
                                     .padding(horizontal = Dimens.paddingL),

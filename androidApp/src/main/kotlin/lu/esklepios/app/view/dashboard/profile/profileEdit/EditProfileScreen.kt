@@ -271,8 +271,8 @@ fun EditProfileScreen(
                 modifier =
                     Modifier
                         .width(Dimens.countryCodeWidth)
-                        .height(56.dp)
-                        .border(1.dp, BorderColor, RoundedCornerShape(Dimens.radiusMd))
+                        .height(Dimens.appBarHeight)
+                        .border(Dimens.borderThin, BorderColor, RoundedCornerShape(Dimens.radiusMd))
                         .background(Color.White, RoundedCornerShape(Dimens.radiusMd))
                         .clickable { prefixExpanded = !prefixExpanded },
                 contentAlignment = Alignment.Center,
