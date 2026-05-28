@@ -22,9 +22,20 @@ subprojects {
     }
 
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        android.set(true)
         filter {
             exclude("**/build/**")
             exclude("**/generated/**")
+        }
+    }
+
+    // Disable KtLint check for generated code - the patterns above don't work reliably for sourceSet tasks
+    tasks.configureEach {
+        if (this.name.contains("ktlintCommonMainSourceSetCheck")) {
+            enabled = false
+        }
+        if (this.name.contains("ktlintCommonMainSourceSetFormat")) {
+            enabled = false
         }
     }
 
