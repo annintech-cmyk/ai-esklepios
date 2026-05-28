@@ -23,8 +23,8 @@ subprojects {
 
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
         filter {
-            exclude("**/generated/**")
             exclude("**/build/**")
+            exclude("**/generated/**")
         }
     }
 
