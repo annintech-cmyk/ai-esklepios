@@ -6,6 +6,7 @@ struct LoginView: View {
     @State private var navigateToHome = false
     @State private var navigateToRegister = false
     @State private var navigateToForgot = false
+    @State private var showSaveCredentialsDialog = false
 
     var body: some View {
         AppScreen(
@@ -93,9 +94,29 @@ struct LoginView: View {
                 }
             }
         }
+        .onChange(of: viewModel.uiState.showSaveCredentialsDialog) { show in
+            if show { showSaveCredentialsDialog = true }
+        }
         .onChange(of: viewModel.uiState.isLoggedIn) { loggedIn in
             if loggedIn { navigateToHome = true }
         }
+        .confirmationDialog(
+            "Save Credentials?",
+            isPresented: $showSaveCredentialsDialog,
+            actions: {
+                Button("Save") {
+                    viewModel.saveCredentials()
+                    showSaveCredentialsDialog = false
+                }
+                Button("Not Now") {
+                    viewModel.skipSaveCredentials()
+                    showSaveCredentialsDialog = false
+                }
+            },
+            message: {
+                Text("Would you like to save your email and password for faster login next time?")
+            }
+        )
         .navigationDestination(isPresented: $navigateToHome) { HomeView() }
         .navigationDestination(isPresented: $navigateToRegister) { RegisterView() }
         .navigationDestination(isPresented: $navigateToForgot) { ForgotPasswordView() }

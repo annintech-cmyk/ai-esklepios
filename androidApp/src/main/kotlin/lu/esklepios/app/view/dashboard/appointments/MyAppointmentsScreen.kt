@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Business
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -45,6 +46,7 @@ import androidx.navigation.NavController
 import lu.esklepios.app.R
 import lu.esklepios.app.core.navigation.NavDestination
 import lu.esklepios.app.core.ui.components.AppBodyText
+import lu.esklepios.app.core.ui.components.AvatarCircle
 import lu.esklepios.app.core.ui.components.AppButtonText
 import lu.esklepios.app.core.ui.components.AppCaptionText
 import lu.esklepios.app.core.ui.components.AppCard
@@ -60,10 +62,12 @@ import lu.esklepios.app.core.ui.components.LoadingIndicator
 import lu.esklepios.app.core.ui.components.SecondaryButton
 import lu.esklepios.app.core.ui.components.StatusBadge
 import lu.esklepios.app.core.ui.theme.Background
+import lu.esklepios.app.core.ui.theme.BorderColor
 import lu.esklepios.app.core.ui.theme.Danger
 import lu.esklepios.app.core.ui.theme.DangerBg
 import lu.esklepios.app.core.ui.theme.Dimens
 import lu.esklepios.app.core.ui.theme.Primary
+import lu.esklepios.app.core.ui.theme.PrimaryLight
 import lu.esklepios.app.core.ui.theme.TextSecondary
 import lu.esklepios.app.domain.model.Appointment
 import lu.esklepios.app.domain.model.AppointmentStatus
@@ -199,15 +203,19 @@ fun MyAppointmentsScreen(
                         }
                     } else {
                         LazyColumn(
-                            contentPadding = PaddingValues(horizontal = innerPadding.calculateTopPadding(), vertical = Dimens.paddingM),
+                            contentPadding = PaddingValues(horizontal = Dimens.paddingM, vertical = Dimens.paddingM),
                             verticalArrangement = Arrangement.spacedBy(Dimens.paddingM),
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
                             items(appointments, key = { it.id }) { appointment ->
                                 AppointmentItemCard(
                                     appointment = appointment,
                                     isUpcoming = uiState.selectedTab == 0,
                                     onCancel = { cancelTargetId = appointment.id },
-                                    onModify = {},
+                                    onModify = {
+                                        navController.navigate(NavDestination.PractitionerList.route)
+                                    },
+                                    modifier = Modifier.fillMaxWidth(),
                                 )
                             }
                         }
@@ -224,38 +232,72 @@ private fun AppointmentItemCard(
     isUpcoming: Boolean,
     onCancel: () -> Unit,
     onModify: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    AppCard(modifier = Modifier.fillMaxWidth()) {
+    AppCard(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimens.paddingL)) {
+            // Header: avatar + practitioner name/specialty + status badge
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top,
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Dimens.paddingM),
             ) {
+                AvatarCircle(
+                    initials = nameInitials(appointment.practitionerName),
+                    size = Dimens.avatarSizeSm,
+                )
                 Column(modifier = Modifier.weight(1f)) {
                     AppSubtitleText(text = appointment.practitionerName)
                     AppCaptionText(text = appointment.specialty, color = Primary)
-                    AppCaptionText(text = appointment.clinicName)
                 }
                 StatusBadge(status = appointment.status)
             }
 
             Spacer(Modifier.height(Dimens.paddingM))
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                AppIcon(
-                    Icons.Filled.CalendarMonth,
-                    // a11y: decorative — labelled by adjacent Text
-                    contentDescription = null,
-                    tint = TextSecondary,
-                    size = Dimens.iconSizeSm,
+            // Info box: clinic name on top of date
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(PrimaryLight, shape = RoundedCornerShape(Dimens.radiusMd))
+                        .padding(Dimens.paddingM),
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AppIcon(
+                        Icons.Filled.Business,
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
+                        tint = TextSecondary,
+                        size = Dimens.iconSizeSm,
+                    )
+                    Spacer(Modifier.width(Dimens.paddingS))
+                    AppCaptionText(text = appointment.clinicName, color = TextSecondary)
+                }
+                Spacer(Modifier.height(Dimens.paddingS))
+                Spacer(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(Dimens.borderThin)
+                            .background(BorderColor),
                 )
-                Spacer(Modifier.width(Dimens.paddingS))
-                AppCaptionText(text = DateUtil.formatAppointmentDateTime(appointment.dateTime))
+                Spacer(Modifier.height(Dimens.paddingS))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AppIcon(
+                        Icons.Filled.CalendarMonth,
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
+                        tint = TextSecondary,
+                        size = Dimens.iconSizeSm,
+                    )
+                    Spacer(Modifier.width(Dimens.paddingS))
+                    AppCaptionText(text = DateUtil.formatAppointmentDateTime(appointment.dateTime))
+                }
             }
 
             if (isUpcoming && appointment.status != AppointmentStatus.CANCELLED) {
-                Spacer(Modifier.height(Dimens.paddingL))
+                Spacer(Modifier.height(Dimens.paddingM))
                 Row(horizontalArrangement = Arrangement.spacedBy(Dimens.paddingM)) {
                     SecondaryButton(
                         text = stringResource(R.string.appointments_modify),
@@ -282,3 +324,11 @@ private fun AppointmentItemCard(
         }
     }
 }
+
+private fun nameInitials(name: String): String =
+    name.split(" ")
+        .filter { it.isNotEmpty() && '.' !in it }
+        .take(2)
+        .mapNotNull { it.firstOrNull() }
+        .joinToString("")
+        .uppercase()

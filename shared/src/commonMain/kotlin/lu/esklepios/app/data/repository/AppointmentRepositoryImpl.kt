@@ -2,9 +2,11 @@ package lu.esklepios.app.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import kotlin.random.Random
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import lu.esklepios.app.BuildKonfig
 import lu.esklepios.app.data.network.ApiService
 import lu.esklepios.app.data.network.toCreateRequest
 import lu.esklepios.app.data.network.toDomain
@@ -19,12 +21,21 @@ class AppointmentRepositoryImpl(
     private val database: ESklepiosDatabase,
 ) : AppointmentRepository {
     override suspend fun createAppointment(appointment: Appointment): Result<Appointment> {
-        return apiService.createAppointment(appointment.toCreateRequest())
-            .map { dto ->
-                val created = dto.toDomain()
-                cacheAppointment(created)
-                created
+        return if (BuildKonfig.FOR_DEMO) {
+            runCatching {
+                val demoId = "demo_appointment_${Random.nextInt(100000, 999999)}"
+                val demoAppointment = appointment.copy(id = demoId, status = AppointmentStatus.CONFIRMED)
+                cacheAppointment(demoAppointment)
+                demoAppointment
             }
+        } else {
+            apiService.createAppointment(appointment.toCreateRequest())
+                .map { dto ->
+                    val created = dto.toDomain()
+                    cacheAppointment(created)
+                    created
+                }
+        }
     }
 
     override fun getAppointments(userId: String): Flow<List<Appointment>> {
@@ -68,11 +79,17 @@ class AppointmentRepositoryImpl(
     }
 
     override suspend fun cancelAppointment(id: String): Result<Unit> {
-        return apiService.cancelAppointment(id).onSuccess {
-            database.appointmentsQueries.updateStatus(
-                status = AppointmentStatus.CANCELLED.name,
-                id = id,
-            )
+        return if (BuildKonfig.FOR_DEMO) {
+            runCatching {
+                database.appointmentsQueries.deleteById(id)
+            }
+        } else {
+            apiService.cancelAppointment(id).onSuccess {
+                database.appointmentsQueries.updateStatus(
+                    status = AppointmentStatus.CANCELLED.name,
+                    id = id,
+                )
+            }
         }
     }
 

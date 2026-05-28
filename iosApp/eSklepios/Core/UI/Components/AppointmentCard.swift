@@ -13,47 +13,81 @@ struct AppointmentCard: View {
     var body: some View {
         AppCard {
             VStack(alignment: .leading, spacing: Spacing.m) {
-                // Header row
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: Spacing.xxs) {
+                // Header: avatar + practitioner name/specialty + status badge
+                HStack(alignment: .center, spacing: Spacing.m) {
+                    AvatarCircle(initials: nameInitials(practitionerName), size: Sizing.avatarSm)
+                    VStack(alignment: .leading, spacing: Spacing.xs) {
                         AppSubtitleText(text: practitionerName)
-                        AppLabelText(text: specialty, color: .appPrimary)
-                        AppCaptionText(text: clinicName)
+                        AppCaptionText(text: specialty, color: .appPrimary)
                     }
                     Spacer()
                     StatusBadge(status: status)
                 }
 
-                // Date row
-                HStack(spacing: Spacing.tiny) {
-                    Image(systemName: "calendar")
-                        .font(.label)
-                        .foregroundColor(.appTextSecondary)
-                    AppLabelText(text: dateTime, color: .appTextSecondary)
+                // Info box: clinic name on top of date, grouped with accent background
+                VStack(alignment: .leading, spacing: Spacing.s) {
+                    HStack(spacing: Spacing.s) {
+                        Image(systemName: "building.2.fill")
+                            .font(.system(size: Dimens.iconSm))
+                            .foregroundColor(.appTextSecondary)
+                            .accessibilityHidden(true)
+                        AppCaptionText(text: clinicName, color: .appTextSecondary)
+                    }
+                    Rectangle()
+                        .fill(Color.appBorderColor)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: Dimens.strokeThin)
+                    HStack(spacing: Spacing.s) {
+                        Image(systemName: "calendar")
+                            .font(.system(size: Dimens.iconSm))
+                            .foregroundColor(.appTextSecondary)
+                            .accessibilityHidden(true)
+                        AppCaptionText(text: dateTime, color: .appTextSecondary)
+                    }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(Spacing.m)
+                .background(Color.appPrimaryLight)
+                .cornerRadius(Radius.md)
 
-                // Action buttons for upcoming
+                // Action buttons for upcoming appointments
                 if isUpcoming && status != .cancelled {
                     Divider()
-                        .background(Color.appTextHint.opacity(0.3))
+                        .background(Color.appBorderColor)
 
                     HStack(spacing: Spacing.m) {
                         if let modify = onModify {
-                            SecondaryButton(title: "Modify", action: modify)
+                            SecondaryButton(
+                                title: NSLocalizedString("appointments_modify", value: "Modify", comment: ""),
+                                action: modify
+                            )
                         }
                         if let cancel = onCancel {
                             Button(action: cancel) {
-                                AppButtonText(text: "Cancel", color: .appDanger)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: Sizing.buttonHeight)
-                                    .background(Color.appDangerBg)
-                                    .cornerRadius(Radius.pill)
+                                AppButtonText(
+                                    text: NSLocalizedString("action_cancel", value: "Cancel", comment: ""),
+                                    color: .appDanger
+                                )
+                                .frame(maxWidth: .infinity)
+                                .frame(height: Sizing.buttonHeight)
+                                .background(Color.appDangerBg)
+                                .cornerRadius(Radius.pill)
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    private func nameInitials(_ name: String) -> String {
+        name.split(separator: " ")
+            .filter { !$0.isEmpty && !$0.contains(".") }
+            .prefix(2)
+            .compactMap { $0.first }
+            .map { String($0) }
+            .joined()
+            .uppercased()
     }
 }
 
@@ -80,6 +114,6 @@ struct AppointmentCard: View {
             onCancel: nil
         )
     }
-    .padding()
+    .padding(.horizontal, Spacing.m)
     .background(Color.appBackground)
 }

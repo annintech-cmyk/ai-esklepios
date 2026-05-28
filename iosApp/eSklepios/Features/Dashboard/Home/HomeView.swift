@@ -36,22 +36,15 @@ struct HomeView: View {
                 )
 
                 // Date filter segmented control
-                Picker("", selection: Binding(
-                    get: { viewModel.selectedDateFilter },
-                    set: { viewModel.setDateFilter($0) }
-                )) {
-                    ForEach(dateFilters, id: \.key) { filter in
-                        Text(filter.label).tag(filter.key)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal, Dimens.paddingL)
-                .padding(.vertical, Dimens.paddingM)
-                .background(Color.appSurface)
+                PractitionerDateFilterPicker(
+                    filters: dateFilters,
+                    selectedFilter: viewModel.selectedDateFilter,
+                    onFilterSelected: { viewModel.setDateFilter($0) }
+                )
 
                 // "Open to New Patients" toggle pill
                 HStack {
-                    NewPatientsTogglePill(
+                    PractitionerNewPatientsTogglePill(
                         checked: viewModel.openToNewPatients,
                         label: NSLocalizedString("home_filter_new_patients", value: "Open to new patients", comment: ""),
                         onToggle: { viewModel.toggleNewPatientsFilter() }
@@ -154,51 +147,5 @@ struct HomeView: View {
                 PractitionerListView()
             }
         }
-    }
-}
-
-// MARK: - Slot mapping helper
-
-private func slotDays(from slots: [AppointmentSlot]) -> [SlotDayModel] {
-    let available = slots.filter { $0.available }
-    let grouped = Dictionary(grouping: available) { slot in
-        DateUtil.dateFromDateTime(slot.dateTime)
-    }
-    return grouped
-        .map { (dateKey, daySlots) in
-            SlotDayModel(
-                id: dateKey,
-                dateKey: dateKey,
-                slots: daySlots
-                    .map { slot in
-                        SlotEntry(
-                            id: slot.id,
-                            time: DateUtil.timeFromDateTime(slot.dateTime)
-                        )
-                    }
-                    .sorted { $0.time < $1.time }
-            )
-        }
-        .sorted { $0.dateKey < $1.dateKey }
-}
-
-private struct NewPatientsTogglePill: View {
-    let checked: Bool
-    let label: String
-    let onToggle: () -> Void
-
-    var body: some View {
-        HStack(spacing: Spacing.xs) {
-            Image(systemName: checked ? "checkmark.circle.fill" : "circle")
-                .font(.system(size: Dimens.iconSm))
-                .foregroundColor(checked ? .appSuccess : .appTextSecondary)
-            AppCaptionText(text: label, color: checked ? .appSuccess : .appTextSecondary)
-        }
-        .padding(.horizontal, Spacing.m)
-        .padding(.vertical, Spacing.xs)
-        .background(checked ? Color.appSuccessBg : Color.clear)
-        .clipShape(Capsule())
-        .overlay(Capsule().stroke(checked ? Color.appSuccess : Color.appTextHint.opacity(0.4), lineWidth: Dimens.strokeThin))
-        .onTapGesture(perform: onToggle)
     }
 }

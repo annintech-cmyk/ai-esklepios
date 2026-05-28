@@ -1312,6 +1312,24 @@ auth.sign_in_apple
     de = Mit Apple anmelden
     lb = Mat Apple umellen
 
+auth.save_credentials_title
+    en = Save Credentials?
+    fr = Enregistrer les identifiants ?
+    de = Anmeldedaten speichern?
+    lb = Identifianten späicheren?
+
+auth.save_credentials_message
+    en = Would you like to save your email and password for faster login next time?
+    fr = Voulez-vous enregistrer votre e-mail et votre mot de passe pour une connexion plus rapide la prochaine fois?
+    de = Möchten Sie Ihre E-Mail und Ihr Passwort speichern, um sich beim nächsten Mal schneller anmelden zu können?
+    lb = Wëllt dir Ärer E-Mail an Äert Passwuert späicheren fir beim nächste Kéier méi séier ëmzewellen?
+
+auth.not_now
+    en = Not Now
+    fr = Pas maintenant
+    de = Nicht jetzt
+    lb = Elo net
+
 [[Extra]]
 home.search_hint
     en = Search specialty, doctor…

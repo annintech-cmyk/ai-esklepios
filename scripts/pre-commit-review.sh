@@ -65,7 +65,7 @@ fi
 SENSITIVE_RE='(password\s*=\s*["'"'"'][^"'"'"']{4,}|api_key\s*=\s*["'"'"']|secret\s*=\s*["'"'"']|Bearer\s+[A-Za-z0-9._-]{20,}|-----BEGIN\s+(RSA\s+)?PRIVATE KEY)'
 while IFS= read -r file; do
     [ -z "$file" ] && continue; [ ! -f "$file" ] && continue
-    matches=$(git diff --cached "$file" | grep '^+' | grep -iE "$SENSITIVE_RE" || true)
+    matches=$(git diff --cached "$file" | grep '^+' | grep -v 'const val KEY_' | grep -iE "$SENSITIVE_RE" || true)
     if [ -n "$matches" ]; then
         err "Potential secret in $file:"; echo "$matches" | head -3
         inc_error

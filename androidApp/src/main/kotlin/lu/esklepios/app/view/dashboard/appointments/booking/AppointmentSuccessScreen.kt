@@ -181,9 +181,7 @@ fun AppointmentSuccessScreen(
         GhostButton(
             text = stringResource(R.string.success_back_home),
             onClick = {
-                navController.navigate(NavDestination.Home.route) {
-                    popUpTo(0) { inclusive = true }
-                }
+                navController.popBackStack()
             },
             modifier = Modifier.fillMaxWidth(),
         )

@@ -12,6 +12,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -157,5 +159,25 @@ fun LoginScreen(
         }
 
         Spacer(Modifier.height(Dimens.paddingXXL))
+    }
+
+    if (uiState.showSaveCredentialsDialog) {
+        AlertDialog(
+            title = { Text("Save Credentials?") },
+            text = { Text("Would you like to save your email and password for faster login next time?") },
+            onDismissRequest = { viewModel.skipSaveCredentials() },
+            confirmButton = {
+                PrimaryButton(
+                    text = "Save",
+                    onClick = { viewModel.saveCredentials() },
+                )
+            },
+            dismissButton = {
+                PrimaryButton(
+                    text = "Not Now",
+                    onClick = { viewModel.skipSaveCredentials() },
+                )
+            },
+        )
     }
 }

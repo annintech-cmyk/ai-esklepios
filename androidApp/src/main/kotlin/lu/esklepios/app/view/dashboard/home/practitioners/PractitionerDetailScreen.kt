@@ -2,6 +2,7 @@ package lu.esklepios.app.view.dashboard.home.practitioners
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,6 +44,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import lu.esklepios.app.R
+import lu.esklepios.app.core.navigation.LocalNavAnimatedVisibilityScope
+import lu.esklepios.app.core.navigation.LocalSharedTransitionScope
 import lu.esklepios.app.core.ui.components.AppBodyText
 import lu.esklepios.app.core.ui.components.AppCaptionText
 import lu.esklepios.app.core.ui.components.AppIcon
@@ -63,6 +66,7 @@ import lu.esklepios.app.core.ui.theme.TextSecondary
 import lu.esklepios.app.debug.DummyPractitioners
 import lu.esklepios.app.util.AppUrls
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun PractitionerDetailScreen(
     navController: NavController,
@@ -70,6 +74,30 @@ fun PractitionerDetailScreen(
 ) {
     val doctor = DummyPractitioners.all.find { it.id == practitionerId }
     val context = LocalContext.current
+    val sharedScope = LocalSharedTransitionScope.current
+    val avs = LocalNavAnimatedVisibilityScope.current
+
+    val avatarHeroModifier: Modifier = if (sharedScope != null && avs != null) {
+        with(sharedScope) {
+            Modifier.sharedElement(
+                sharedContentState = rememberSharedContentState(key = "practitioner-avatar-$practitionerId"),
+                animatedVisibilityScope = avs,
+            )
+        }
+    } else {
+        Modifier
+    }
+
+    val nameHeroModifier: Modifier = if (sharedScope != null && avs != null) {
+        with(sharedScope) {
+            Modifier.sharedElement(
+                sharedContentState = rememberSharedContentState(key = "practitioner-name-$practitionerId"),
+                animatedVisibilityScope = avs,
+            )
+        }
+    } else {
+        Modifier
+    }
 
     if (doctor == null) {
         Box(
@@ -112,12 +140,14 @@ fun PractitionerDetailScreen(
                 AvatarCircle(
                     initials = doctor.initials,
                     size = Dimens.detailAvatarSize,
+                    modifier = avatarHeroModifier,
                 )
                 Spacer(Modifier.width(Dimens.paddingPlus))
                 Column {
                     AppSubtitleText(
                         text = doctor.fullName,
                         color = Color.White,
+                        modifier = nameHeroModifier,
                     )
                     AppCaptionText(
                         text = doctor.specialty,

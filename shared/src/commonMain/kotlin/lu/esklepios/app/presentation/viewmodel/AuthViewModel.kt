@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import lu.esklepios.app.data.network.TokenStorage
 import lu.esklepios.app.domain.model.ProfileType
 import lu.esklepios.app.domain.model.User
 import lu.esklepios.app.domain.usecase.ForgotPasswordUseCase
@@ -42,6 +43,8 @@ data class AuthUiState(
     val profileType: ProfileType = ProfileType.PATIENT,
     val step: Int = 1,
     val forgotPasswordSent: Boolean = false,
+    val showSaveCredentialsDialog: Boolean = false,
+    val hasSavedCredentials: Boolean = false,
 )
 
 class AuthViewModel(
@@ -49,9 +52,21 @@ class AuthViewModel(
     private val registerUseCase: RegisterUseCase,
     private val forgotPasswordUseCase: ForgotPasswordUseCase,
     private val logoutUseCase: LogoutUseCase,
+    private val tokenStorage: TokenStorage,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
+
+    init {
+        loadSavedEmail()
+    }
+
+    private fun loadSavedEmail() {
+        val savedEmail = tokenStorage.getSavedEmail()
+        if (!savedEmail.isNullOrEmpty()) {
+            _uiState.update { it.copy(email = savedEmail, hasSavedCredentials = true) }
+        }
+    }
 
     fun login() {
         val state = _uiState.value
@@ -63,12 +78,23 @@ class AuthViewModel(
             _uiState.update { it.copy(isLoading = true, error = null) }
             loginUseCase(state.email, state.password)
                 .onSuccess {
-                    _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
+                    _uiState.update { it.copy(isLoading = false, showSaveCredentialsDialog = true) }
                 }
                 .onFailure { throwable ->
                     _uiState.update { it.copy(isLoading = false, error = throwable.message ?: "Login failed") }
                 }
         }
+    }
+
+    fun saveCredentials() {
+        val state = _uiState.value
+        tokenStorage.setSavedEmail(state.email)
+        tokenStorage.setSavedPassword(state.password)
+        _uiState.update { it.copy(showSaveCredentialsDialog = false, isLoggedIn = true) }
+    }
+
+    fun skipSaveCredentials() {
+        _uiState.update { it.copy(showSaveCredentialsDialog = false, isLoggedIn = true) }
     }
 
     fun register() {

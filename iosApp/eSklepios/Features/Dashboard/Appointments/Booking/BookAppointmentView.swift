@@ -201,7 +201,6 @@ struct BookAppointmentView: View {
                     dismiss()
                 },
                 onNavigateToHome: {
-                    navigateToSuccess = false
                     dismiss()
                 }
             )

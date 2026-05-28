@@ -1,5 +1,6 @@
 package lu.esklepios.app.core.ui.components
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,6 +40,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import lu.esklepios.app.R
+import lu.esklepios.app.core.navigation.LocalNavAnimatedVisibilityScope
+import lu.esklepios.app.core.navigation.LocalSharedTransitionScope
 import lu.esklepios.app.core.ui.theme.BorderColor
 import lu.esklepios.app.core.ui.theme.BorderLight
 import lu.esklepios.app.core.ui.theme.Dimens
@@ -74,6 +77,7 @@ data class SlotDayUiModel(
     val slots: List<String>,
 )
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun PractitionerCard(
     practitioner: PractitionerUiModel,
@@ -81,6 +85,31 @@ fun PractitionerCard(
     onSeeProfile: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val sharedScope = LocalSharedTransitionScope.current
+    val avs = LocalNavAnimatedVisibilityScope.current
+
+    val avatarHeroModifier: Modifier = if (sharedScope != null && avs != null) {
+        with(sharedScope) {
+            Modifier.sharedElement(
+                sharedContentState = rememberSharedContentState(key = "practitioner-avatar-${practitioner.id}"),
+                animatedVisibilityScope = avs,
+            )
+        }
+    } else {
+        Modifier
+    }
+
+    val nameHeroModifier: Modifier = if (sharedScope != null && avs != null) {
+        with(sharedScope) {
+            Modifier.sharedElement(
+                sharedContentState = rememberSharedContentState(key = "practitioner-name-${practitioner.id}"),
+                animatedVisibilityScope = avs,
+            )
+        }
+    } else {
+        Modifier
+    }
+
     var weekOffset by remember { mutableIntStateOf(0) }
     var expanded by remember { mutableStateOf(false) }
 
@@ -139,12 +168,14 @@ fun PractitionerCard(
                 AvatarCircle(
                     initials = practitioner.initials,
                     size = Dimens.avatarSizeLg,
+                    modifier = avatarHeroModifier,
                 )
                 HSpace(Dimens.paddingM)
                 Column(Modifier.weight(1f)) {
                     AppSubtitleText(
                         text = practitioner.fullName,
                         color = TextPrimary,
+                        modifier = nameHeroModifier,
                     )
                     AppCaptionText(
                         text = practitioner.specialty,

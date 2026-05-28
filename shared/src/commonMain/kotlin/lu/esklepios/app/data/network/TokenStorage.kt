@@ -9,5 +9,15 @@ interface TokenStorage {
 
     fun setRefreshToken(token: String)
 
+    fun getSavedEmail(): String?
+
+    fun setSavedEmail(email: String)
+
+    fun getSavedPassword(): String?
+
+    fun setSavedPassword(password: String)
+
+    fun clearSavedCredentials()
+
     fun clear()
 }

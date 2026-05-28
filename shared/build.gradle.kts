@@ -134,5 +134,10 @@ buildkonfig {
             "MAPS_API_KEY",
             devProperties.getProperty("MAPS_API_KEY", "DEV_MAPS_KEY_HERE"),
         )
+        buildConfigField(
+            BOOLEAN,
+            "FOR_DEMO",
+            devProperties.getProperty("FOR_DEMO", "false"),
+        )
     }
 }

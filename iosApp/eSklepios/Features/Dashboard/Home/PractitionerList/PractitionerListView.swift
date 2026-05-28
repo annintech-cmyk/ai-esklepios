@@ -6,11 +6,12 @@ struct PractitionerListView: View {
     @StateObject private var viewModel = HomeViewModelWrapper()
     @State private var selectedPractitionerId: String? = nil
     @State private var navigateToPractitioner = false
+    @Namespace private var heroTransition
 
     private var dateFilters: [(key: String, label: String)] {
         [
-            ("All", NSLocalizedString("home_filter_all", value: "All", comment: "")),
-            ("Today", NSLocalizedString("home_filter_today", value: "Today", comment: "")),
+            ("All",          NSLocalizedString("home_filter_all",   value: "All",           comment: "")),
+            ("Today",        NSLocalizedString("home_filter_today", value: "Today",         comment: "")),
             ("Within 3 days", NSLocalizedString("home_filter_3days", value: "Within 3 days", comment: ""))
         ]
     }
@@ -30,22 +31,15 @@ struct PractitionerListView: View {
             )
 
             // Date filter segmented control
-            Picker("", selection: Binding(
-                get: { viewModel.selectedDateFilter },
-                set: { viewModel.setDateFilter($0) }
-            )) {
-                ForEach(dateFilters, id: \.key) { filter in
-                    Text(filter.label).tag(filter.key)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding(.horizontal, Dimens.paddingL)
-            .padding(.vertical, Dimens.paddingM)
-            .background(Color.appSurface)
+            PractitionerDateFilterPicker(
+                filters: dateFilters,
+                selectedFilter: viewModel.selectedDateFilter,
+                onFilterSelected: { viewModel.setDateFilter($0) }
+            )
 
             // "Open to New Patients" toggle pill
             HStack {
-                PractitionerListNewPatientsToggle(
+                PractitionerNewPatientsTogglePill(
                     checked: viewModel.openToNewPatients,
                     label: NSLocalizedString("home_filter_new_patients", value: "Open to new patients", comment: ""),
                     onToggle: { viewModel.toggleNewPatientsFilter() }
@@ -117,7 +111,8 @@ struct PractitionerListView: View {
                                 },
                                 onFavorite: {
                                     viewModel.toggleFavorite(id: p.id)
-                                }
+                                },
+                                namespace: heroTransition
                             )
                             .padding(.horizontal, Dimens.paddingL)
                         }
@@ -131,49 +126,8 @@ struct PractitionerListView: View {
         .navigationBarHidden(true)
         .navigationDestination(isPresented: $navigateToPractitioner) {
             if let id = selectedPractitionerId {
-                PractitionerDetailView(practitionerId: id)
+                PractitionerDetailView(practitionerId: id, namespace: heroTransition)
             }
         }
-    }
-}
-
-private func slotDays(from slots: [AppointmentSlot]) -> [SlotDayModel] {
-    let available = slots.filter { $0.available }
-    let grouped = Dictionary(grouping: available) { slot in
-        String(slot.dateTime.prefix(10))
-    }
-    return grouped
-        .map { (dateKey, daySlots) in
-            SlotDayModel(
-                id: dateKey,
-                dateKey: dateKey,
-                slots: daySlots
-                    .map { SlotEntry(id: $0.id, time: String($0.dateTime.dropFirst(11).prefix(5))) }
-                    .sorted { $0.time < $1.time }
-            )
-        }
-        .sorted { $0.dateKey < $1.dateKey }
-}
-
-private struct PractitionerListNewPatientsToggle: View {
-    let checked: Bool
-    let label: String
-    let onToggle: () -> Void
-
-    var body: some View {
-        HStack(spacing: Spacing.xs) {
-            AppIcon(
-                systemName: checked ? "checkmark.circle.fill" : "circle",
-                tint: checked ? .appSuccess : .appTextSecondary,
-                size: Dimens.iconSm
-            )
-            AppCaptionText(text: label, color: checked ? .appSuccess : .appTextSecondary)
-        }
-        .padding(.horizontal, Spacing.m)
-        .padding(.vertical, Spacing.xs)
-        .background(checked ? Color.appSuccessBg : Color.clear)
-        .clipShape(Capsule())
-        .overlay(Capsule().stroke(checked ? Color.appSuccess : Color.appTextHint.opacity(0.4), lineWidth: Dimens.strokeThin))
-        .onTapGesture(perform: onToggle)
     }
 }

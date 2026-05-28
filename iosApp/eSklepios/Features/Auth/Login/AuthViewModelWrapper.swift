@@ -14,6 +14,8 @@ class AuthViewModelWrapper: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
+    @Published var showSaveCredentialsDialog: Bool = false
+    @Published var hasSavedCredentials: Bool = false
 
     init() {
         self.viewModel = KoinHelper.shared.authViewModel()
@@ -26,6 +28,8 @@ class AuthViewModelWrapper: ObservableObject {
         self.email = initial?.email ?? ""
         self.password = initial?.password ?? ""
         self.confirmPassword = initial?.confirmPassword ?? ""
+        self.showSaveCredentialsDialog = initial?.showSaveCredentialsDialog ?? false
+        self.hasSavedCredentials = initial?.hasSavedCredentials ?? false
         startCollecting()
     }
 
@@ -41,6 +45,8 @@ class AuthViewModelWrapper: ObservableObject {
                 self?.email = state.email
                 self?.password = state.password
                 self?.confirmPassword = state.confirmPassword
+                self?.showSaveCredentialsDialog = state.showSaveCredentialsDialog
+                self?.hasSavedCredentials = state.hasSavedCredentials
             }
         }
     }
@@ -79,15 +85,26 @@ class AuthViewModelWrapper: ObservableObject {
         var email: String
         var password: String
         var confirmPassword: String
+        var showSaveCredentialsDialog: Bool
+        var hasSavedCredentials: Bool
     }
     var uiState: UiState {
         UiState(isLoading: isLoading, isLoggedIn: isLoggedIn, error: error,
                 forgotPasswordSent: forgotPasswordSent, step: step,
-                email: email, password: password, confirmPassword: confirmPassword)
+                email: email, password: password, confirmPassword: confirmPassword,
+                showSaveCredentialsDialog: showSaveCredentialsDialog, hasSavedCredentials: hasSavedCredentials)
     }
 
     func clearError() {
         viewModel.clearError()
+    }
+
+    func saveCredentials() {
+        viewModel.saveCredentials()
+    }
+
+    func skipSaveCredentials() {
+        viewModel.skipSaveCredentials()
     }
 
     deinit {

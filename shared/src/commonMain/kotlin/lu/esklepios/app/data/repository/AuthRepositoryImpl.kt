@@ -1,10 +1,13 @@
 package lu.esklepios.app.data.repository
 
+import kotlin.random.Random
+import lu.esklepios.app.BuildKonfig
 import lu.esklepios.app.data.network.ApiService
 import lu.esklepios.app.data.network.TokenStorage
 import lu.esklepios.app.data.network.toDomain
 import lu.esklepios.app.data.network.toRegisterRequest
 import lu.esklepios.app.db.ESklepiosDatabase
+import lu.esklepios.app.domain.model.ProfileType
 import lu.esklepios.app.domain.model.User
 import lu.esklepios.app.domain.repository.AuthRepository
 
@@ -17,12 +20,34 @@ class AuthRepositoryImpl(
         email: String,
         password: String,
     ): Result<User> {
-        return apiService.login(email, password).map { response ->
-            tokenStorage.setToken(response.token)
-            tokenStorage.setRefreshToken(response.refreshToken)
-            val user = response.user.toDomain()
-            cacheUser(user)
-            user
+        return if (BuildKonfig.FOR_DEMO) {
+            runCatching {
+                val mockToken = "demo_token_${Random.nextInt(100000, 999999)}"
+                tokenStorage.setToken(mockToken)
+                tokenStorage.setRefreshToken("demo_refresh_token")
+                val user = User(
+                    id = "demo_user_1",
+                    firstName = email.substringBefore("@").replaceFirstChar { it.uppercase() },
+                    lastName = "Demo User",
+                    email = email,
+                    phone = "+352 123 456 789",
+                    gender = "Not specified",
+                    dateOfBirth = "1990-01-01",
+                    cnsNumber = "1990010100000",
+                    profileType = ProfileType.PATIENT,
+                    language = "en",
+                )
+                cacheUser(user)
+                user
+            }
+        } else {
+            apiService.login(email, password).map { response ->
+                tokenStorage.setToken(response.token)
+                tokenStorage.setRefreshToken(response.refreshToken)
+                val user = response.user.toDomain()
+                cacheUser(user)
+                user
+            }
         }
     }
 

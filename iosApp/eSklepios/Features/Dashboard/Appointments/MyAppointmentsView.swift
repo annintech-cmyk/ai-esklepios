@@ -4,6 +4,7 @@ struct MyAppointmentsView: View {
     @StateObject private var viewModel = MyAppointmentsViewModelWrapper()
     @State private var cancelTargetId: String? = nil
     @State private var showCancelAlert = false
+    @State private var showPractitionerList = false
 
     var body: some View {
         VStack(spacing: Spacing.none) {
@@ -59,16 +60,20 @@ struct MyAppointmentsView: View {
                                     clinicName: appt.clinicName,
                                     status: AppointmentStatusDisplay.from(string: appt.status.name),
                                     isUpcoming: isUpcoming,
-                                    onModify: isUpcoming ? {} : nil,
+                                    onModify: isUpcoming ? {
+                                        showPractitionerList = true
+                                    } : nil,
                                     onCancel: isUpcoming ? {
                                         cancelTargetId = appt.id
                                         showCancelAlert = true
                                     } : nil
                                 )
+                                .frame(maxWidth: .infinity)
                             }
                         }
-                        .padding(.horizontal, Dimens.paddingL)
+                        .padding(.horizontal, Dimens.paddingM)
                         .padding(.vertical, Dimens.paddingM)
+                        .frame(maxWidth: .infinity)
                     }
                     .background(Color.appBackground)
                 }
@@ -96,6 +101,9 @@ struct MyAppointmentsView: View {
             }
         } message: {
             AppBodyText(text: NSLocalizedString("appointments_cancel_confirm", value: "Are you sure you want to cancel this appointment?", comment: ""))
+        }
+        .navigationDestination(isPresented: $showPractitionerList) {
+            PractitionerListView()
         }
     }
 }

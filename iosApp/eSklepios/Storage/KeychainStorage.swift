@@ -63,4 +63,25 @@ class KeychainStorage {
     func setBool(key: String, value: Bool) {
         set(key: key, value: value ? "true" : "false")
     }
+
+    func getSavedEmail() -> String? {
+        get(key: "saved_email")
+    }
+
+    func setSavedEmail(_ email: String) {
+        set(key: "saved_email", value: email)
+    }
+
+    func getSavedPassword() -> String? {
+        get(key: "saved_password")
+    }
+
+    func setSavedPassword(_ password: String) {
+        set(key: "saved_password", value: password)
+    }
+
+    func clearSavedCredentials() {
+        remove(key: "saved_email")
+        remove(key: "saved_password")
+    }
 }
