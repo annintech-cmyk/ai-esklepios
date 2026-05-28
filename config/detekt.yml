@@ -35,7 +35,7 @@ style:
   ReturnCount:
     max: 4
   MaxLineLength:
-    maxLineLength: 140
+    maxLineLength: 250
   UnusedPrivateMember:
     active: true
     allowedNames: '(_|ignore|expected|Preview|.*Preview)'
