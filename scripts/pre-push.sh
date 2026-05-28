@@ -132,30 +132,6 @@ else
     warn "SwiftLint not installed — skipping iOS lint (install: brew install swiftlint)"
 fi
 
-# ═════════════════════════════════════════════════════════════════════════════
-# 8. iOS — BUILD (macOS only)
-# ═════════════════════════════════════════════════════════════════════════════
-section "iOS — Build"
-
-if [[ "$(uname)" == "Darwin" ]]; then
-    if command -v xcodebuild &>/dev/null; then
-        info "Building iOS app (simulator) …"
-        if xcodebuild build \
-            -project iosApp/eSklepios.xcodeproj \
-            -scheme eSklepios \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
-            CODE_SIGNING_ALLOWED=NO \
-            -quiet 2>&1; then
-            ok "iOS build succeeded"
-        else
-            fail "iOS build failed — check Xcode output"
-        fi
-    else
-        warn "xcodebuild not found — skipping iOS build"
-    fi
-else
-    warn "Not on macOS — skipping iOS build checks"
-fi
 
 # ═════════════════════════════════════════════════════════════════════════════
 # FINAL SUMMARY

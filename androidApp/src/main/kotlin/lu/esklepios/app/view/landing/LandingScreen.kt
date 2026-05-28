@@ -41,9 +41,9 @@ import lu.esklepios.app.core.ui.components.AppTitleText
 import lu.esklepios.app.core.ui.components.GlassButton
 import lu.esklepios.app.core.ui.components.LandingSearchCard
 import lu.esklepios.app.core.ui.components.VSpace
+import lu.esklepios.app.core.ui.theme.Background
 import lu.esklepios.app.core.ui.theme.Dimens
 import lu.esklepios.app.core.ui.theme.Gradients
-import lu.esklepios.app.core.ui.theme.PrimaryMid
 import lu.esklepios.app.core.ui.theme.TealAccent
 import lu.esklepios.app.domain.repository.AuthRepository
 import lu.esklepios.app.presentation.viewmodel.HomeViewModel
@@ -69,7 +69,7 @@ fun LandingScreen(
         modifier =
             Modifier
                 .fillMaxSize()
-                .background(PrimaryMid)
+                .background(Background)
                 .verticalScroll(rememberScrollState()),
     ) {
         LandingHeroSection(
