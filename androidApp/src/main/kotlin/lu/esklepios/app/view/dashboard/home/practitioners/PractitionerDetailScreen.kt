@@ -64,6 +64,7 @@ import lu.esklepios.app.core.ui.theme.TextHint
 import lu.esklepios.app.core.ui.theme.TextPrimary
 import lu.esklepios.app.core.ui.theme.TextSecondary
 import lu.esklepios.app.debug.DummyPractitioners
+import lu.esklepios.app.domain.model.Practitioner
 import lu.esklepios.app.util.AppUrls
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -73,7 +74,6 @@ fun PractitionerDetailScreen(
     practitionerId: String,
 ) {
     val doctor = DummyPractitioners.all.find { it.id == practitionerId }
-    val context = LocalContext.current
     val sharedScope = LocalSharedTransitionScope.current
     val avs = LocalNavAnimatedVisibilityScope.current
 
@@ -113,424 +113,422 @@ fun PractitionerDetailScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        GradientHeader(
-            roundedBottom = false,
-            topPadding = Dimens.paddingNone,
-            bottomPadding = Dimens.paddingNone,
+        DetailScreenHeader(
+            doctor = doctor,
+            avatarHeroModifier = avatarHeroModifier,
+            nameHeroModifier = nameHeroModifier,
+            onBack = { navController.popBackStack() },
+        )
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().background(Background),
+            contentPadding = PaddingValues(top = Dimens.paddingM),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                AppIconButton(
-                    icon = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.cd_back),
-                    onClick = { navController.popBackStack() },
-                    tint = Color.White,
+            item { ContactDetailsCard(doctor = doctor) }
+            item { SchedulesCard(doctor = doctor) }
+            item { PaymentsCard(doctor = doctor) }
+            item { PresentationCard(doctor = doctor) }
+            item { Spacer(Modifier.height(Dimens.paddingXXL)) }
+        }
+    }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+private fun DetailScreenHeader(
+    doctor: Practitioner,
+    avatarHeroModifier: Modifier,
+    nameHeroModifier: Modifier,
+    onBack: () -> Unit,
+) {
+    GradientHeader(
+        roundedBottom = false,
+        topPadding = Dimens.paddingNone,
+        bottomPadding = Dimens.paddingNone,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            AppIconButton(
+                icon = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.cd_back),
+                onClick = onBack,
+                tint = Color.White,
+            )
+            Spacer(Modifier.weight(1f))
+        }
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = Dimens.paddingL, end = Dimens.paddingL, bottom = Dimens.paddingL),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            AvatarCircle(
+                initials = doctor.initials,
+                size = Dimens.detailAvatarSize,
+                modifier = avatarHeroModifier,
+            )
+            Spacer(Modifier.width(Dimens.paddingPlus))
+            Column {
+                AppSubtitleText(
+                    text = doctor.fullName,
+                    color = Color.White,
+                    modifier = nameHeroModifier,
                 )
-                Spacer(Modifier.weight(1f))
+                AppCaptionText(
+                    text = doctor.specialty,
+                    color = Color.White.copy(alpha = 0.75f),
+                )
             }
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(start = Dimens.paddingL, end = Dimens.paddingL, bottom = Dimens.paddingL),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                AvatarCircle(
-                    initials = doctor.initials,
-                    size = Dimens.detailAvatarSize,
-                    modifier = avatarHeroModifier,
-                )
-                Spacer(Modifier.width(Dimens.paddingPlus))
-                Column {
-                    AppSubtitleText(
-                        text = doctor.fullName,
-                        color = Color.White,
-                        modifier = nameHeroModifier,
+        }
+    }
+}
+
+@Composable
+private fun ContactDetailsCard(doctor: Practitioner) {
+    val context = LocalContext.current
+    DetailCard {
+        AppSubtitleText(
+            text = stringResource(R.string.detail_contact_details),
+            color = TextPrimary,
+            modifier =
+                Modifier.padding(
+                    top = Dimens.paddingL,
+                    start = Dimens.paddingL,
+                    end = Dimens.paddingL,
+                ),
+        )
+        Row(
+            modifier =
+                Modifier.padding(
+                    start = Dimens.paddingL,
+                    end = Dimens.paddingL,
+                    top = Dimens.paddingS,
+                    bottom = Dimens.paddingL,
+                ),
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                AppCaptionText(text = stringResource(R.string.label_clinic), color = TextPrimary)
+                Spacer(Modifier.height(Dimens.paddingXS))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AppIcon(
+                        imageVector = Icons.Filled.MedicalServices,
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
+                        tint = PrimaryMid,
+                        size = Dimens.iconSizeMicro,
                     )
+                    Spacer(Modifier.width(Dimens.paddingTiny))
+                    AppCaptionText(text = doctor.clinicName, color = TextSecondary)
+                }
+                Spacer(Modifier.height(Dimens.paddingM))
+                AppCaptionText(text = stringResource(R.string.detail_address), color = TextPrimary)
+                Spacer(Modifier.height(Dimens.paddingXS))
+                Row(verticalAlignment = Alignment.Top) {
+                    AppIcon(
+                        imageVector = Icons.Filled.LocationOn,
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
+                        tint = PrimaryMid,
+                        size = Dimens.iconSizeMicro,
+                        modifier = Modifier.padding(top = Dimens.paddingXXS),
+                    )
+                    Spacer(Modifier.width(Dimens.paddingTiny))
                     AppCaptionText(
-                        text = doctor.specialty,
-                        color = Color.White.copy(alpha = 0.75f),
+                        text = "${doctor.address}, ${doctor.city}, ${doctor.postalCode}",
+                        color = TextSecondary,
                     )
+                }
+                Spacer(Modifier.height(Dimens.paddingM))
+                AppCaptionText(text = stringResource(R.string.detail_contact), color = TextPrimary)
+                Spacer(Modifier.height(Dimens.paddingXS))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier =
+                        Modifier.clickable {
+                            context.startActivity(
+                                Intent(Intent.ACTION_DIAL, Uri.parse("tel:${doctor.phone}")),
+                            )
+                        },
+                ) {
+                    AppIcon(
+                        imageVector = Icons.Filled.Phone,
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
+                        tint = PrimaryMid,
+                        size = Dimens.iconSizeMicro,
+                    )
+                    Spacer(Modifier.width(Dimens.paddingTiny))
+                    AppCaptionText(text = doctor.phone, color = Primary)
+                }
+                Spacer(Modifier.height(Dimens.paddingS))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier =
+                        Modifier.clickable {
+                            context.startActivity(
+                                Intent(Intent.ACTION_SENDTO).apply {
+                                    data = Uri.parse("mailto:${doctor.email}")
+                                },
+                            )
+                        },
+                ) {
+                    AppIcon(
+                        imageVector = Icons.Filled.Email,
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
+                        tint = PrimaryMid,
+                        size = Dimens.iconSizeMicro,
+                    )
+                    Spacer(Modifier.width(Dimens.paddingTiny))
+                    AppCaptionText(text = doctor.email, color = Primary)
+                }
+            }
+
+            Spacer(Modifier.width(Dimens.paddingM))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(Dimens.detailMapHeight)
+                            .clip(RoundedCornerShape(Dimens.radiusSm))
+                            .background(PrimaryLight),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        AppIcon(
+                            imageVector = Icons.Filled.LocationOn,
+                            contentDescription = stringResource(R.string.cd_map_placeholder),
+                            tint = PrimaryMid,
+                            size = Dimens.iconSizeLg,
+                        )
+                        Spacer(Modifier.height(Dimens.paddingTiny))
+                        AppCaptionText(
+                            text = doctor.city,
+                            color = TextSecondary,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
                 }
             }
         }
+    }
+}
 
-        LazyColumn(
+@Composable
+private fun SchedulesCard(doctor: Practitioner) {
+    val context = LocalContext.current
+    DetailCard {
+        AppCaptionText(
+            text = stringResource(R.string.detail_schedules_header),
+            color = TextPrimary,
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(Background),
-            contentPadding = PaddingValues(top = Dimens.paddingM),
+                Modifier.padding(
+                    top = Dimens.paddingL,
+                    start = Dimens.paddingL,
+                    end = Dimens.paddingL,
+                ),
+        )
+        Row(
+            modifier =
+                Modifier.padding(
+                    start = Dimens.paddingL,
+                    end = Dimens.paddingL,
+                    top = Dimens.paddingS,
+                    bottom = Dimens.paddingL,
+                ),
         ) {
-            // ── Card 1 — Contact details ─────────────────────────────────────
-            item {
-                DetailCard {
-                    AppSubtitleText(
-                        text = stringResource(R.string.detail_contact_details),
-                        color = TextPrimary,
-                        modifier =
-                            Modifier.padding(
-                                top = Dimens.paddingL,
-                                start = Dimens.paddingL,
-                                end = Dimens.paddingL,
-                            ),
+            Column(modifier = Modifier.weight(1f)) {
+                if (doctor.schedule.isEmpty()) {
+                    AppCaptionText(
+                        text = stringResource(R.string.detail_no_schedule),
+                        color = TextHint,
                     )
-                    Row(
-                        modifier =
-                            Modifier.padding(
-                                start = Dimens.paddingL,
-                                end = Dimens.paddingL,
-                                top = Dimens.paddingS,
-                                bottom = Dimens.paddingL,
-                            ),
-                    ) {
-                        Column(modifier = Modifier.weight(1f)) {
+                } else {
+                    doctor.schedule.forEach { entry ->
+                        Row(modifier = Modifier.padding(bottom = Dimens.paddingXS)) {
                             AppCaptionText(
-                                text = stringResource(R.string.label_clinic),
-                                color = TextPrimary,
+                                text = entry.day,
+                                color = TextSecondary,
+                                modifier = Modifier.width(Dimens.scheduleDayLabelWidth),
                             )
-                            Spacer(Modifier.height(Dimens.paddingXS))
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                AppIcon(
-                                    imageVector = Icons.Filled.MedicalServices,
-                                    // a11y: decorative — labelled by adjacent Text
-                                    contentDescription = null,
-                                    tint = PrimaryMid,
-                                    size = Dimens.iconSizeMicro,
-                                )
-                                Spacer(Modifier.width(Dimens.paddingTiny))
-                                AppCaptionText(text = doctor.clinicName, color = TextSecondary)
-                            }
-                            Spacer(Modifier.height(Dimens.paddingM))
-                            AppCaptionText(
-                                text = stringResource(R.string.detail_address),
-                                color = TextPrimary,
-                            )
-                            Spacer(Modifier.height(Dimens.paddingXS))
-                            Row(verticalAlignment = Alignment.Top) {
-                                AppIcon(
-                                    imageVector = Icons.Filled.LocationOn,
-                                    // a11y: decorative — labelled by adjacent Text
-                                    contentDescription = null,
-                                    tint = PrimaryMid,
-                                    size = Dimens.iconSizeMicro,
-                                    modifier = Modifier.padding(top = Dimens.paddingXXS),
-                                )
-                                Spacer(Modifier.width(Dimens.paddingTiny))
-                                AppCaptionText(
-                                    text = "${doctor.address}, ${doctor.city}, ${doctor.postalCode}",
-                                    color = TextSecondary,
-                                )
-                            }
-                            Spacer(Modifier.height(Dimens.paddingM))
-                            AppCaptionText(
-                                text = stringResource(R.string.detail_contact),
-                                color = TextPrimary,
-                            )
-                            Spacer(Modifier.height(Dimens.paddingXS))
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier =
-                                    Modifier.clickable {
-                                        context.startActivity(
-                                            Intent(Intent.ACTION_DIAL, Uri.parse("tel:${doctor.phone}")),
-                                        )
-                                    },
-                            ) {
-                                AppIcon(
-                                    imageVector = Icons.Filled.Phone,
-                                    // a11y: decorative — labelled by adjacent Text
-                                    contentDescription = null,
-                                    tint = PrimaryMid,
-                                    size = Dimens.iconSizeMicro,
-                                )
-                                Spacer(Modifier.width(Dimens.paddingTiny))
-                                AppCaptionText(text = doctor.phone, color = Primary)
-                            }
-                            Spacer(Modifier.height(Dimens.paddingS))
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier =
-                                    Modifier.clickable {
-                                        context.startActivity(
-                                            Intent(Intent.ACTION_SENDTO).apply {
-                                                data = Uri.parse("mailto:${doctor.email}")
-                                            },
-                                        )
-                                    },
-                            ) {
-                                AppIcon(
-                                    imageVector = Icons.Filled.Email,
-                                    // a11y: decorative — labelled by adjacent Text
-                                    contentDescription = null,
-                                    tint = PrimaryMid,
-                                    size = Dimens.iconSizeMicro,
-                                )
-                                Spacer(Modifier.width(Dimens.paddingTiny))
-                                AppCaptionText(text = doctor.email, color = Primary)
-                            }
+                            Spacer(Modifier.width(Dimens.paddingXS))
+                            AppCaptionText(text = entry.hours, color = TextPrimary)
                         }
+                    }
+                }
+            }
 
-                        Spacer(Modifier.width(Dimens.paddingM))
+            Spacer(Modifier.width(Dimens.paddingL))
 
-                        Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.Top) {
+                    AppIcon(
+                        imageVector = Icons.Filled.Phone,
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
+                        tint = TextPrimary,
+                        size = Dimens.iconSizeMicro,
+                        modifier = Modifier.padding(top = Dimens.paddingXXS),
+                    )
+                    Spacer(Modifier.width(Dimens.paddingXS))
+                    // UI-14 exemption: buildAnnotatedString requires raw `Text(annotated)` —
+                    // annotated strings cannot be wrapped in AppText components.
+                    Text(
+                        text =
+                            buildAnnotatedString {
+                                append(stringResource(R.string.detail_emergency_prefix))
+                                append(" ")
+                                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                    append(stringResource(R.string.detail_emergency_number))
+                                }
+                            },
+                        fontSize = Dimens.fontSizeXxs,
+                        color = TextPrimary,
+                    )
+                }
+                Spacer(Modifier.height(Dimens.paddingTiny))
+                AppCaptionText(
+                    text = stringResource(R.string.detail_emergency_subtitle),
+                    color = Primary,
+                    modifier =
+                        Modifier.clickable {
+                            context.startActivity(
+                                Intent(Intent.ACTION_VIEW, Uri.parse(AppUrls.HEALTH_PORTAL)),
+                            )
+                        },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PaymentsCard(doctor: Practitioner) {
+    DetailCard {
+        AppSubtitleText(
+            text = stringResource(R.string.detail_payments),
+            color = TextPrimary,
+            modifier =
+                Modifier.padding(
+                    top = Dimens.paddingL,
+                    start = Dimens.paddingL,
+                    end = Dimens.paddingL,
+                ),
+        )
+        AppCaptionText(
+            text = stringResource(R.string.detail_means_of_payment),
+            color = TextPrimary,
+            modifier =
+                Modifier.padding(
+                    top = Dimens.paddingS,
+                    start = Dimens.paddingL,
+                    end = Dimens.paddingL,
+                ),
+        )
+        if (doctor.paymentMethods.isEmpty()) {
+            AppBodyText(
+                text = stringResource(R.string.detail_no_payment_info),
+                color = TextHint,
+                modifier = Modifier.padding(Dimens.paddingL),
+            )
+        } else {
+            Column(
+                modifier =
+                    Modifier.padding(
+                        start = Dimens.paddingL,
+                        end = Dimens.paddingL,
+                        top = Dimens.paddingS,
+                        bottom = Dimens.paddingL,
+                    ),
+            ) {
+                doctor.paymentMethods.forEach { method ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(bottom = Dimens.paddingTiny),
+                    ) {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .size(Dimens.paddingTiny)
+                                    .background(TextSecondary, CircleShape),
+                        )
+                        Spacer(Modifier.width(Dimens.paddingS))
+                        AppCaptionText(text = method, color = TextSecondary)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PresentationCard(doctor: Practitioner) {
+    DetailCard {
+        AppSubtitleText(
+            text = stringResource(R.string.detail_presentation),
+            color = TextPrimary,
+            modifier =
+                Modifier.padding(
+                    top = Dimens.paddingL,
+                    start = Dimens.paddingL,
+                    end = Dimens.paddingL,
+                ),
+        )
+        if (doctor.diplomas.isEmpty() && doctor.presentation.isBlank()) {
+            AppBodyText(
+                text = stringResource(R.string.detail_no_presentation),
+                color = TextHint,
+                modifier = Modifier.padding(Dimens.paddingL),
+            )
+        } else {
+            if (doctor.diplomas.isNotEmpty()) {
+                AppCaptionText(
+                    text = stringResource(R.string.detail_diplomas_label),
+                    color = TextPrimary,
+                    modifier =
+                        Modifier.padding(
+                            horizontal = Dimens.paddingL,
+                            vertical = Dimens.paddingS,
+                        ),
+                )
+                Column(modifier = Modifier.padding(horizontal = Dimens.paddingL)) {
+                    doctor.diplomas.forEach { diploma ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(bottom = Dimens.paddingTiny),
+                        ) {
                             Box(
                                 modifier =
                                     Modifier
-                                        .fillMaxWidth()
-                                        .height(Dimens.detailMapHeight)
-                                        .clip(RoundedCornerShape(Dimens.radiusSm))
-                                        .background(PrimaryLight),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    AppIcon(
-                                        imageVector = Icons.Filled.LocationOn,
-                                        contentDescription = stringResource(R.string.cd_map_placeholder),
-                                        tint = PrimaryMid,
-                                        size = Dimens.iconSizeLg,
-                                    )
-                                    Spacer(Modifier.height(Dimens.paddingTiny))
-                                    AppCaptionText(
-                                        text = doctor.city,
-                                        color = TextSecondary,
-                                        textAlign = TextAlign.Center,
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            // ── Card 2 — Schedules ───────────────────────────────────────────
-            item {
-                DetailCard {
-                    AppCaptionText(
-                        text = stringResource(R.string.detail_schedules_header),
-                        color = TextPrimary,
-                        modifier =
-                            Modifier.padding(
-                                top = Dimens.paddingL,
-                                start = Dimens.paddingL,
-                                end = Dimens.paddingL,
-                            ),
-                    )
-                    Row(
-                        modifier =
-                            Modifier.padding(
-                                start = Dimens.paddingL,
-                                end = Dimens.paddingL,
-                                top = Dimens.paddingS,
-                                bottom = Dimens.paddingL,
-                            ),
-                    ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            if (doctor.schedule.isEmpty()) {
-                                AppCaptionText(
-                                    text = stringResource(R.string.detail_no_schedule),
-                                    color = TextHint,
-                                )
-                            } else {
-                                doctor.schedule.forEach { entry ->
-                                    Row(modifier = Modifier.padding(bottom = Dimens.paddingXS)) {
-                                        AppCaptionText(
-                                            text = entry.day,
-                                            color = TextSecondary,
-                                            modifier = Modifier.width(Dimens.scheduleDayLabelWidth),
-                                        )
-                                        Spacer(Modifier.width(Dimens.paddingXS))
-                                        AppCaptionText(
-                                            text = entry.hours,
-                                            color = TextPrimary,
-                                        )
-                                    }
-                                }
-                            }
-                        }
-
-                        Spacer(Modifier.width(Dimens.paddingL))
-
-                        Column(modifier = Modifier.weight(1f)) {
-                            Row(verticalAlignment = Alignment.Top) {
-                                AppIcon(
-                                    imageVector = Icons.Filled.Phone,
-                                    // a11y: decorative — labelled by adjacent Text
-                                    contentDescription = null,
-                                    tint = TextPrimary,
-                                    size = Dimens.iconSizeMicro,
-                                    modifier = Modifier.padding(top = Dimens.paddingXXS),
-                                )
-                                Spacer(Modifier.width(Dimens.paddingXS))
-                                // UI-14 exemption: buildAnnotatedString requires raw `Text(annotated)` —
-                                // annotated strings cannot be wrapped in AppText components.
-                                Text(
-                                    text =
-                                        buildAnnotatedString {
-                                            append(stringResource(R.string.detail_emergency_prefix))
-                                            append(" ")
-                                            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                                                append(stringResource(R.string.detail_emergency_number))
-                                            }
-                                        },
-                                    fontSize = Dimens.fontSizeXxs,
-                                    color = TextPrimary,
-                                )
-                            }
-                            Spacer(Modifier.height(Dimens.paddingTiny))
-                            AppCaptionText(
-                                text = stringResource(R.string.detail_emergency_subtitle),
-                                color = Primary,
-                                modifier =
-                                    Modifier.clickable {
-                                        context.startActivity(
-                                            Intent(
-                                                Intent.ACTION_VIEW,
-                                                Uri.parse(AppUrls.HEALTH_PORTAL),
-                                            ),
-                                        )
-                                    },
+                                        .size(Dimens.paddingTiny)
+                                        .background(TextSecondary, CircleShape),
                             )
+                            Spacer(Modifier.width(Dimens.paddingS))
+                            AppCaptionText(text = diploma, color = TextSecondary)
                         }
                     }
                 }
             }
-
-            // ── Card 3 — Payments ────────────────────────────────────────────
-            item {
-                DetailCard {
-                    AppSubtitleText(
-                        text = stringResource(R.string.detail_payments),
-                        color = TextPrimary,
-                        modifier =
-                            Modifier.padding(
-                                top = Dimens.paddingL,
-                                start = Dimens.paddingL,
-                                end = Dimens.paddingL,
-                            ),
-                    )
-                    AppCaptionText(
-                        text = stringResource(R.string.detail_means_of_payment),
-                        color = TextPrimary,
-                        modifier =
-                            Modifier.padding(
-                                top = Dimens.paddingS,
-                                start = Dimens.paddingL,
-                                end = Dimens.paddingL,
-                            ),
-                    )
-                    if (doctor.paymentMethods.isEmpty()) {
-                        AppBodyText(
-                            text = stringResource(R.string.detail_no_payment_info),
-                            color = TextHint,
-                            modifier = Modifier.padding(Dimens.paddingL),
-                        )
-                    } else {
-                        Column(
-                            modifier =
-                                Modifier.padding(
-                                    start = Dimens.paddingL,
-                                    end = Dimens.paddingL,
-                                    top = Dimens.paddingS,
-                                    bottom = Dimens.paddingL,
-                                ),
-                        ) {
-                            doctor.paymentMethods.forEach { method ->
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.padding(bottom = Dimens.paddingTiny),
-                                ) {
-                                    Box(
-                                        modifier =
-                                            Modifier
-                                                .size(Dimens.paddingTiny)
-                                                .background(TextSecondary, CircleShape),
-                                    )
-                                    Spacer(Modifier.width(Dimens.paddingS))
-                                    AppCaptionText(
-                                        text = method,
-                                        color = TextSecondary,
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+            if (doctor.presentation.isNotBlank()) {
+                Spacer(Modifier.height(Dimens.paddingS))
+                AppCaptionText(
+                    text = doctor.presentation,
+                    color = TextSecondary,
+                    modifier =
+                        Modifier.padding(
+                            start = Dimens.paddingL,
+                            end = Dimens.paddingL,
+                            bottom = Dimens.paddingL,
+                        ),
+                )
+            } else {
+                Spacer(Modifier.height(Dimens.paddingM))
             }
-
-            // ── Card 4 — Presentation ────────────────────────────────────────
-            item {
-                DetailCard {
-                    AppSubtitleText(
-                        text = stringResource(R.string.detail_presentation),
-                        color = TextPrimary,
-                        modifier =
-                            Modifier.padding(
-                                top = Dimens.paddingL,
-                                start = Dimens.paddingL,
-                                end = Dimens.paddingL,
-                            ),
-                    )
-                    if (doctor.diplomas.isEmpty() && doctor.presentation.isBlank()) {
-                        AppBodyText(
-                            text = stringResource(R.string.detail_no_presentation),
-                            color = TextHint,
-                            modifier = Modifier.padding(Dimens.paddingL),
-                        )
-                    } else {
-                        if (doctor.diplomas.isNotEmpty()) {
-                            AppCaptionText(
-                                text = stringResource(R.string.detail_diplomas_label),
-                                color = TextPrimary,
-                                modifier =
-                                    Modifier.padding(
-                                        horizontal = Dimens.paddingL,
-                                        vertical = Dimens.paddingS,
-                                    ),
-                            )
-                            Column(modifier = Modifier.padding(horizontal = Dimens.paddingL)) {
-                                doctor.diplomas.forEach { diploma ->
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        modifier = Modifier.padding(bottom = Dimens.paddingTiny),
-                                    ) {
-                                        Box(
-                                            modifier =
-                                                Modifier
-                                                    .size(Dimens.paddingTiny)
-                                                    .background(TextSecondary, CircleShape),
-                                        )
-                                        Spacer(Modifier.width(Dimens.paddingS))
-                                        AppCaptionText(
-                                            text = diploma,
-                                            color = TextSecondary,
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                        if (doctor.presentation.isNotBlank()) {
-                            Spacer(Modifier.height(Dimens.paddingS))
-                            AppCaptionText(
-                                text = doctor.presentation,
-                                color = TextSecondary,
-                                modifier =
-                                    Modifier.padding(
-                                        start = Dimens.paddingL,
-                                        end = Dimens.paddingL,
-                                        bottom = Dimens.paddingL,
-                                    ),
-                            )
-                        } else {
-                            Spacer(Modifier.height(Dimens.paddingM))
-                        }
-                    }
-                }
-            }
-
-            item { Spacer(Modifier.height(Dimens.paddingXXL)) }
         }
     }
 }
