@@ -55,12 +55,12 @@ import lu.esklepios.app.view.dashboard.appointments.MyAppointmentsScreen
 import lu.esklepios.app.view.dashboard.appointments.booking.AppointmentSuccessScreen
 import lu.esklepios.app.view.dashboard.appointments.booking.BookingScreen
 import lu.esklepios.app.view.dashboard.home.HomeScreen
-import lu.esklepios.app.view.dashboard.home.practitionerData.PractitionerDetailScreen
+import lu.esklepios.app.view.dashboard.home.practitioner_data.PractitionerDetailScreen
 import lu.esklepios.app.view.dashboard.home.practitioners.PractitionerListScreen
 import lu.esklepios.app.view.dashboard.profile.ProfileScreen
-import lu.esklepios.app.view.dashboard.profile.profileEdit.ChangeEmailScreen
-import lu.esklepios.app.view.dashboard.profile.profileEdit.ChangePasswordScreen
-import lu.esklepios.app.view.dashboard.profile.profileEdit.EditProfileScreen
+import lu.esklepios.app.view.dashboard.profile.profile_edit.ChangeEmailScreen
+import lu.esklepios.app.view.dashboard.profile.profile_edit.ChangePasswordScreen
+import lu.esklepios.app.view.dashboard.profile.profile_edit.EditProfileScreen
 import lu.esklepios.app.view.landing.LandingScreen
 import lu.esklepios.app.view.splash.SplashScreen
 import org.koin.androidx.compose.koinViewModel

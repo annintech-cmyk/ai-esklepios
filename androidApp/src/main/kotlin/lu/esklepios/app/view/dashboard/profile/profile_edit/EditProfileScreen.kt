@@ -1,4 +1,4 @@
-package lu.esklepios.app.view.dashboard.profile.profileEdit
+package lu.esklepios.app.view.dashboard.profile.profile_edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
