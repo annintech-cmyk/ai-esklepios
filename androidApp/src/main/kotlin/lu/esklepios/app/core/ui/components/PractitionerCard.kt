@@ -69,8 +69,10 @@ data class PractitionerUiModel(
 }
 
 data class SlotDayUiModel(
-    val dayLabel: String, // ISO date "2026-05-26"
-    val slots: List<String>, // slot IDs
+    // ISO date "2026-05-26"
+    val dayLabel: String,
+    // slot IDs
+    val slots: List<String>,
 )
 
 @Composable
@@ -164,7 +166,8 @@ fun PractitionerCard(
             ) {
                 AppIcon(
                     imageVector = Icons.Filled.Business,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = TextSecondary,
                     size = Dimens.iconSizeSm,
                 )
@@ -185,7 +188,8 @@ fun PractitionerCard(
             ) {
                 AppIcon(
                     imageVector = Icons.Filled.LocationOn,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = TextSecondary,
                     size = Dimens.iconSizeSm,
                 )

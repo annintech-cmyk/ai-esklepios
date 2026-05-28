@@ -88,7 +88,8 @@ fun ChangeEmailScreen(
         ) {
             AppIcon(
                 Icons.Filled.ForwardToInbox,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = Primary,
                 size = Dimens.paddingXXL + Dimens.paddingXS,
                 modifier = Modifier.padding(top = Dimens.paddingXS / 2),

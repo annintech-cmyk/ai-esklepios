@@ -52,7 +52,8 @@ fun CheckRow(
             ) {
                 AppIcon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = Color.White,
                     size = Dimens.iconSizeXxs,
                 )

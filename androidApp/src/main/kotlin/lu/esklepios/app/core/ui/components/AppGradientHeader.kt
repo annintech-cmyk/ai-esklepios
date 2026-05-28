@@ -300,7 +300,8 @@ private fun CenteredProfile(profile: HeaderProfile.Centered) {
             ) {
                 Icon(
                     imageVector = Icons.Filled.CameraAlt,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.size(Dimens.iconSizeCamera),
                 )

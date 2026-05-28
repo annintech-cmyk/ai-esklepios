@@ -62,6 +62,7 @@ android {
 
 dependencies {
     implementation(project(":shared"))
+    implementation(libs.androidx.material3)
 
     // Compose BOM
     val composeBom = platform(libs.compose.bom)

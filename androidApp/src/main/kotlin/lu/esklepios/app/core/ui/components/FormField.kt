@@ -86,7 +86,8 @@ fun FormField(
                     {
                         Icon(
                             imageVector = leadingIcon,
-                            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                            // a11y: decorative — labelled by adjacent Text
+                            contentDescription = null,
                             tint = if (isError) Danger else PrimaryMid,
                             modifier = Modifier.size(Dimens.iconSizeMd),
                         )

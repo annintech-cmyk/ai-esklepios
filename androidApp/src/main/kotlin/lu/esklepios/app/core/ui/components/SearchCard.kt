@@ -76,7 +76,8 @@ fun SearchCard(
         ) {
             AppIcon(
                 imageVector = Icons.Filled.Search,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = Color.White,
                 size = Dimens.iconSizeMd,
             )
@@ -88,7 +89,8 @@ fun SearchCard(
             )
             AppIcon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = Color.White,
                 size = Dimens.iconSizeMd,
             )
@@ -149,7 +151,8 @@ private fun LandingTrustRow(
     Row(verticalAlignment = Alignment.CenterVertically) {
         AppIcon(
             imageVector = icon,
-            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+            // a11y: decorative — labelled by adjacent Text
+            contentDescription = null,
             tint = PrimaryMid,
             size = Dimens.iconSizeMd,
         )

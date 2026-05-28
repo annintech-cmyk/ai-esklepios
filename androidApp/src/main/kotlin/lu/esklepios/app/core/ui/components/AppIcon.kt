@@ -46,7 +46,8 @@ fun AppIcon(
 private fun AppIconDefaultPreview() {
     AppIcon(
         imageVector = Icons.Filled.Star,
-        contentDescription = null, // a11y: decorative — preview only
+        // a11y: decorative — preview only
+        contentDescription = null,
     )
 }
 

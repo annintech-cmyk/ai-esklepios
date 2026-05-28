@@ -47,7 +47,8 @@ fun FilterChip(
         if (icon != null) {
             AppIcon(
                 imageVector = icon,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = textColor,
                 size = Dimens.iconSizeSm,
             )

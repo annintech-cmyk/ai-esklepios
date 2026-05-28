@@ -74,14 +74,16 @@ fun ForgotPasswordScreen(
             if (uiState.forgotPasswordSent) {
                 AppIcon(
                     Icons.Filled.CheckCircle,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = Success,
                     size = Dimens.avatarSizeMd,
                 )
             } else {
                 AppIcon(
                     Icons.Filled.Lock,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = Primary,
                     size = Dimens.avatarSizeMd,
                 )

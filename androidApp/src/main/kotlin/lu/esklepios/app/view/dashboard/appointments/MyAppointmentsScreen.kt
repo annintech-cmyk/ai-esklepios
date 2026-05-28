@@ -245,7 +245,8 @@ private fun AppointmentItemCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AppIcon(
                     Icons.Filled.CalendarMonth,
-                    contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                    // a11y: decorative — labelled by adjacent Text
+                    contentDescription = null,
                     tint = TextSecondary,
                     size = Dimens.iconSizeSm,
                 )

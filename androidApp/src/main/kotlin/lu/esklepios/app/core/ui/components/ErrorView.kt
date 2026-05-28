@@ -36,7 +36,8 @@ fun ErrorView(
     ) {
         Icon(
             imageVector = Icons.Filled.Warning,
-            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+            // a11y: decorative — labelled by adjacent Text
+            contentDescription = null,
             tint = Danger,
             modifier = Modifier.size(Dimens.avatarSizeXl),
         )

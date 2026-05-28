@@ -89,7 +89,8 @@ fun MapPreviewCard(
                 ) {
                     AppIcon(
                         imageVector = Icons.Filled.LocationOn,
-                        contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
                         tint = Danger,
                         size = Dimens.iconSizeLg,
                     )
@@ -129,7 +130,8 @@ fun MapPreviewCard(
                 ) {
                     AppIcon(
                         imageVector = Icons.Filled.Map,
-                        contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                        // a11y: decorative — labelled by adjacent Text
+                        contentDescription = null,
                         tint = Primary,
                         size = Dimens.iconSizeSm,
                     )

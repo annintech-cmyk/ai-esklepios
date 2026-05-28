@@ -42,7 +42,8 @@ fun EmptyStateView(
         ) {
             AppIcon(
                 imageVector = icon,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint = Primary.copy(alpha = 0.3f),
                 size = Dimens.emptyIconSmSize,
             )

@@ -133,9 +133,10 @@ fun ChangePasswordScreen(
             placeholder = stringResource(R.string.label_current_password_field),
             showPassword = showCurrentPw,
             onToggleShow = { showCurrentPw = !showCurrentPw },
+            // a11y: decorative — labelled by adjacent Text
             leadingIcon = {
                 Icon(Icons.Filled.Lock, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
-            }, // a11y: decorative — labelled by adjacent Text
+            },
         )
 
         Spacer(Modifier.height(Dimens.paddingXL))
@@ -148,9 +149,10 @@ fun ChangePasswordScreen(
             placeholder = stringResource(R.string.label_new_password_field),
             showPassword = showNewPw,
             onToggleShow = { showNewPw = !showNewPw },
+            // a11y: decorative — labelled by adjacent Text
             leadingIcon = {
                 Icon(Icons.Filled.LockPerson, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
-            }, // a11y: decorative — labelled by adjacent Text
+            },
         )
 
         if (newPw.isNotBlank()) {
@@ -194,9 +196,10 @@ fun ChangePasswordScreen(
             showPassword = showConfirmPw,
             onToggleShow = { showConfirmPw = !showConfirmPw },
             isError = uiState.confirmPassword.isNotBlank() && !passwordsMatch,
+            // a11y: decorative — labelled by adjacent Text
             leadingIcon = {
                 Icon(Icons.Filled.LockReset, contentDescription = null, tint = TextSecondary, modifier = Modifier.size(Dimens.iconSizeMd))
-            }, // a11y: decorative — labelled by adjacent Text
+            },
         )
         if (passwordsMatch) {
             Spacer(Modifier.height(Dimens.paddingS))
@@ -307,7 +310,8 @@ private fun PasswordCriterionRow(
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
             if (met) Icons.Filled.CheckCircle else Icons.Filled.RadioButtonUnchecked,
-            contentDescription = null, // a11y: decorative — labelled by adjacent Text
+            // a11y: decorative — labelled by adjacent Text
+            contentDescription = null,
             tint = if (met) Success else TextHint,
             modifier = Modifier.size(Dimens.iconSizeSm),
         )

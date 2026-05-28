@@ -28,6 +28,7 @@ security-crypto = "1.1.0-alpha06"
 play-services-maps = "19.0.0"
 detekt = "1.23.7"
 ktlint-plugin = "12.1.2"
+material3 = "1.4.0"
 
 [libraries]
 # Ktor
@@ -104,6 +105,7 @@ play-services-maps = { module = "com.google.android.gms:play-services-maps", ver
 
 # Accompanist
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

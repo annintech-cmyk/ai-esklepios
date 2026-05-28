@@ -43,7 +43,8 @@ fun SearchInputField(
         leadingIcon = {
             Icon(
                 leadingIcon,
-                contentDescription = null, // a11y: decorative — labelled by adjacent Text
+                // a11y: decorative — labelled by adjacent Text
+                contentDescription = null,
                 tint =
                     when (variant) {
                         SearchInputVariant.Light -> iconTint
