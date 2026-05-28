@@ -219,7 +219,6 @@ This installs two hooks:
 5. Android unit tests
 6. Android debug build
 7. SwiftLint (iOS)
-8. iOS simulator build
 
 ### To Skip Hooks (Emergency Only)
 ```bash
